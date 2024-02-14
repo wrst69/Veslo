@@ -1,40 +1,57 @@
 import { HttpService } from '@nestjs/axios';
-import { Injectable } from '@nestjs/common';
+import { Cache } from '@nestjs/cache-manager';
+import { Inject, Injectable } from '@nestjs/common';
+import { lastValueFrom } from 'rxjs';
+import { map } from 'rxjs/operators'
 
-const LERS_URL = 'http//10.192.1.4:10000/api/v1/';
+const LERS_URL = 'http://10.192.1.4:10000/api/v1/';
 
 @Injectable()
 export class LersService {
-  #lersToken;
+  constructor(
+    @Inject('CACHE_MANAGER') private cacheManager: Cache,
+    private httpService: HttpService
+  ) {}
 
-  constructor(private httpService: HttpService) {}
+  private async loginLers() {
+    const account = {
+      login: 'api1',
+      password: '123451234512345',
+      application: 'Veslo'
+    }
 
-  async loginLers() {
-    this.#lersToken = await this.httpService.get(`${LERS_URL}Login`);
-    console.log(this.#lersToken);
+     const token = await lastValueFrom(this.httpService
+      .post(`${LERS_URL}Login`, account)
+      .pipe(
+        map(res => res.data.token)
+    ));
+    
+    return token;
+  }
+
+  private async getNodesFromDb() {
+    const token = await this.loginLers();
+
+    return await lastValueFrom(this.httpService
+      .get(
+        `${LERS_URL}Core/Nodes`,
+        {
+          headers:{
+            Authorization: `Bearer ${ token }`
+          },
+          params: {
+            getMeasurePoints: true
+          }
+        }
+      )
+      .pipe(
+        map(res => res.data)
+    ));
   }
 
   async getNodes() {
-    console.log('INSIDE SERVICE');
-    const nodesData = await this.retrieveNodesFromDb();
-
-    return nodesData;
-  }
-
-  async getNodesFromDb() {
-    return this.httpService.get(`${LERS_URL}Core/Nodes`);
-  }
-
-  async retrieveNodesFromDb() {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        const nodes = [
-          { name: 'asdad' },
-          { name: 'asdascsd' },
-          { name: 'asdfdfdfdfad' },
-        ];
-        resolve(nodes);
-      }, 1000);
-    });
+    return await this.getNodesFromDb();
   }
 }
+
+

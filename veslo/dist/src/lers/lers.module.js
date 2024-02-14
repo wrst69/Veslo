@@ -8,14 +8,23 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LersModule = void 0;
 const common_1 = require("@nestjs/common");
+const cache_manager_1 = require("@nestjs/cache-manager");
+const axios_1 = require("@nestjs/axios");
+const cache_manager_redis_yet_1 = require("cache-manager-redis-yet");
 const lers_controller_1 = require("./lers.controller");
 const lers_service_1 = require("./lers.service");
-const axios_1 = require("@nestjs/axios");
 let LersModule = class LersModule {
 };
 LersModule = __decorate([
     (0, common_1.Module)({
-        imports: [axios_1.HttpModule],
+        imports: [
+            axios_1.HttpModule,
+            cache_manager_1.CacheModule.register({
+                isGlobal: true,
+                ttl: 21600 * 1000,
+                store: cache_manager_redis_yet_1.redisStore
+            }),
+        ],
         controllers: [lers_controller_1.LersController],
         providers: [lers_service_1.LersService],
     })

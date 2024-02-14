@@ -11,9 +11,4 @@ export class LersController {
   getNodes() {
     return this.lersService.getNodes();
   }
-
-  @Get('login')
-  lersLogin() {
-    return this.lersService.loginLers();
-  }
 }

@@ -20,9 +20,6 @@ let LersController = class LersController {
     getNodes() {
         return this.lersService.getNodes();
     }
-    lersLogin() {
-        return this.lersService.loginLers();
-    }
 };
 __decorate([
     (0, common_1.Get)(),
@@ -30,12 +27,6 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], LersController.prototype, "getNodes", null);
-__decorate([
-    (0, common_1.Get)('login'),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], LersController.prototype, "lersLogin", null);
 LersController = __decorate([
     (0, common_1.UseInterceptors)(cache_manager_1.CacheInterceptor),
     (0, common_1.Controller)('lers'),

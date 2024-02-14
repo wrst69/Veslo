@@ -1,10 +1,10 @@
 import { HttpService } from '@nestjs/axios';
+import { Cache } from '@nestjs/cache-manager';
 export declare class LersService {
-    #private;
+    private cacheManager;
     private httpService;
-    constructor(httpService: HttpService);
-    loginLers(): Promise<void>;
-    getNodes(): Promise<unknown>;
-    getNodesFromDb(): Promise<import("rxjs").Observable<import("axios").AxiosResponse<any, any>>>;
-    retrieveNodesFromDb(): Promise<unknown>;
+    constructor(cacheManager: Cache, httpService: HttpService);
+    private loginLers;
+    private getNodesFromDb;
+    getNodes(): Promise<any>;
 }
