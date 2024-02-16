@@ -1,13 +1,15 @@
-import { Controller, Patch, Post } from '@nestjs/common';
+import { Controller, Patch, Post, UseGuards } from '@nestjs/common';
+import { AuthGuard } from 'src/users/auth/auth.guard';
 import { NodesService } from './nodes.service';
 
 @Controller('nodes')
+@UseGuards(AuthGuard)
 export class NodesController {
-    constructor(private nodesService: NodesService) {}
+  constructor(private nodesService: NodesService) {}
 
-    @Post()
-    createNode() {}
+  @Post()
+  createNode() {}
 
-    @Patch()
-    updateNode() {}
+  @Patch()
+  updateNode() {}
 }

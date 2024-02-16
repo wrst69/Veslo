@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.NodesController = void 0;
 const common_1 = require("@nestjs/common");
+const auth_guard_1 = require("../users/auth/auth.guard");
 const nodes_service_1 = require("./nodes.service");
 let NodesController = class NodesController {
     constructor(nodesService) {
@@ -33,6 +34,7 @@ __decorate([
 ], NodesController.prototype, "updateNode", null);
 NodesController = __decorate([
     (0, common_1.Controller)('nodes'),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     __metadata("design:paramtypes", [nodes_service_1.NodesService])
 ], NodesController);
 exports.NodesController = NodesController;

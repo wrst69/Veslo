@@ -28,11 +28,11 @@ let LersService = class LersService {
         const account = {
             login: 'api1',
             password: '123451234512345',
-            application: 'Veslo'
+            application: 'Veslo',
         };
         const token = await (0, rxjs_1.lastValueFrom)(this.httpService
             .post(`${LERS_URL}Login`, account)
-            .pipe((0, operators_1.map)(res => res.data.token)));
+            .pipe((0, operators_1.map)((res) => res.data.token)));
         return token;
     }
     async getNodesFromDb() {
@@ -40,13 +40,13 @@ let LersService = class LersService {
         return await (0, rxjs_1.lastValueFrom)(this.httpService
             .get(`${LERS_URL}Core/Nodes`, {
             headers: {
-                Authorization: `Bearer ${token}`
+                Authorization: `Bearer ${token}`,
             },
             params: {
-                getMeasurePoints: true
-            }
+                getMeasurePoints: true,
+            },
         })
-            .pipe((0, operators_1.map)(res => res.data)));
+            .pipe((0, operators_1.map)((res) => res.data)));
     }
     async getNodes() {
         return await this.getNodesFromDb();

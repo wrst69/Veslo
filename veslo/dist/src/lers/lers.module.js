@@ -21,8 +21,8 @@ LersModule = __decorate([
             axios_1.HttpModule,
             cache_manager_1.CacheModule.register({
                 isGlobal: true,
-                ttl: 21600 * 1000,
-                store: cache_manager_redis_yet_1.redisStore
+                ttl: 21600 * 10000,
+                store: cache_manager_redis_yet_1.redisStore,
             }),
         ],
         controllers: [lers_controller_1.LersController],
