@@ -1,29 +1,29 @@
-import { revalidatePath } from "next/cache";
-import { ordersRepository } from "../orders.repository"
-import { OrderItem } from "../ui/order-item";
+"use client";
 
-export async function OrdersList({
-    revalidatePagePath
-} : {
-    revalidatePagePath: string
+import { columns } from "../model/table-columns";
+import { DataTable } from "../ui/data-table";
+
+export function OrderList({
+    orders,
+    nodes,
+    measurePoints,
+    selectedPoint
+}: {
+    orders,
+    nodes,
+    measurePoints,
+    selectedPoint
 }) {
-    const orders = await ordersRepository.getOrdersList();
 
-    const handleDeleteAction = async (orderId: number) => {
-        "use server";
-        await ordersRepository.deleteOrderElement({id: orderId});
+    if (selectedPoint.currentNodeId) {
+        console.log(selectedPoint.currentNodeId)
+        const filteredOrders = orders.filter(order => order.nodeId === selectedPoint.currentNodeId)
+        console.log(filteredOrders)
 
-        revalidatePath(revalidatePagePath);
-    };
-
-    return <div className="flex flex-col gap-3">{
-        orders.map(order => (
-            <OrderItem 
-                key={order.id}
-                order={order} 
-                onDelete={handleDeleteAction.bind(null, order.id)}
-            />
-        ))
-    }
-    </div>
+        return (
+            <div className="container ">
+                <DataTable columns={columns} data={filteredOrders}/>
+            </div>
+        )
+    }     
 }

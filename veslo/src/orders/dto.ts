@@ -4,9 +4,21 @@ import { IsBoolean, IsNumber, IsString } from 'class-validator';
 export class OrderDto {
   @ApiProperty()
   @IsNumber()
-  id: number;
+  nodeId: number;
 
   @ApiProperty()
+  @IsNumber()
+  measurePointId: number;
+
+  @ApiProperty()
+  @IsString()
+  status: string;
+
+  @ApiProperty()
+  @IsNumber()
+  cost: number;
+
+  /* @ApiProperty()
   @IsNumber()
   ownerId: number;
 
@@ -20,7 +32,7 @@ export class OrderDto {
 
   @ApiProperty()
   @IsString()
-  title: string;
+  title: string; */
 }
 
 export class UpdateOrderDto {

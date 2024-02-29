@@ -1,9 +1,8 @@
 export declare class OrderDto {
-    id: number;
-    ownerId: number;
     nodeId: number;
     measurePointId: number;
-    title: string;
+    status: string;
+    cost: number;
 }
 export declare class UpdateOrderDto {
     id: number;

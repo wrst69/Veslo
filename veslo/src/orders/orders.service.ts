@@ -10,7 +10,11 @@ export class OrdersService {
     return await this.db.order.findMany();
   }
 
-  async getOrdersByUserId(userId: number) {
+  async createOrder(dto: OrderDto) {
+    return await this.db.order.create({ data: { ...dto } });
+  }
+
+  /* async getOrdersByUserId(userId: number) {
     return await this.db.order.findMany({ where: { ownerId: userId } });
   }
 
@@ -23,7 +27,7 @@ export class OrdersService {
       where: { id: dto.id },
       data: { ...dto, ownerId: userId },
     });
-  }
+  } */
 
   //deleteOrder(id: number) {}
 }

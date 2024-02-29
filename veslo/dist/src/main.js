@@ -16,7 +16,8 @@ async function bootstrap() {
     swagger_1.SwaggerModule.setup('spec', app, document);
     app.use(cookieParser());
     app.useGlobalPipes(new common_1.ValidationPipe());
-    await app.listen(3000);
+    app.enableCors();
+    await app.listen(3003);
 }
 bootstrap();
 //# sourceMappingURL=main.js.map

@@ -1,0 +1,26 @@
+version: '3.9'
+
+services:
+  veslo-frontend.postgres:
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - 5431:5432
+    volumes:
+      - veslo-frontend.postgres:/var/lib/postgresql/data
+
+  veslo-frontend.pgadmin:
+    image: dpage/pgadmin4
+    container_name: veslo-frontend.pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "gbpleq1@gmail.com"
+      PGADMIN_DEFAULT_PASSWORD: "postgres"
+      PGADMIN_CONFIG_SERVER_MODE: "False"
+    ports:
+      - 8082:80
+
+volumes:
+  veslo-frontend.postgres:

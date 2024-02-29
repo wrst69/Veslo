@@ -15,10 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.OrdersController = void 0;
 const common_1 = require("@nestjs/common");
 const orders_service_1 = require("./orders.service");
-const auth_guard_1 = require("../users/auth/auth.guard");
-const session_info_decorator_1 = require("../users/auth/session-info.decorator");
-const dto_1 = require("../users/auth/dto");
-const dto_2 = require("./dto");
+const dto_1 = require("./dto");
 let OrdersController = class OrdersController {
     constructor(ordersService) {
         this.ordersService = ordersService;
@@ -26,16 +23,10 @@ let OrdersController = class OrdersController {
     getOrders() {
         return this.ordersService.getOrders();
     }
-    getOrdersByUserId(session) {
-        return this.ordersService.getOrdersByUserId(session.id);
+    getOrdersByMeasurePointId() {
     }
-    createOrder(dto, session) {
-        return this.ordersService.createOrder(session.id, dto);
-    }
-    updateOrder(dto, session) {
-        return this.ordersService.updateOrder(session.id, dto);
-    }
-    deleteOrder(orderId) {
+    createOrder(dto) {
+        return this.ordersService.createOrder(dto);
     }
 };
 __decorate([
@@ -46,38 +37,19 @@ __decorate([
 ], OrdersController.prototype, "getOrders", null);
 __decorate([
     (0, common_1.Get)(),
-    __param(0, (0, session_info_decorator_1.SessionInfo)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [dto_1.getSessionInfoDto]),
+    __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
-], OrdersController.prototype, "getOrdersByUserId", null);
+], OrdersController.prototype, "getOrdersByMeasurePointId", null);
 __decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
-    __param(1, (0, session_info_decorator_1.SessionInfo)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [dto_2.OrderDto,
-        dto_1.getSessionInfoDto]),
+    __metadata("design:paramtypes", [dto_1.OrderDto]),
     __metadata("design:returntype", Promise)
 ], OrdersController.prototype, "createOrder", null);
-__decorate([
-    (0, common_1.Patch)(),
-    __param(0, (0, common_1.Body)()),
-    __param(1, (0, session_info_decorator_1.SessionInfo)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [dto_2.UpdateOrderDto,
-        dto_1.getSessionInfoDto]),
-    __metadata("design:returntype", Promise)
-], OrdersController.prototype, "updateOrder", null);
-__decorate([
-    (0, common_1.Delete)(),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
-    __metadata("design:returntype", void 0)
-], OrdersController.prototype, "deleteOrder", null);
 OrdersController = __decorate([
     (0, common_1.Controller)('orders'),
-    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     __metadata("design:paramtypes", [orders_service_1.OrdersService])
 ], OrdersController);
 exports.OrdersController = OrdersController;

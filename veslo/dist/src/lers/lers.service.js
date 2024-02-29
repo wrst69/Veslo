@@ -37,16 +37,38 @@ let LersService = class LersService {
     }
     async getNodesFromDb() {
         const token = await this.loginLers();
-        return await (0, rxjs_1.lastValueFrom)(this.httpService
+        const nodeGroups = await (0, rxjs_1.lastValueFrom)(this.httpService
+            .get(`${LERS_URL}Core/NodeGroups`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .pipe((0, operators_1.map)((res) => res.data)));
+        const nodes = await (0, rxjs_1.lastValueFrom)(this.httpService
             .get(`${LERS_URL}Core/Nodes`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
+        })
+            .pipe((0, operators_1.map)((res) => res.data)));
+        const measurePoints = await (0, rxjs_1.lastValueFrom)(this.httpService
+            .get(`${LERS_URL}Core/MeasurePoints`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
             params: {
-                getMeasurePoints: true,
+                getEquipment: true,
             },
         })
             .pipe((0, operators_1.map)((res) => res.data)));
+        const equipment = await (0, rxjs_1.lastValueFrom)(this.httpService
+            .get(`${LERS_URL}Core/Equipment`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .pipe((0, operators_1.map)((res) => res.data)));
+        return { nodeGroups, nodes, measurePoints, equipment };
     }
     async getNodes() {
         return await this.getNodesFromDb();

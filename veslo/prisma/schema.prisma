@@ -15,9 +15,7 @@ model User {
   hash String
   salt String
 
-  orders       Order[]
-  orderUpdates OrderUpdate[]
-  comments     Comment[]
+  comments Comment[]
 
   @@map("users")
 }
@@ -27,7 +25,6 @@ model Node {
   name String
 
   measurePoints MeasurePoint[]
-  orders        Order[]
 }
 
 model MeasurePoint {
@@ -36,27 +33,14 @@ model MeasurePoint {
 
   nodeId Int  @map("node_id")
   node   Node @relation(fields: [nodeId], references: [id])
-
-  orders Order[]
 }
 
 model Order {
-  id Int @id @default(autoincrement())
-
-  ownerId Int  @unique @map("owner_id")
-  owner   User @relation(fields: [ownerId], references: [id])
-
-  nodeId Int  @unique @map("node_id")
-  node   Node @relation(fields: [nodeId], references: [id])
-
-  measurePointId Int          @unique @map("measure_point_id")
-  measurePoint  MeasurePoint @relation(fields: [measurePointId], references: [id])
-
-  title    String  @default("")
-  isClosed Boolean @default(false) @map("is_closed")
-
-  updates  OrderUpdate[]
-  comments Comment[]
+  id             Int    @id @default(autoincrement())
+  nodeId         Int
+  measurePointId Int
+  status         String
+  cost           Float
 
   @@map("orders")
 }
@@ -64,24 +48,15 @@ model Order {
 model OrderUpdate {
   id Int @id @default(autoincrement())
 
-  ownerId Int  @unique
-  owner   User @relation(fields: [ownerId], references: [id])
-
-  orderId Int   @unique
-  order   Order @relation(fields: [orderId], references: [id])
-
   @@map("order_updates")
 }
 
 model Comment {
-  id Int @id @default(autoincrement())
+  id    Int    @id @default(autoincrement())
   title String
 
   ownerId Int  @unique
   owner   User @relation(fields: [ownerId], references: [id])
-
-  orderId Int   @unique
-  order   Order @relation(fields: [orderId], references: [id])
 
   @@map("comments")
 }

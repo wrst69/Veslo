@@ -19,17 +19,8 @@ let OrdersService = class OrdersService {
     async getOrders() {
         return await this.db.order.findMany();
     }
-    async getOrdersByUserId(userId) {
-        return await this.db.order.findMany({ where: { ownerId: userId } });
-    }
-    async createOrder(userId, dto) {
-        return await this.db.order.create({ data: Object.assign(Object.assign({}, dto), { ownerId: userId }) });
-    }
-    async updateOrder(userId, dto) {
-        return await this.db.order.update({
-            where: { id: dto.id },
-            data: Object.assign(Object.assign({}, dto), { ownerId: userId }),
-        });
+    async createOrder(dto) {
+        return await this.db.order.create({ data: Object.assign({}, dto) });
     }
 };
 OrdersService = __decorate([

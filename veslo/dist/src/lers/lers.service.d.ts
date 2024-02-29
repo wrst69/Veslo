@@ -6,5 +6,10 @@ export declare class LersService {
     constructor(cacheManager: Cache, httpService: HttpService);
     private loginLers;
     private getNodesFromDb;
-    getNodes(): Promise<any>;
+    getNodes(): Promise<{
+        nodeGroups: any;
+        nodes: any;
+        measurePoints: any;
+        equipment: any;
+    }>;
 }

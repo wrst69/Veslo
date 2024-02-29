@@ -14,7 +14,7 @@ import { getSessionInfoDto } from 'src/users/auth/dto';
 import { OrderDto, UpdateOrderDto } from './dto';
 
 @Controller('orders')
-@UseGuards(AuthGuard)
+//@UseGuards(AuthGuard)
 export class OrdersController {
   constructor(private ordersService: OrdersService) {}
 
@@ -24,6 +24,19 @@ export class OrdersController {
   }
 
   @Get()
+  getOrdersByMeasurePointId() {
+    //return this.ordersService.getOrders();
+  }
+
+  @Post()
+  createOrder(
+    @Body() dto: OrderDto,
+    //@SessionInfo() session: getSessionInfoDto,
+  ): Promise<OrderDto> {
+    return this.ordersService.createOrder(dto);
+  }
+
+  /* @Get()
   getOrdersByUserId(@SessionInfo() session: getSessionInfoDto) {
     return this.ordersService.getOrdersByUserId(session.id);
   }
@@ -47,5 +60,5 @@ export class OrdersController {
   @Delete()
   deleteOrder(orderId: number) {
     //return this.ordersService.deleteOrder(orderId);
-  }
+  } */
 }

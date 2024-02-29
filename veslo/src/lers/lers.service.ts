@@ -32,18 +32,50 @@ export class LersService {
   private async getNodesFromDb() {
     const token = await this.loginLers();
 
-    return await lastValueFrom(
+    const nodeGroups = await lastValueFrom(
+      this.httpService
+        .get(`${LERS_URL}Core/NodeGroups`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .pipe(map((res) => res.data)),
+    );
+
+    const nodes = await lastValueFrom(
       this.httpService
         .get(`${LERS_URL}Core/Nodes`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
+        })
+        .pipe(map((res) => res.data)),
+    );
+
+    const measurePoints = await lastValueFrom(
+      this.httpService
+        .get(`${LERS_URL}Core/MeasurePoints`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
           params: {
-            getMeasurePoints: true,
+            getEquipment: true,
           },
         })
         .pipe(map((res) => res.data)),
     );
+
+    const equipment = await lastValueFrom(
+      this.httpService
+        .get(`${LERS_URL}Core/Equipment`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .pipe(map((res) => res.data)),
+    );
+
+    return { nodeGroups, nodes, measurePoints, equipment };
   }
 
   async getNodes() {
