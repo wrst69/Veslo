@@ -29,7 +29,64 @@ export class LersService {
     return token;
   }
 
-  private async getNodesFromDb() {
+  private async getFilteredNodes(token) {
+    const nodes = await lastValueFrom(
+      this.httpService
+        .get(`${LERS_URL}Core/Nodes`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .pipe(map((res) => res.data)),
+    );
+
+    const filteredNodes: { id; title; address; type }[] = [];
+    nodes.nodes.map((node) =>
+      filteredNodes.push({
+        id: node.id,
+        title: node.title,
+        address: node.address,
+        type: node.type,
+      }),
+    );
+
+    return filteredNodes;
+  }
+
+  private async getFilteredMeasurePoints(token) {
+    const data = await lastValueFrom(
+      this.httpService
+        .get(`${LERS_URL}Core/MeasurePoints`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          params: {
+            getEquipment: true,
+          },
+        })
+        .pipe(map((res) => res.data)),
+    );
+
+    const measurePoints = data.measurePoints.map((point) => {
+      return {
+        id: point.id,
+        title: point.title,
+        fullTitle: point.fullTitle,
+        address: point.address,
+        type: point.type,
+        systemType: point.systemType,
+        nodeId: point.nodeId,
+        isDoublePipeHotWaterSystem: point.isDoublePipeHotWaterSystem,
+        isTwoChannels: point.isTwoChannels,
+        resourceKind: point.resourceKind,
+        deviceId: point.deviceId,
+      };
+    });
+
+    return measurePoints;
+  }
+
+  private async getDataFromDb() {
     const token = await this.loginLers();
 
     const nodeGroups = await lastValueFrom(
@@ -42,28 +99,9 @@ export class LersService {
         .pipe(map((res) => res.data)),
     );
 
-    const nodes = await lastValueFrom(
-      this.httpService
-        .get(`${LERS_URL}Core/Nodes`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .pipe(map((res) => res.data)),
-    );
+    const nodes = await this.getFilteredNodes(token);
 
-    const measurePoints = await lastValueFrom(
-      this.httpService
-        .get(`${LERS_URL}Core/MeasurePoints`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          params: {
-            getEquipment: true,
-          },
-        })
-        .pipe(map((res) => res.data)),
-    );
+    const measurePoints = await this.getFilteredMeasurePoints(token);
 
     const equipment = await lastValueFrom(
       this.httpService
@@ -78,7 +116,7 @@ export class LersService {
     return { nodeGroups, nodes, measurePoints, equipment };
   }
 
-  async getNodes() {
-    return await this.getNodesFromDb();
+  async getData() {
+    return await this.getDataFromDb();
   }
 }

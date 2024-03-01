@@ -4,10 +4,9 @@ import {
     ResizableHandle,
     ResizablePanel,
     ResizablePanelGroup,
-  } from "@/shared/ui/resizable"
+} from "@/shared/ui/resizable"
 
 import { NodesList } from "@/features/nodes-list/pub/nodes-list";
-
 import { OrderList } from "@/features/orders-list/pub/orders-list";
 import { useState } from "react";
   
@@ -29,13 +28,12 @@ import { useState } from "react";
     });
   
     return (
-      
         <ResizablePanelGroup direction="horizontal" className="min-h-screen max-w-screen">
           <ResizablePanel defaultSize={35}>
                 <NodesList 
-                    nodes={nodes.nodes}
+                    nodes={nodes}
                     nodeGroups={nodeGroups}
-                    measurePoints={measurePoints.measurePoints}
+                    measurePoints={measurePoints}
                     revalidatePagePath="/"
                     onPointChange={setSelectedPoint}
                 />
@@ -44,12 +42,9 @@ import { useState } from "react";
           <ResizablePanel defaultSize={65}>
                 <OrderList 
                     orders={orders}
-                    nodes={nodes}
-                    measurePoints={measurePoints} 
                     selectedPoint={selectedPoint}
                 />
           </ResizablePanel>
-        </ResizablePanelGroup>
-    
+        </ResizablePanelGroup>  
     );
   }

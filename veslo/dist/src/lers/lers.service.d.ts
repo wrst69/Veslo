@@ -5,10 +5,17 @@ export declare class LersService {
     private httpService;
     constructor(cacheManager: Cache, httpService: HttpService);
     private loginLers;
-    private getNodesFromDb;
-    getNodes(): Promise<{
+    private getFilteredNodes;
+    private getFilteredMeasurePoints;
+    private getDataFromDb;
+    getData(): Promise<{
         nodeGroups: any;
-        nodes: any;
+        nodes: {
+            id: any;
+            title: any;
+            address: any;
+            type: any;
+        }[];
         measurePoints: any;
         equipment: any;
     }>;

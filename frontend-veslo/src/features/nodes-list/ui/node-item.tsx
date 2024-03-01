@@ -1,5 +1,3 @@
-
-
 import {
     Select,
     SelectContent,
@@ -16,7 +14,7 @@ import {
 
 import { ordersRepository } from "@/entities/order/_repositories/orders";
 import { toast } from "sonner";
-import { CreateOrderForm } from "@/features/create-order/create-order-form";
+import { CreateOrderForm, CreateOrderSheet } from "@/features/create-order/create-order-sheet";
 
 export function NodeItem({
     node,
@@ -70,8 +68,9 @@ export function NodeItem({
                                     </SelectContent>
                                 </Select>
                                 <div>Equipment 1</div>
-                                <div>Equipment 2</div>
-                                <CreateOrderForm/>
+                                <div className="mb-2">Equipment 2</div>
+                                        
+                                <CreateOrderSheet/>
                         </AccordionContent>
                     </AccordionItem>
 )};

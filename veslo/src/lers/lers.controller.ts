@@ -9,6 +9,6 @@ export class LersController {
 
   @Get()
   getNodes() {
-    return this.lersService.getNodes();
+    return this.lersService.getData();
   }
 }

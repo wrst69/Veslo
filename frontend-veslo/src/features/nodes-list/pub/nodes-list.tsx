@@ -16,8 +16,8 @@ export function NodesList({
     nodes,
     nodeGroups,
     measurePoints,
-    revalidatePagePath: string,
-    onPointChange
+    revalidatePagePath?: string,
+    onPointChange?
 }) {
 
     const [selectedNodeGroup, setSelectedNodeGroup] = useState('all');

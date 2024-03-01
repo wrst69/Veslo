@@ -5,25 +5,22 @@ import { DataTable } from "../ui/data-table";
 
 export function OrderList({
     orders,
-    nodes,
-    measurePoints,
     selectedPoint
 }: {
     orders,
-    nodes,
-    measurePoints,
     selectedPoint
 }) {
 
     if (selectedPoint.currentNodeId) {
-        console.log(selectedPoint.currentNodeId)
-        const filteredOrders = orders.filter(order => order.nodeId === selectedPoint.currentNodeId)
-        console.log(filteredOrders)
+        let filteredOrders = orders.filter(order => order.nodeId === selectedPoint.currentNodeId);
 
-        return (
-            <div className="container ">
-                <DataTable columns={columns} data={filteredOrders}/>
-            </div>
-        )
-    }     
+    if (selectedPoint.currentMeasurePointId) {
+        filteredOrders = filteredOrders.filter(order => order.measurePointId === selectedPoint.currentMeasurePointId);
+    }
+
+    return (
+         <div className="container ">
+            <DataTable columns={columns} data={filteredOrders}/>
+        </div>
+    )}     
 }

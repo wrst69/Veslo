@@ -11,6 +11,12 @@ export function MainNav() {
       </Link>
       <Link
         className="transition-colors hover:text-foreground/80 text-foreground/60"
+        href="/equipment"
+      >
+        Equipment
+      </Link>
+      <Link
+        className="transition-colors hover:text-foreground/80 text-foreground/60"
         href="/admin"
       >
         Admin panel

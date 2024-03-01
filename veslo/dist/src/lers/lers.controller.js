@@ -18,7 +18,7 @@ let LersController = class LersController {
         this.lersService = lersService;
     }
     getNodes() {
-        return this.lersService.getNodes();
+        return this.lersService.getData();
     }
 };
 __decorate([

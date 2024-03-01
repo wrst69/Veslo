@@ -6,7 +6,7 @@ import { Input } from '@/shared/ui/input';
 import { z } from 'zod';
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTransition } from 'react';
-import { createOrdersAction } from '../actions';
+import { createOrdersAction } from '../../orders-list/actions';
 import { Form } from '@/shared/ui/form';
 import { Button } from '@/shared/ui/button';
 import { cn } from '@/shared/ui/utils';

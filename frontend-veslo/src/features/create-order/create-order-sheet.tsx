@@ -8,8 +8,9 @@ import {
 } from "@/shared/ui/sheet"
 
 import { Button } from "@/shared/ui/button"
+import { CreateOrderForm } from "./_ui/create-order-form"
 
-export function CreateOrderForm() {
+export function CreateOrderSheet() {
     return (
         <Sheet>
             <SheetTrigger asChild>
@@ -19,8 +20,7 @@ export function CreateOrderForm() {
                 <SheetHeader>
                 <SheetTitle>Форма заявки</SheetTitle>
                 <SheetDescription>
-                    This action cannot be undone. This will permanently delete your account
-                    and remove your data from our servers.
+                    <CreateOrderForm className="" revalidatePagePath="/"/>
                 </SheetDescription>
                 </SheetHeader>
             </SheetContent>

@@ -4,7 +4,12 @@ export declare class LersController {
     constructor(lersService: LersService);
     getNodes(): Promise<{
         nodeGroups: any;
-        nodes: any;
+        nodes: {
+            id: any;
+            title: any;
+            address: any;
+            type: any;
+        }[];
         measurePoints: any;
         equipment: any;
     }>;
