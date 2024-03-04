@@ -10,12 +10,14 @@ export function NodesList({
     nodes,
     nodeGroups,
     measurePoints,
+    equipment,
     revalidatePagePath,
     onPointChange
 } : {
     nodes,
     nodeGroups,
     measurePoints,
+    equipment,
     revalidatePagePath?: string,
     onPointChange?
 }) {
@@ -53,26 +55,24 @@ export function NodesList({
     };
 
     return (
-            <div className="flex h-full flex-col justify-top ml-4 mr-3 ">
-                <div>
-                    <NodeGroupSelect nodeGroups={nodeGroups} onSelect={setSelectedNodeGroup}/>
-                </div>
-                <NodeSearchField onInput={inputHandler}/>
-                <div className="flex flex-col gap-3 scroll-smooth">
-                    <Accordion type="single" collapsible onValueChange={handleCardChange}>
-                        {filteredData.map(node => {
-                            const filteredMeasurePoints = measurePoints.filter(point => point.nodeId === node.id);
+           <div className="flex h-full flex-col justify-top ml-4 mr-3 ">
+                <NodeGroupSelect nodeGroups={nodeGroups} onSelect={setSelectedNodeGroup}/>
+                <NodeSearchField onInput={inputHandler}/> 
+                    <div className="flex flex-col gap-3 scroll-smooth">
+                            <Accordion type="single" collapsible onValueChange={handleCardChange}>
+                                {filteredData.map(node => {
+                                    const filteredMeasurePoints = measurePoints.filter(point => point.nodeId === node.id);
 
-                            return (
-                                <NodeItem
-                                    key={node.id}
-                                    node={node}
-                                    measurePoints={filteredMeasurePoints}
-                                    onPointChange={onPointChange}
-                                />
-                        )})}
-                    </Accordion>    
-                </div>
-            </div>
+                                    return (
+                                        <NodeItem
+                                            key={node.id}
+                                            node={node}
+                                            measurePoints={filteredMeasurePoints}
+                                            onPointChange={onPointChange}
+                                        />
+                                )})}
+                            </Accordion>                           
+                    </div>         
+            </div>           
     )
 }

@@ -103,6 +103,9 @@ let LersService = class LersService {
     async getData() {
         return await this.getDataFromDb();
     }
+    async getMeasurePointEquipment(id) {
+        return;
+    }
 };
 LersService = __decorate([
     (0, common_1.Injectable)(),

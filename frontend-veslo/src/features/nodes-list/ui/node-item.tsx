@@ -59,9 +59,10 @@ export function NodeItem({
                         <AccordionContent>
                                 <Select onValueChange={handlePointChange}>
                                     <SelectTrigger className="m-1 w-[97%]">
-                                        <SelectValue defaultValue={measurePoints[0]?.title} placeholder="Выберите точку учета" />
+                                        <SelectValue defaultValue="all" placeholder="Выберите точку учета" />
                                     </SelectTrigger>
                                     <SelectContent>
+                                        <SelectItem value="all">Все</SelectItem>
                                         {measurePoints?.map(point => {
                                             return <SelectItem value ={point.id} key={point.id}>{point.title}</SelectItem>
                                         })}

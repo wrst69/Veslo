@@ -119,4 +119,8 @@ export class LersService {
   async getData() {
     return await this.getDataFromDb();
   }
+
+  async getMeasurePointEquipment(id: number) {
+    return;
+  }
 }

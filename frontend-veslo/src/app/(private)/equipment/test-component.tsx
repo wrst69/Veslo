@@ -28,30 +28,19 @@ export function TestComponent({
         currentMeasurePointId: undefined
     });
     
-    //{nodeId, equipmentId}
-    //{id, equipmentModelId, serialNumber }
-    //{id, title, longTitle }
-
     const filterEquipment = () => {
-        const nodeEquipment = equipment.nodeEquipment.filter(equip => equip.nodeId === selectedPoint.currentNodeId);
+        const currentNodeEquipment = equipment.nodeEquipment.filter(equip => equip.nodeId === selectedPoint.currentNodeId);
 
-        const cleanEquipmentId = nodeEquipment.map(equip => equip.equipmentId);
+        const currentNodeEquipmentId = currentNodeEquipment.map(equip => equip.equipmentId);
 
-        const equip = equipment.list.filter(equip => cleanEquipmentId.find(id => equip.id === id));
-
-        const modelsId = equipment.modelList.map(e => e.id);
-    
-
-        equip.map(equip => {
+        const equip = equipment.list.filter(equip => currentNodeEquipmentId.find(id => equip.id === id));
+        
+        equip.map(item => {    
+            const model = equipment.modelList.find(model => item.equipmentModelId === model.id);
             
-
-            //console.log(modelsId)  
-            //console.log(equipment.modelList.includes(equip.id));
-            console.log(equipment.modelList.filter(item => {
-                
-                item.id === equip.equipmentModelId;
-            }));  
-        })  
+            item.nodeTitle = model.title
+            item.calibrationInterval = model.calibrationInterval
+        })
 
         return equip;
     }

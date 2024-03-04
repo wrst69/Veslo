@@ -14,12 +14,14 @@ import { useState } from "react";
     orders,
     nodeGroups,
     nodes,
-    measurePoints
+    measurePoints,
+    equipment
   }: {
     orders,
     nodeGroups,
     nodes,
-    measurePoints
+    measurePoints,
+    equipment
   }) {
   
     const [selectedPoint, setSelectedPoint] = useState({
@@ -34,6 +36,7 @@ import { useState } from "react";
                     nodes={nodes}
                     nodeGroups={nodeGroups}
                     measurePoints={measurePoints}
+                    equipment={equipment}
                     revalidatePagePath="/"
                     onPointChange={setSelectedPoint}
                 />

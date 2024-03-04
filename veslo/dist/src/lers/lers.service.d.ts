@@ -19,4 +19,5 @@ export declare class LersService {
         measurePoints: any;
         equipment: any;
     }>;
+    getMeasurePointEquipment(id: number): Promise<void>;
 }

@@ -2,7 +2,7 @@ import { LersService } from './lers.service';
 export declare class LersController {
     private lersService;
     constructor(lersService: LersService);
-    getNodes(): Promise<{
+    getData(): Promise<{
         nodeGroups: any;
         nodes: {
             id: any;
@@ -13,4 +13,5 @@ export declare class LersController {
         measurePoints: any;
         equipment: any;
     }>;
+    getMeasurePointEquipment(id: number): Promise<void>;
 }

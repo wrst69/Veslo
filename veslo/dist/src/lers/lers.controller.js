@@ -17,18 +17,27 @@ let LersController = class LersController {
     constructor(lersService) {
         this.lersService = lersService;
     }
-    getNodes() {
+    getData() {
         return this.lersService.getData();
+    }
+    getMeasurePointEquipment(id) {
+        return this.lersService.getMeasurePointEquipment(id);
     }
 };
 __decorate([
+    (0, common_1.UseInterceptors)(cache_manager_1.CacheInterceptor),
     (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
-], LersController.prototype, "getNodes", null);
+], LersController.prototype, "getData", null);
+__decorate([
+    (0, common_1.Get)(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", void 0)
+], LersController.prototype, "getMeasurePointEquipment", null);
 LersController = __decorate([
-    (0, common_1.UseInterceptors)(cache_manager_1.CacheInterceptor),
     (0, common_1.Controller)('lers'),
     __metadata("design:paramtypes", [lers_service_1.LersService])
 ], LersController);
