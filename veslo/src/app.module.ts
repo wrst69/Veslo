@@ -4,9 +4,20 @@ import { LersModule } from './lers/lers.module';
 import { AuthModule } from './users/auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { OrdersModule } from './orders/orders.module';
+import { ConfigModule } from '@nestjs/config';
+import { isRgbColor } from 'class-validator';
 
 @Module({
-  imports: [DbModule, LersModule, AuthModule, UsersModule, OrdersModule],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    DbModule,
+    AuthModule,
+    UsersModule,
+    LersModule,
+    OrdersModule,
+  ],
   controllers: [],
   providers: [],
 })

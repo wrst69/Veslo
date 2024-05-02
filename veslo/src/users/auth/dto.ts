@@ -1,10 +1,17 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Role } from '@prisma/client';
 import { IsNotEmpty, IsString } from 'class-validator';
-import { UserRole } from 'types/user-role.enum';
 
 export class SignUpBodyDto {
   @ApiProperty({
     example: 'FedorovAY',
+  })
+  @IsNotEmpty()
+  @IsString()
+  login: string;
+
+  @ApiProperty({
+    example: 'Иванов Иван Иванович',
   })
   @IsNotEmpty()
   @IsString()
@@ -15,7 +22,7 @@ export class SignUpBodyDto {
   })
   @IsNotEmpty()
   @IsString()
-  role: UserRole;
+  role: Role;
 
   @ApiProperty({
     example: '123456',
@@ -31,7 +38,7 @@ export class SignInBodyDto {
   })
   @IsNotEmpty()
   @IsString()
-  name: string;
+  login: string;
 
   @ApiProperty({
     example: '123456',
@@ -50,7 +57,7 @@ export class getSessionInfoDto {
   @ApiProperty({
     example: 'FedorovAY',
   })
-  name: string;
+  login: string;
 
   @ApiProperty()
   ist: number;

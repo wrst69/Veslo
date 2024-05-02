@@ -1,40 +1,14 @@
-import { SignInForm } from '@/features/auth/sign-in-form.server';
-import { Card, CardContent, CardHeader } from '@/shared/ui/card';
-import Link from 'next/link';
+import { SignInForm } from "@/features/auth";
 
-export default function AuthenticationPage() {
-  return (
-    <>
-      {" "}
-      <div className="container relative  flex-col items-center justify-center self-center pt-24">
-        <Card className="max-w-[350px] mx-auto">
-          <CardHeader className="flex flex-col space-y-2 text-center">
-            <h1 className="text-2xl font-semibold tracking-tight">
-              Войти в аккаунт
-            </h1>
-          </CardHeader>
-          <CardContent className="grid gap-4">
-            <SignInForm />
-            <p className="px-0 text-center text-sm text-muted-foreground">
-              Нажимая продолжить вы соглашаетесь с{" "}
-              <Link
-                href="/terms"
-                className="underline underline-offset-4 hover:text-primary"
-              >
-                Пользовательским соглашением
-              </Link>{" "}
-              и{" "}
-              <Link
-                href="/privacy"
-                className="underline underline-offset-4 hover:text-primary"
-              >
-                Политикой конфиденциальности
-              </Link>
-              .
-            </p>
-          </CardContent>
-        </Card>
-      </div>
-    </>
-  );
+export default function SignInPage() {
+    return (
+        <div className="min-h-screen flex flex-col ">
+            <main className="grow flex flex-col pt-24 ">
+                <div className="rounded-xl border-2 border-black px-14 py-8 max-w-[400px] w-full self-center ">
+                    <h1 className="text-2xl mb-10">Вход</h1>
+                    <SignInForm/>
+                </div> 
+            </main>
+        </div>
+    )
 }

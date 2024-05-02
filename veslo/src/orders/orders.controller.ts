@@ -8,7 +8,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { OrdersService } from './orders.service';
-import { AuthGuard } from 'src/users/auth/auth.guard';
+import { AuthGuard } from 'src/users/auth/guards/auth????.guard';
 import { SessionInfo } from 'src/users/auth/session-info.decorator';
 import { getSessionInfoDto } from 'src/users/auth/dto';
 import { OrderDto, UpdateOrderDto } from './dto';
@@ -28,13 +28,13 @@ export class OrdersController {
     //return this.ordersService.getOrders();
   }
 
-  @Post()
+  /* @Post()
   createOrder(
     @Body() dto: OrderDto,
     //@SessionInfo() session: getSessionInfoDto,
   ): Promise<OrderDto> {
     return this.ordersService.createOrder(dto);
-  }
+  } */
 
   /* @Get()
   getOrdersByUserId(@SessionInfo() session: getSessionInfoDto) {

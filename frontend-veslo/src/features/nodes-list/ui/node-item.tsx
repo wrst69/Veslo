@@ -14,15 +14,16 @@ import {
 
 import { ordersRepository } from "@/entities/order/_repositories/orders";
 import { toast } from "sonner";
-import { CreateOrderForm, CreateOrderSheet } from "@/features/create-order/create-order-sheet";
+import { CreateOrderSheet } from "@/features/create-order/create-order-sheet";
+import { Checkbox } from "@/shared/ui/checkbox";
 
 export function NodeItem({
     node,
     measurePoints,
     onPointChange
 }:{
-    measurePoints,
     node: NodeListElement,
+    measurePoints,
     onPointChange
 }) {
 
@@ -49,29 +50,37 @@ export function NodeItem({
     }
 
     return (   
-                    <AccordionItem key={node.id} 
-                        value={(node.id).toString()} 
-                        className="
-                        border border-gray-200 rounded-lg p-3 mb-2
-                        data-[state=open]:border-2 data-[state=open]:border-black"          
-                    >
-                        <AccordionTrigger>{node.title}</AccordionTrigger>
-                        <AccordionContent>
-                                <Select onValueChange={handlePointChange}>
-                                    <SelectTrigger className="m-1 w-[97%]">
-                                        <SelectValue defaultValue="all" placeholder="Выберите точку учета" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectItem value="all">Все</SelectItem>
-                                        {measurePoints?.map(point => {
-                                            return <SelectItem value ={point.id} key={point.id}>{point.title}</SelectItem>
-                                        })}
-                                    </SelectContent>
-                                </Select>
-                                <div>Equipment 1</div>
-                                <div className="mb-2">Equipment 2</div>
-                                        
-                                <CreateOrderSheet/>
-                        </AccordionContent>
-                    </AccordionItem>
+        <AccordionItem 
+            key={node.id} 
+            value={(node.id).toString()} 
+            className="
+            border border-gray-200 rounded-lg p-3 mb-2
+            data-[state=open]:border-2 data-[state=open]:border-black"          
+        >
+             <AccordionTrigger>{node.title}</AccordionTrigger>
+                <AccordionContent>
+                    <Select onValueChange={handlePointChange}>
+                        <SelectTrigger className="m-1 w-[97%]">
+                            <SelectValue defaultValue="all" placeholder="Выберите точку учета" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="all">Все</SelectItem>
+                                {measurePoints?.map(point => {
+                                    return <SelectItem value ={point.id} key={point.id}>{point.title}</SelectItem>
+                                })}
+                            </SelectContent>
+                    </Select>
+                    <div className="items-top flex space-x-2">
+                        <Checkbox>
+                            <div className="grid gap-1.5 leading-none">
+
+                            </div>
+                        </Checkbox>
+                        
+                        Equipment 1
+                    </div>
+                    <div className="mb-2">Equipment 2</div>               
+                    <CreateOrderSheet/>
+                </AccordionContent>
+        </AccordionItem>
 )};

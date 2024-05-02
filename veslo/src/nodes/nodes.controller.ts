@@ -1,5 +1,5 @@
 import { Controller, Patch, Post, UseGuards } from '@nestjs/common';
-import { AuthGuard } from 'src/users/auth/auth.guard';
+import { AuthGuard } from 'src/users/auth/guards/auth????.guard';
 import { NodesService } from './nodes.service';
 
 @Controller('nodes')

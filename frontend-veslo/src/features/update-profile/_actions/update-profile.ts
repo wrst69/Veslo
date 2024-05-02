@@ -1,9 +1,9 @@
 "use server";
 
 import { z } from 'zod';
-import { profileSchema } from '@/entities/user/profile';
-import { updateProfileUseCase } from '@/entities/user/profile.server';
-import { getAppSessionStrictServer } from '@/entities/user/session.server';
+import { profileSchema } from '@/sdsdsd/user/profile';
+import { updateProfileUseCase } from '@/sdsdsd/user/profile.server';
+import { getAppSessionStrictServer } from '@/sdsdsd/user/session.server';
 
 const propsSchema = z.object({
     userId: z.string(),

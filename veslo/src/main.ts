@@ -18,8 +18,13 @@ async function bootstrap() {
 
   app.use(cookieParser());
   app.useGlobalPipes(new ValidationPipe());
-  app.enableCors();
+  app.enableCors({
+    origin: ['http://localhost:3000'],
+    credentials: true,
+    //exposedHeaders: 'set-cookie',
+  });
 
   await app.listen(3003);
 }
+
 bootstrap();

@@ -1,16 +1,26 @@
 import { Injectable } from '@nestjs/common';
+import { Role } from '@prisma/client';
 import { DbService } from 'src/db/db.service';
-import { UserRole } from 'types/user-role.enum';
 
 @Injectable()
 export class UsersService {
   constructor(private db: DbService) {}
 
-  findByName(name: string) {
-    return this.db.user.findFirst({ where: { name } });
+  async findByLogin(login: string) {
+    return this.db.user.findUnique({ where: { login } });
   }
 
-  create(name: string, role: UserRole, hash: string, salt: string) {
-    return this.db.user.create({ data: { name, role, hash, salt } });
+  async findById(id: number) {
+    return this.db.user.findUnique({ where: { id } });
+  }
+
+  async create(
+    login: string,
+    name: string,
+    role: Role,
+    hash: string,
+    salt: string,
+  ) {
+    return this.db.user.create({ data: { login, name, role, hash, salt } });
   }
 }
