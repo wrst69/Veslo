@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 import { DbModule } from './db/db.module';
-import { LersModule } from './lers/lers.module';
-import { AuthModule } from './users/auth/auth.module';
+import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
+import { LersModule } from './lers/lers.module';
 import { OrdersModule } from './orders/orders.module';
 
 @Module({
-  imports: [DbModule, LersModule, AuthModule, UsersModule, OrdersModule],
+  imports: [DbModule, AuthModule, UsersModule, LersModule, OrdersModule],
   controllers: [],
   providers: [],
 })

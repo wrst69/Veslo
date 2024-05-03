@@ -1,5 +1,5 @@
 import { HttpService } from '@nestjs/axios';
-import { Cache } from '@nestjs/cache-manager';
+import { CACHE_MANAGER, Cache } from '@nestjs/cache-manager';
 import { Inject, Injectable } from '@nestjs/common';
 import { lastValueFrom } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -9,7 +9,7 @@ const LERS_URL = 'http://10.192.1.4:10000/api/v1/';
 @Injectable()
 export class LersService {
   constructor(
-    @Inject('CACHE_MANAGER') private cacheManager: Cache,
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
     private httpService: HttpService,
   ) {}
 

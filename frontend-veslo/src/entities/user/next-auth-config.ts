@@ -1,43 +1,63 @@
-import { privateConfig } from "@/shared/config/private";
 import { compact } from "lodash-es";
-import { AuthOptions } from "next-auth";
-import GithubProvider from "next-auth/providers/github"
-import { PrismaAdapter } from '@auth/prisma-adapter';
-import { dbClient } from "@/shared/lib/db";
-import { createUserUseCase } from "./_use-cases/create-user";
+import { privateConfig } from "@/shared/config/private";
 
-const prismaAdapter = PrismaAdapter(dbClient);
+import type { AuthOptions } from "next-auth"
+import CredentialsProvider from "next-auth/providers/credentials"
+import { usersRepository } from "@/entities/user/_repositories/users";
+
+import { randomBytes, pbkdf2Sync } from 'crypto';
 
 export const nextAuthConfig: AuthOptions = {
-  adapter: {
-    ...prismaAdapter,
-    createUser: (user) => {
-      return createUserUseCase.exec(user);
-    },
-  } as AuthOptions["adapter"],
-  callbacks: {
-    session: async ({ session, user }) => {
-      return {
-        ...session,
-        user: {
-          ...session.user,
-          id: user.id,
-          role: user.role,
-        },
-      };
-    },
-  },
-  pages: {
-    signIn: "/auth/sign-in",
-    newUser: "/auth/new-user",
-    verifyRequest: "/auth/verify-request",
-  },
   providers: compact([
-    privateConfig.GITHUB_ID &&
-      privateConfig.GITHUB_SECRET &&
-      GithubProvider({
-        clientId: privateConfig.GITHUB_ID,
-        clientSecret: privateConfig.GITHUB_SECRET,
-      }),
+      CredentialsProvider({
+        credentials: {
+          login: { label: 'login', type: 'text', required: true},
+          password: { label: 'password', type: 'password', required: true}
+        },
+        async authorize(credentials, req) {
+          if (!credentials?.login || !credentials?.password) {
+            console.log('no credentials')
+            return null;
+          }
+
+          const currentUser = await usersRepository.getUserByLogin(credentials.login);
+
+          const tokenData = await fetch ('http://localhost:3003/auth/sign-in', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              login: credentials?.login,
+              password: credentials?.password
+            }),
+          });
+
+          const accessToken = await tokenData.json();
+
+          console.log(currentUser);
+          console.log(tokenData);
+          console.log(accessToken);
+          
+          if (currentUser && accessToken) {
+            return {...currentUser, accessToken: accessToken };
+          }
+        }
+      })
   ]),
+
+  
+
+  /* callbacks: {
+    async jwt({ token, user }) {
+      return { ...token, ...user };
+    },
+    async session({ session, token, user }) {
+      session.user = token as any;
+      return session;
+    }
+  }, */
+  /* pages: {
+    signIn: '/auth-nest/sign-in'
+  } */
 };

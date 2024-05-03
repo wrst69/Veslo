@@ -10,9 +10,9 @@ export class OrdersService {
     return await this.db.order.findMany();
   }
 
-  async createOrder(dto: OrderDto) {
+  /* async createOrder(dto: OrderDto) {
     return await this.db.order.create({ data: { ...dto } });
-  }
+  } */
 
   /* async getOrdersByUserId(userId: number) {
     return await this.db.order.findMany({ where: { ownerId: userId } });

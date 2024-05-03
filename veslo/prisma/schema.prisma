@@ -8,39 +8,58 @@ datasource db {
 }
 
 model User {
-  id Int @id @default(autoincrement())
-
-  name String @unique
-  role String @default("viewer")
-  hash String
-  salt String
-
-  comments Comment[]
+  id        Int      @id @default(autoincrement())
+  name      String
+  hash      String
+  salt      String
+  login     String   @unique
+  avatar    String?
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  role      Role   @default(VIEWER)
+  comments  Comment?
+  orders    Order?
 
   @@map("users")
 }
 
-model Node {
-  id   Int    @unique
-  name String
+enum Role {
+  ADMIN
+  USER
+  VIEWER
+}
 
+model Node {
+  id            Int            @unique
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  title         String
   measurePoints MeasurePoint[]
+  orders        Order[]
 }
 
 model MeasurePoint {
-  id   Int    @unique
-  name String
-
-  nodeId Int  @map("node_id")
-  node   Node @relation(fields: [nodeId], references: [id])
+  id        Int      @unique
+  nodeId    Int      @map("node_id")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  title     String
+  node      Node     @relation(fields: [nodeId], references: [id])
+  orders    Order[]
 }
 
 model Order {
-  id             Int    @id @default(autoincrement())
-  nodeId         Int
-  measurePointId Int
-  status         String
+  id             Int          @id @default(autoincrement())
   cost           Float
+  status         String
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  measurePointId Int          @map("measure_point_id")
+  nodeId         Int          @map("node_id")
+  ownerId        Int          @unique
+  measurePoint   MeasurePoint @relation(fields: [measurePointId], references: [id])
+  node           Node         @relation(fields: [nodeId], references: [id])
+  owner          User         @relation(fields: [ownerId], references: [id])
 
   @@map("orders")
 }
@@ -52,11 +71,12 @@ model OrderUpdate {
 }
 
 model Comment {
-  id    Int    @id @default(autoincrement())
-  title String
-
-  ownerId Int  @unique
-  owner   User @relation(fields: [ownerId], references: [id])
+  id        Int      @id @default(autoincrement())
+  title     String
+  ownerId   Int      @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  owner     User     @relation(fields: [ownerId], references: [id])
 
   @@map("comments")
 }

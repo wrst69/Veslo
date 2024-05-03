@@ -7,8 +7,10 @@ import {
     ResizablePanelGroup,
 } from "@/shared/ui/resizable"
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { EquipmentItem } from "./test-equipment-item";
+import { useRouter } from "next/navigation";
+import { ROUTES } from "@/shared/constants/routes";
 
 export function TestComponent({
     nodeGroups,
@@ -22,6 +24,21 @@ export function TestComponent({
     equipment,
     measurePoints
 }) {
+
+    const { push } = useRouter();
+
+	useEffect(() => {
+		const token = localStorage.getItem('token');
+
+		if (!token) {
+            push(ROUTES.SIGN_IN);
+        }
+	}, []);
+    
+	/* const { data, isLoading } = useQuery({
+		queryKey: ['profile'],
+		queryFn: () => authService.profile(),
+	}) */
 
     const [selectedPoint, setSelectedPoint] = useState({
         currentNodeId: undefined,

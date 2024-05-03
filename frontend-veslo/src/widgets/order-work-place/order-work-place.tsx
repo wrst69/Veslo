@@ -10,7 +10,7 @@ import { NodesList } from "@/features/nodes-list/pub/nodes-list";
 import { OrderList } from "@/features/orders-list/pub/orders-list";
 import { useState } from "react";
   
-  export default function OrderWorkPlace({
+export default function OrderWorkPlace({
     orders,
     nodeGroups,
     nodes,

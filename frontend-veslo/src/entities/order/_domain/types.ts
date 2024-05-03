@@ -1,5 +1,5 @@
 import { MeasurePointId, NodeId } from "@/entities/node/_domain/types";
-import { UserId } from "@/entities/user/user";
+import { UserId } from "@/sdsdsd/user/user";
 
 export type OrderId = string;
 
