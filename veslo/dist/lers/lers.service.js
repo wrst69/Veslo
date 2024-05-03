@@ -109,7 +109,7 @@ let LersService = class LersService {
 };
 LersService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, common_1.Inject)('CACHE_MANAGER')),
+    __param(0, (0, common_1.Inject)(cache_manager_1.CACHE_MANAGER)),
     __metadata("design:paramtypes", [cache_manager_1.Cache,
         axios_1.HttpService])
 ], LersService);

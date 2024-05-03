@@ -6,14 +6,6 @@ import { DbService } from 'src/db/db.service';
 export class UsersService {
   constructor(private db: DbService) {}
 
-  async findByLogin(login: string) {
-    return this.db.user.findUnique({ where: { login } });
-  }
-
-  async findById(id: number) {
-    return this.db.user.findUnique({ where: { id } });
-  }
-
   async create(
     login: string,
     name: string,
@@ -22,5 +14,13 @@ export class UsersService {
     salt: string,
   ) {
     return this.db.user.create({ data: { login, name, role, hash, salt } });
+  }
+
+  async findByLogin(login: string) {
+    return this.db.user.findUnique({ where: { login } });
+  }
+
+  async findById(id: number) {
+    return this.db.user.findUnique({ where: { id } });
   }
 }

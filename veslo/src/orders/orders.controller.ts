@@ -8,13 +8,12 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { OrdersService } from './orders.service';
-import { AuthGuard } from 'src/users/auth/guards/auth????.guard';
-import { SessionInfo } from 'src/users/auth/session-info.decorator';
-import { getSessionInfoDto } from 'src/users/auth/dto';
+//import { AuthGuard } from 'src/users/auth/guards/auth????.guard';
+//import { SessionInfo } from 'src/users/auth/session-info.decorator';
+//import { getSessionInfoDto } from 'src/users/auth/dto';
 import { OrderDto, UpdateOrderDto } from './dto';
 
 @Controller('orders')
-//@UseGuards(AuthGuard)
 export class OrdersController {
   constructor(private ordersService: OrdersService) {}
 

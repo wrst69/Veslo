@@ -16,14 +16,14 @@ let UsersService = class UsersService {
     constructor(db) {
         this.db = db;
     }
+    async create(login, name, role, hash, salt) {
+        return this.db.user.create({ data: { login, name, role, hash, salt } });
+    }
     async findByLogin(login) {
         return this.db.user.findUnique({ where: { login } });
     }
     async findById(id) {
         return this.db.user.findUnique({ where: { id } });
-    }
-    async create(login, name, role, hash, salt) {
-        return this.db.user.create({ data: { login, name, role, hash, salt } });
     }
 };
 UsersService = __decorate([

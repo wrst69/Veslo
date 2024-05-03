@@ -24,6 +24,8 @@ async function bootstrap() {
     //exposedHeaders: 'set-cookie',
   });
 
+  app.useGlobalPipes(new ValidationPipe());
+
   await app.listen(3003);
 }
 

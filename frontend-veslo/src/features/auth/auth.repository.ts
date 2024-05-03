@@ -9,22 +9,23 @@ interface IAuthResponse {
 const API_URL = 'http://localhost:3003';
 
 class AuthRepository {
-	async signIn(data: IAuthFormData): Promise<IAuthResponse> {
+	async signIn(data: IAuthFormData) {
 		const response = await fetch(`${API_URL}/auth/sign-in`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify(data),
+			credentials: 'include'
 		});
         
 		if (!response.ok) {
 			throw new Error('Ошибка при выполнении запроса');
 		}
 		
-		const responseData: IAuthResponse = await response.json();
+		//const responseData: IAuthResponse = await response.json();
         
-		return responseData;
+		//return responseData;
 	};
 
 	async getProfile() {

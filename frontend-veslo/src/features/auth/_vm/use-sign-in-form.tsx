@@ -31,7 +31,7 @@ export function useSignInForm() {
         mutationKey: ['login'],
         mutationFn: (data: IAuthFormData) => authRepository.signIn(data),
         onSuccess(data) {
-            localStorage.setItem('token', data.accessToken);
+            //localStorage.setItem('token', data.accessToken);
             reset();
             router.push(ROUTES.HOME);
         },
