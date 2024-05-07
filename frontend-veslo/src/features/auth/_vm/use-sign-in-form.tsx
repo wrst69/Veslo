@@ -4,7 +4,7 @@ import { useMutation } from "@tanstack/react-query";
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ROUTES } from '@/shared/constants/routes';
-import { IAuthFormData } from '../model/types';
+import { IAuthFormData } from '../interfaces';
 import { authRepository } from '../auth.repository';
 
 export function useSignInForm() {
@@ -31,9 +31,8 @@ export function useSignInForm() {
         mutationKey: ['login'],
         mutationFn: (data: IAuthFormData) => authRepository.signIn(data),
         onSuccess(data) {
-            //localStorage.setItem('token', data.accessToken);
             reset();
-            router.push(ROUTES.HOME);
+            router.push(ROUTES.ORDERS);
         },
     })
     

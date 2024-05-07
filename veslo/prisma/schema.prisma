@@ -17,9 +17,9 @@ model User {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
   role      Role   @default(VIEWER)
-  comments  Comment?
   orders    Order?
-
+  comments  Comment?
+  
   @@map("users")
 }
 
@@ -36,6 +36,8 @@ model Node {
   title         String
   measurePoints MeasurePoint[]
   orders        Order[]
+
+  @@map("nodes")
 }
 
 model MeasurePoint {
@@ -46,6 +48,8 @@ model MeasurePoint {
   title     String
   node      Node     @relation(fields: [nodeId], references: [id])
   orders    Order[]
+
+  @@map("measure_points")
 }
 
 model Order {
@@ -60,6 +64,7 @@ model Order {
   measurePoint   MeasurePoint @relation(fields: [measurePointId], references: [id])
   node           Node         @relation(fields: [nodeId], references: [id])
   owner          User         @relation(fields: [ownerId], references: [id])
+  comments       Comment?
 
   @@map("orders")
 }
@@ -74,9 +79,11 @@ model Comment {
   id        Int      @id @default(autoincrement())
   title     String
   ownerId   Int      @unique
+  orderId   Int      @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   owner     User     @relation(fields: [ownerId], references: [id])
+  order     Order    @relation(fields: [orderId], references: [id])
 
   @@map("comments")
 }

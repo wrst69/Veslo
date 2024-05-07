@@ -11,19 +11,7 @@ class OrdersRepository {
     
     deleteOrder = async (command: DeleteOrderListElementCommand) => {};
 
-    /*  async getUserById(userId: UserId): Promise<UserEntity> {
-    return dbClient.user.findUniqueOrThrow({
-      where: {
-        id: userId,
-      }
-    })
-  }
-  
-  async createUser(user: UserEntity): Promise<UserEntity> {
-    return await dbClient.user.create({
-      data: user,
-    })
-  } */
+    
 }
 
 export const ordersRepository = new OrdersRepository();

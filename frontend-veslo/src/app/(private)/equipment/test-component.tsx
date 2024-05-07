@@ -25,21 +25,6 @@ export function TestComponent({
     measurePoints
 }) {
 
-    const { push } = useRouter();
-
-	useEffect(() => {
-		const token = localStorage.getItem('token');
-
-		if (!token) {
-            push(ROUTES.SIGN_IN);
-        }
-	}, []);
-    
-	/* const { data, isLoading } = useQuery({
-		queryKey: ['profile'],
-		queryFn: () => authService.profile(),
-	}) */
-
     const [selectedPoint, setSelectedPoint] = useState({
         currentNodeId: undefined,
         currentMeasurePointId: undefined

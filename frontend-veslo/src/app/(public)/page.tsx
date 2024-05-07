@@ -1,8 +1,21 @@
+"use client";
 
-export default async function Home() {
-  return (
-    <main className="flex min-h-screen flex-col p-8">
-      
-    </main>
-  );
+import { ROUTES } from "@/shared/constants/routes"
+import { FullPageSpinner } from "@/shared/ui/full-page-spinner";
+import { redirect } from "next/navigation";
+import SignInPage from "../(auth)/auth/sign-in/page";
+import { useSessionQuery } from "@/entities/session/queries";
+
+export default function Home() {
+    const { isLoading, isSuccess } = useSessionQuery();
+
+    if (isLoading) {
+        return <FullPageSpinner isLoading={ isLoading }/>;
+    }
+
+    if (isSuccess) {
+        redirect(ROUTES.ORDERS);
+    }
+    
+    return <SignInPage/>;
 }

@@ -1,11 +1,16 @@
 import axios from 'axios';
+import { API_URL } from '../constants/constants';
 
-const axiosInstance = axios.create({
-    baseURL: 'http://localhost:3003/',
-    withCredentials: true
+export const axiosInstance = axios.create({
+    baseURL: API_URL,
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    withCredentials: true,
   });
 
-axiosInstance.interceptors.request.use(async (config) => {
+  
+/* axiosInstance.interceptors.request.use(async (config) => {
     const isSSR = typeof window === 'undefined';
 
     if (isSSR) {
@@ -20,4 +25,4 @@ axiosInstance.interceptors.request.use(async (config) => {
             );
         }
     }
-})
+}) */

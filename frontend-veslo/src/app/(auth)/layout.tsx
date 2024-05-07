@@ -1,4 +1,4 @@
-import { AppHeader } from "@/widgets/app-headers/app-header";
+import { AppHeader } from '@/widgets/app-headers/app-header';
 
 export default async function Layout({
     children,
@@ -7,7 +7,7 @@ export default async function Layout({
   }) {
     return (
       <>
-        <AppHeader variant="auth"/>
+        <AppHeader variant='auth'/>
         {children}  
       </>
     );

@@ -15,23 +15,3 @@ export type UserEntity = {
   role: Role;
   image?: string | null;
 };
-
-export type SessionEntity = {
-  user: {
-    id: UserId;
-    login?: string | null;
-    name?: string| null;
-    role: Role;
-    image?: string | null;
-    accessToken: string
-  };
-  expires: string;
-};
-
-// Projections
-
-export type Profile = {
-  login?: string | null;
-  name?: string | null;
-  image?: string | null;
-}

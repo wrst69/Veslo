@@ -1,12 +1,9 @@
-
-
 import { nodesRepository } from "@/features/nodes-list/nodes.repository";
 import { ordersRepository } from "@/entities/order/_repositories/orders";
-
 import OrderWorkPlace from "@/widgets/order-work-place/order-work-place";
 
-export default async function Home() {
-  const orders = await ordersRepository.getOrdersList();
+export default async function OrdersPage() {
+  const orders =  await ordersRepository.getOrdersList();
 
   const { nodeGroups, nodes, measurePoints, equipment } = await nodesRepository.getNodesList();
 
