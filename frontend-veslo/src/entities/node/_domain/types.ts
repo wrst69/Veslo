@@ -1,12 +1,7 @@
-export type NodeId = string;
-export type MeasurePointId = string;
-
 export type Node = {
-    id: NodeId,
-
+    id: number,
 };
 
 export type MeasurePoint = {
-    id: MeasurePointId,
-
+    id: number,
 };

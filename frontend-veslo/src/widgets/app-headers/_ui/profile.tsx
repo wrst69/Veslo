@@ -9,33 +9,22 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
-
-import { LogOut, User } from "lucide-react";
+import { LogOut } from "lucide-react";
 import { Button } from "@/shared/ui/button";
 import Link from "next/link";
 import { Skeleton } from "@/shared/ui/skeleton";
-import { useSignOut } from "@/features/auth/use-sign-out";
-import { SignInButton } from "@/features/auth/sign-in-button";
-import { ProfileAvatar, getProfileDisplayName } from "@/sdsdsd/user/profile";
-import { useSession } from "next-auth/react";
+import { useSessionQuery } from "@/entities/session/queries";
+import { UserAvatar } from "@/features/user/_ui/avatar";
+import { useSignOut } from "@/features/auth/_vm/use-sign-out";
 
 export function Profile() {
-  /* const session = useSession();
-  const { signOut, isPending: isLoadingSignOut } = useSignOut();
+    const { isLoading }= useSessionQuery();
+    const { isPending, signOut } = useSignOut();
 
-  if (session.status === "loading") {
-    return <Skeleton className="w-8 h-8 rounded-full" />;
-  }
-
-  if (session.status === "unauthenticated") {
-    return <SignInButton />;
-  }
-
-  const user = session?.data?.user; */
-  
-  
-
-
+    if (isLoading) {
+      return <Skeleton className="w-8 h-8 rounded-full" />;
+    }
+    
     return (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
@@ -43,7 +32,7 @@ export function Profile() {
             variant="ghost"
             className="p-px rounded-full self-center h-8 w-8"
           >
-            {/* <ProfileAvatar profile={user}/> */}
+            <UserAvatar/>
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56 mr-2 ">
@@ -62,7 +51,7 @@ export function Profile() {
                 <span>Профиль</span>
               </Link> */}
             </DropdownMenuItem>
-            <DropdownMenuItem /* disabled={isLoadingSignOut} onClick={() => signOut()} */>
+            <DropdownMenuItem disabled={isPending} onClick={() => signOut()}>
               <LogOut className="mr-2 h-4 w-4" />
               <span>Выход</span>
             </DropdownMenuItem>

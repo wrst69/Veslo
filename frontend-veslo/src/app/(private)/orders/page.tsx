@@ -1,16 +1,12 @@
-import { nodesRepository } from "@/features/nodes-list/nodes.repository";
-import { ordersRepository } from "@/entities/order/_repositories/orders";
+import { nodesRepository } from "@/entities/node/_repositories/nodes.repository";
 import OrderWorkPlace from "@/widgets/order-work-place/order-work-place";
 
 export default async function OrdersPage() {
-  const orders =  await ordersRepository.getOrdersList();
-
-  const { nodeGroups, nodes, measurePoints, equipment } = await nodesRepository.getNodesList();
+  const { nodeGroups, nodes, measurePoints, equipment } = await nodesRepository.getLersNodesList();
 
   return (
     <main className="flex min-h-screen flex-col p-8">
       <OrderWorkPlace
-        orders={orders}
         nodeGroups={nodeGroups}
         nodes={nodes}
         measurePoints={measurePoints}

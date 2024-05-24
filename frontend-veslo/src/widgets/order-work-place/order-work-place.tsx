@@ -1,52 +1,44 @@
-"use client"
+'use client';
 
 import {
     ResizableHandle,
     ResizablePanel,
     ResizablePanelGroup,
 } from "@/shared/ui/resizable"
-
-import { NodesList } from "@/features/nodes-list/pub/nodes-list";
-import { OrderList } from "@/features/orders-list/pub/orders-list";
+import { NodesList } from "@/widgets/order-work-place/nodes-list/pub/nodes-list";
+import { OrderList } from "@/widgets/order-work-place/orders-list/_ui/orders-list";
 import { useState } from "react";
   
 export default function OrderWorkPlace({
-    orders,
     nodeGroups,
     nodes,
-    measurePoints,
-    equipment
+    measurePoints
   }: {
-    orders,
     nodeGroups,
     nodes,
-    measurePoints,
-    equipment
+    measurePoints
+    
   }) {
-  
-    const [selectedPoint, setSelectedPoint] = useState({
-        currentNodeId: undefined,
-        currentMeasurePointId: undefined
+    
+    const [selectedPoint, setSelectedPoint] = useState<any>({
+        currentNode: undefined,
+        currentMeasurePoint: undefined
     });
   
     return (
         <ResizablePanelGroup direction="horizontal" className="min-h-screen max-w-screen">
-          <ResizablePanel defaultSize={35}>
+          <ResizablePanel defaultSize={28}>
                 <NodesList 
                     nodes={nodes}
                     nodeGroups={nodeGroups}
                     measurePoints={measurePoints}
-                    equipment={equipment}
-                    revalidatePagePath="/"
+                    selectedPoint={selectedPoint}
                     onPointChange={setSelectedPoint}
                 />
           </ResizablePanel>
           <ResizableHandle withHandle />
-          <ResizablePanel defaultSize={65}>
-                <OrderList 
-                    orders={orders}
-                    selectedPoint={selectedPoint}
-                />
+          <ResizablePanel defaultSize={72}>
+                <OrderList selectedPoint={selectedPoint}/>
           </ResizablePanel>
         </ResizablePanelGroup>  
     );

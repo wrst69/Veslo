@@ -12,17 +12,60 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.OrdersService = void 0;
 const common_1 = require("@nestjs/common");
 const db_service_1 = require("../db/db.service");
+const nodes_service_1 = require("../nodes/nodes.service");
 let OrdersService = class OrdersService {
-    constructor(db) {
+    constructor(db, nodesService) {
         this.db = db;
+        this.nodesService = nodesService;
     }
     async getOrders() {
-        return await this.db.order.findMany();
+        return await this.db.order.findMany({
+            select: {
+                id: true,
+                createdAt: true,
+                updatedAt: true,
+                description: true,
+                type: true,
+                status: true,
+                owner: { select: { id: true, name: true } },
+                node: { select: { lersId: true } },
+                measurePoint: { select: { lersId: true, title: true } },
+            },
+        });
+    }
+    async createOrder(userId, dto) {
+        let node = await this.nodesService.checkNodeExist(dto.nodeLersId);
+        if (!node) {
+            node = await this.nodesService.createNode({
+                lersId: dto.nodeLersId,
+                title: dto.nodeTitle,
+            });
+        }
+        let measurePoint = await this.nodesService.checkMeasurePointExist(dto.measurePointLersId);
+        if (!measurePoint) {
+            measurePoint = await this.nodesService.createMeasurePoint({
+                lersId: dto.measurePointLersId,
+                title: dto.measurePointTitle,
+                nodeId: node.id,
+            });
+        }
+        return await this.db.order.create({
+            data: {
+                description: dto.description,
+                type: dto.type,
+                ownerId: userId,
+                measurePointId: measurePoint.id,
+                nodeId: node.id,
+            },
+        });
+    }
+    async deleteOrder(id) {
+        return await this.db.order.delete({ where: { id } });
     }
 };
 OrdersService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [db_service_1.DbService])
+    __metadata("design:paramtypes", [db_service_1.DbService, nodes_service_1.NodesService])
 ], OrdersService);
 exports.OrdersService = OrdersService;
 //# sourceMappingURL=orders.service.js.map

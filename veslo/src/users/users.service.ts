@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Role } from '@prisma/client';
+import { Roles } from '@prisma/client';
 import { DbService } from 'src/db/db.service';
 
 @Injectable()
@@ -9,7 +9,7 @@ export class UsersService {
   async create(
     login: string,
     name: string,
-    role: Role,
+    role: Roles,
     hash: string,
     salt: string,
   ) {

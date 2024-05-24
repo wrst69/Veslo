@@ -13,11 +13,19 @@ const auth_module_1 = require("./auth/auth.module");
 const users_module_1 = require("./users/users.module");
 const lers_module_1 = require("./lers/lers.module");
 const orders_module_1 = require("./orders/orders.module");
+const nodes_module_1 = require("./nodes/nodes.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [db_module_1.DbModule, auth_module_1.AuthModule, users_module_1.UsersModule, lers_module_1.LersModule, orders_module_1.OrdersModule],
+        imports: [
+            db_module_1.DbModule,
+            auth_module_1.AuthModule,
+            users_module_1.UsersModule,
+            lers_module_1.LersModule,
+            orders_module_1.OrdersModule,
+            nodes_module_1.NodesModule,
+        ],
         controllers: [],
         providers: [],
     })

@@ -1,8 +1,8 @@
-import { Role } from '@prisma/client';
+import { Roles } from '@prisma/client';
 export declare class SignUpBodyDto {
     login: string;
     name: string;
-    role: Role;
+    role: Roles;
     password: string;
 }
 export declare class SignInBodyDto {

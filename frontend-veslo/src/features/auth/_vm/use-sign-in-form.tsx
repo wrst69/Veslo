@@ -4,8 +4,8 @@ import { useMutation } from "@tanstack/react-query";
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ROUTES } from '@/shared/constants/routes';
-import { IAuthFormData } from '../interfaces';
-import { authRepository } from '../auth.repository';
+import { AuthFormDataDto } from '../model/dto';
+import { authRepository } from '../model/auth.repository';
 
 export function useSignInForm() {
     const router = useRouter();
@@ -25,11 +25,11 @@ export function useSignInForm() {
         },
     });
 
-    const { handleSubmit, register, reset } = useForm<IAuthFormData>();
+    const { handleSubmit, register, reset } = useForm<formValues>();
 
     const signInMutation = useMutation({
         mutationKey: ['login'],
-        mutationFn: (data: IAuthFormData) => authRepository.signIn(data),
+        mutationFn: (data: AuthFormDataDto) => authRepository.signIn(data),
         onSuccess(data) {
             reset();
             router.push(ROUTES.ORDERS);

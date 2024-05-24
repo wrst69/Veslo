@@ -1,14 +1,14 @@
-export declare class OrderDto {
-    nodeId: number;
-    measurePointId: number;
-    status: string;
-    cost: number;
+import { OrderStatuses, OrderTypes } from '@prisma/client';
+export declare class CreateOrderDto {
+    nodeLersId: number;
+    nodeTitle: string;
+    measurePointLersId: number;
+    measurePointTitle: string;
+    description: string;
+    type: OrderTypes;
 }
 export declare class UpdateOrderDto {
-    id: number;
-    ownerId: number;
-    title: string;
-    isClosed: boolean;
-}
-export declare class CommentOrderDto {
+    description: string;
+    type: OrderTypes;
+    status: OrderStatuses;
 }

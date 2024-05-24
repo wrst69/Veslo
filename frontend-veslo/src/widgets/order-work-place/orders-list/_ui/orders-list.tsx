@@ -1,0 +1,36 @@
+'use client';
+
+import { useOrdersQuery } from "@/entities/order/_repositories/queries";
+import { columns } from "../model/table-columns";
+import { DataTable } from "./data-table";
+import { FullPageSpinner } from "@/shared/ui/full-page-spinner";
+import { OrderEntity } from "@/entities/order/_domain/types";
+
+export function OrderList({
+    selectedPoint
+}: {
+    selectedPoint
+}) {
+    const { data, isLoading } = useOrdersQuery();
+    const orders: OrderEntity[] = data; //а как задать тип если деструктурировать из квери { data: orders}
+
+    if (isLoading) {
+        return <FullPageSpinner/>
+    }
+
+    let filteredOrders: OrderEntity[] = orders;
+
+    if (selectedPoint.currentNode) {
+        filteredOrders = orders.filter(order => order.node.lersId === selectedPoint.currentNode.id);
+
+        if (selectedPoint.currentMeasurePoint) {
+            filteredOrders = filteredOrders.filter(order => order.measurePoint.lersId === selectedPoint.currentMeasurePoint.id);
+        }
+    }   
+
+    return (
+        <div className="container ">
+           <DataTable columns={columns} data={filteredOrders}/>
+       </div>
+   )
+}

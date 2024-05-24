@@ -1,56 +1,46 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsBoolean, IsNumber, IsString } from 'class-validator';
+import { OrderStatuses, OrderTypes } from '@prisma/client';
+import { IsNumber, IsOptional, IsString } from 'class-validator';
 
-export class OrderDto {
+export class CreateOrderDto {
   @ApiProperty()
   @IsNumber()
-  nodeId: number;
-
-  @ApiProperty()
-  @IsNumber()
-  measurePointId: number;
+  nodeLersId: number;
 
   @ApiProperty()
   @IsString()
-  status: string;
+  nodeTitle: string;
 
   @ApiProperty()
   @IsNumber()
-  cost: number;
-
-  /* @ApiProperty()
-  @IsNumber()
-  ownerId: number;
-
-  @ApiProperty()
-  @IsNumber()
-  nodeId: number;
-
-  @ApiProperty()
-  @IsNumber()
-  measurePointId: number;
+  measurePointLersId: number;
 
   @ApiProperty()
   @IsString()
-  title: string; */
+  measurePointTitle: string;
+
+  @ApiProperty()
+  @IsString()
+  description: string;
+
+  @ApiProperty()
+  @IsString()
+  type: OrderTypes;
 }
 
 export class UpdateOrderDto {
   @ApiProperty()
-  @IsNumber()
-  id: number;
-
-  @ApiProperty()
-  @IsNumber()
-  ownerId: number;
+  @IsString()
+  @IsOptional()
+  description: string;
 
   @ApiProperty()
   @IsString()
-  title: string;
+  @IsOptional()
+  type: OrderTypes;
 
   @ApiProperty()
-  @IsBoolean()
-  isClosed: boolean;
+  @IsString()
+  @IsOptional()
+  status: OrderStatuses;
 }
-
-export class CommentOrderDto {}

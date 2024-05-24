@@ -13,7 +13,7 @@ let CookieService = CookieService_1 = class CookieService {
     setToken(res, token) {
         res.cookie(CookieService_1.tokenKey, token, {
             httpOnly: true,
-            maxAge: 900000,
+            maxAge: 900000 * 4,
             sameSite: 'none',
             secure: true,
         });

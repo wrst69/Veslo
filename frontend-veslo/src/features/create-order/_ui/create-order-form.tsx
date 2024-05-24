@@ -1,53 +1,90 @@
 "use client";
-import { useForm } from 'react-hook-form';
-import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/shared/ui/form';
+
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/shared/ui/form';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+  } from '@/shared/ui/select';
 import { Textarea } from '@/shared/ui/textarea';
-import { Input } from '@/shared/ui/input';
-import { z } from 'zod';
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useTransition } from 'react';
-import { createOrdersAction } from '../../orders-list/actions';
 import { Form } from '@/shared/ui/form';
 import { Button } from '@/shared/ui/button';
-import { cn } from '@/shared/ui/utils';
-
-const createOrderFormSchema = z.object({
-    title: z.string()
-})
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { toast } from 'sonner';
+import { OrderTypes } from '@/entities/order/_domain/types';
+import { CreateOrderDto } from '@/entities/order/_domain/dto';
+import { useCreateOrderMutation } from '@/entities/order/_repositories/queries';
 
 export function CreateOrderForm({
-    className,
-    revalidatePagePath
+    selectedPoint,
+    setOpen
 } : {
-    className: string,
-    revalidatePagePath: string
+    selectedPoint,
+    setOpen
 }) {
-    const [isCreateTransition, startCreateTransition] = useTransition(); 
+    const {currentNode: node, currentMeasurePoint: measurePoint} = selectedPoint;
 
-    const form = useForm({
+    const createOrderFormSchema = z.object({
+        type: z.nativeEnum(OrderTypes, {
+            required_error: 'Необходимо выбрать тип заявки',
+        }),
+        description: z.string().min(1, 'Поле не должно быть пустым')
+    });
+     
+    type formValues = z.infer<typeof createOrderFormSchema>;
+
+    const form = useForm<formValues>({
         resolver: zodResolver(createOrderFormSchema),
         defaultValues: {
-          title: "",
-          description: ""
+          type: undefined,
+          description: ''
         }
     });
 
+    const createOrderMutation = useCreateOrderMutation();
+    
+    const onSubmit = (values: formValues) => {
+        const order: CreateOrderDto = {
+            nodeLersId: node.id,
+            nodeTitle: node.title,
+            measurePointLersId: measurePoint.id,
+            measurePointTitle: measurePoint.title,
+            type: values.type,
+            description: values.description
+        };
+        
+        createOrderMutation.mutate(order, {
+            onSuccess() {
+                setOpen(false);
+                toast('Заявка успешно добавлена');
+            }
+        });
+    }
+
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit((data) => {
-                startCreateTransition(async () => {
-                    createOrdersAction(data, revalidatePagePath);
-                } )
-            })} className={cn(className, "space-y-8")}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className={"space-y-8"}>
+                <div className='text-black text-base'>{measurePoint.title}</div>
                 <FormField
                     control={form.control}
-                    name="title"
+                    name="type"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Тайтл</FormLabel>
-                            <FormControl>
-                                <Input placeholder="название..." {...field} />
-                            </FormControl>
+                            <FormLabel>Тип заявки</FormLabel>
+                            <Select onValueChange={field.onChange} defaultValue={field.value} >
+                                <FormControl>
+                                <SelectTrigger>
+                                    <SelectValue placeholder="Выберите тип заявки" />
+                                </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                    {Object.values(OrderTypes).map(type => <SelectItem key={type} value={type} >{type}</SelectItem>)}
+                                </SelectContent>
+                            </Select>
                             <FormMessage />
                         </FormItem>
                     )}
@@ -59,14 +96,13 @@ export function CreateOrderForm({
                         <FormItem>
                             <FormLabel>Описание</FormLabel>
                             <FormControl>
-                                <Textarea placeholder="описание..." {...field} />
+                                <Textarea placeholder="описание..." {...field}/>
                             </FormControl>
-                            <FormDescription>This is your public display name.</FormDescription>
                             <FormMessage />
                         </FormItem>
                     )}
-                />
-                <Button type="submit" disabled={isCreateTransition}>Добавить заявку</Button>
+                />                    
+                <Button type="submit" disabled={createOrderMutation.isPending}>Добавить заявку</Button>
             </form>
         </Form>
     );

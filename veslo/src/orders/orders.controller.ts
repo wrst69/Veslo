@@ -3,61 +3,48 @@ import {
   Controller,
   Delete,
   Get,
+  Param,
+  ParseIntPipe,
   Patch,
   Post,
   UseGuards,
 } from '@nestjs/common';
 import { OrdersService } from './orders.service';
-//import { AuthGuard } from 'src/users/auth/guards/auth????.guard';
-//import { SessionInfo } from 'src/users/auth/session-info.decorator';
-//import { getSessionInfoDto } from 'src/users/auth/dto';
-import { OrderDto, UpdateOrderDto } from './dto';
+import { CreateOrderDto, UpdateOrderDto } from './dto';
+import { SessionInfo } from 'src/auth/session-info.decorator';
+import { GetSessionInfoDto } from 'src/auth/dto';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller('orders')
 export class OrdersController {
   constructor(private ordersService: OrdersService) {}
 
   @Get()
+  //@UseGuards(AuthGuard)
   getOrders() {
     return this.ordersService.getOrders();
   }
 
-  @Get()
-  getOrdersByMeasurePointId() {
-    //return this.ordersService.getOrders();
-  }
-
-  /* @Post()
-  createOrder(
-    @Body() dto: OrderDto,
-    //@SessionInfo() session: getSessionInfoDto,
-  ): Promise<OrderDto> {
-    return this.ordersService.createOrder(dto);
-  } */
-
-  /* @Get()
-  getOrdersByUserId(@SessionInfo() session: getSessionInfoDto) {
-    return this.ordersService.getOrdersByUserId(session.id);
-  }
-
   @Post()
+  @UseGuards(AuthGuard)
   createOrder(
-    @Body() dto: OrderDto,
-    @SessionInfo() session: getSessionInfoDto,
-  ): Promise<OrderDto> {
+    @Body() dto: CreateOrderDto,
+    @SessionInfo() session: GetSessionInfoDto,
+  ) {
     return this.ordersService.createOrder(session.id, dto);
   }
 
-  @Patch()
+  @Delete(':id')
+  @UseGuards(AuthGuard)
+  deleteOrder(@Param('id', ParseIntPipe) id: number) {
+    return this.ordersService.deleteOrder(id);
+  }
+
+  /*   @Patch()
   updateOrder(
     @Body() dto: UpdateOrderDto,
     @SessionInfo() session: getSessionInfoDto,
   ): Promise<OrderDto> {
     return this.ordersService.updateOrder(session.id, dto);
-  }
-
-  @Delete()
-  deleteOrder(orderId: number) {
-    //return this.ordersService.deleteOrder(orderId);
   } */
 }

@@ -1,4 +1,4 @@
-import { nodesRepository } from "@/features/nodes-list/nodes.repository";
+import { nodesRepository } from "@/entities/node/_repositories/nodes.repository";
 import { TestComponent } from "./test-component";
 
 export default async function Home() {

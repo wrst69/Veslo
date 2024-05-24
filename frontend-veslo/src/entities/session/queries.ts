@@ -1,18 +1,18 @@
-import { authRepository } from "@/features/auth/auth.repository";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { authRepository } from '@/features/auth/model/auth.repository';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 
-const sessionKey = ["session"];
+const sessionKey = ['session'];
 
-export function useSessionQuery() {
+export const useSessionQuery = () => {
   return useQuery({
     queryKey: sessionKey,
     queryFn: () => authRepository.getSessionInfo(),
     retry: 0,
     staleTime: 5 * 60 * 1000,
   });
-}
+};
 
-export function useResetSession() {
+export const useResetSession = () => {
   const queryClient = useQueryClient();
-  return () => queryClient.removeQueries();
-}
+  return () => queryClient.removeQueries({queryKey: sessionKey});
+};

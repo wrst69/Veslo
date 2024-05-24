@@ -9,56 +9,62 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CommentOrderDto = exports.UpdateOrderDto = exports.OrderDto = void 0;
+exports.UpdateOrderDto = exports.CreateOrderDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
+const client_1 = require("@prisma/client");
 const class_validator_1 = require("class-validator");
-class OrderDto {
+class CreateOrderDto {
 }
 __decorate([
     (0, swagger_1.ApiProperty)(),
     (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
-], OrderDto.prototype, "nodeId", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)(),
-    (0, class_validator_1.IsNumber)(),
-    __metadata("design:type", Number)
-], OrderDto.prototype, "measurePointId", void 0);
+], CreateOrderDto.prototype, "nodeLersId", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], OrderDto.prototype, "status", void 0);
+], CreateOrderDto.prototype, "nodeTitle", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
     (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
-], OrderDto.prototype, "cost", void 0);
-exports.OrderDto = OrderDto;
+], CreateOrderDto.prototype, "measurePointLersId", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], CreateOrderDto.prototype, "measurePointTitle", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], CreateOrderDto.prototype, "description", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], CreateOrderDto.prototype, "type", void 0);
+exports.CreateOrderDto = CreateOrderDto;
 class UpdateOrderDto {
 }
 __decorate([
     (0, swagger_1.ApiProperty)(),
-    (0, class_validator_1.IsNumber)(),
-    __metadata("design:type", Number)
-], UpdateOrderDto.prototype, "id", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)(),
-    (0, class_validator_1.IsNumber)(),
-    __metadata("design:type", Number)
-], UpdateOrderDto.prototype, "ownerId", void 0);
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], UpdateOrderDto.prototype, "description", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
     (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
-], UpdateOrderDto.prototype, "title", void 0);
+], UpdateOrderDto.prototype, "type", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)(),
-    (0, class_validator_1.IsBoolean)(),
-    __metadata("design:type", Boolean)
-], UpdateOrderDto.prototype, "isClosed", void 0);
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], UpdateOrderDto.prototype, "status", void 0);
 exports.UpdateOrderDto = UpdateOrderDto;
-class CommentOrderDto {
-}
-exports.CommentOrderDto = CommentOrderDto;
 //# sourceMappingURL=dto.js.map
