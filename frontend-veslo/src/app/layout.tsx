@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 };
 
 export const fontSans = FontSans({
-  subsets: ["latin"],
+  subsets: ["latin", "cyrillic"],
   variable: "--font-sans",
 })
 

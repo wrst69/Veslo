@@ -31,6 +31,7 @@ let OrdersService = class OrdersService {
                 node: { select: { lersId: true } },
                 measurePoint: { select: { lersId: true, title: true } },
             },
+            orderBy: { createdAt: 'desc' },
         });
     }
     async createOrder(userId, dto) {

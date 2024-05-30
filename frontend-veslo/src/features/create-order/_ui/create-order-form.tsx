@@ -18,6 +18,17 @@ import { toast } from 'sonner';
 import { OrderTypes } from '@/entities/order/_domain/types';
 import { CreateOrderDto } from '@/entities/order/_domain/dto';
 import { useCreateOrderMutation } from '@/entities/order/_repositories/queries';
+import { CreateOrderModal } from './modal';
+import { useState } from 'react';
+
+const createOrderFormSchema = z.object({
+    type: z.nativeEnum(OrderTypes, {
+        required_error: 'Необходимо выбрать тип заявки',
+    }),
+    description: z.string().min(1, 'Поле не должно быть пустым')
+});
+ 
+export type formValues = z.infer<typeof createOrderFormSchema>;
 
 export function CreateOrderForm({
     selectedPoint,
@@ -28,24 +39,17 @@ export function CreateOrderForm({
 }) {
     const {currentNode: node, currentMeasurePoint: measurePoint} = selectedPoint;
 
-    const createOrderFormSchema = z.object({
-        type: z.nativeEnum(OrderTypes, {
-            required_error: 'Необходимо выбрать тип заявки',
-        }),
-        description: z.string().min(1, 'Поле не должно быть пустым')
-    });
-     
-    type formValues = z.infer<typeof createOrderFormSchema>;
-
     const form = useForm<formValues>({
         resolver: zodResolver(createOrderFormSchema),
         defaultValues: {
           type: undefined,
           description: ''
-        }
+        },
     });
 
     const createOrderMutation = useCreateOrderMutation();
+
+    const [isModalOpen, setModalOpen] = useState(false);
     
     const onSubmit = (values: formValues) => {
         const order: CreateOrderDto = {
@@ -56,7 +60,7 @@ export function CreateOrderForm({
             type: values.type,
             description: values.description
         };
-        
+
         createOrderMutation.mutate(order, {
             onSuccess() {
                 setOpen(false);
@@ -65,45 +69,50 @@ export function CreateOrderForm({
         });
     }
 
-    return (
-        <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className={"space-y-8"}>
-                <div className='text-black text-base'>{measurePoint.title}</div>
-                <FormField
-                    control={form.control}
-                    name="type"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Тип заявки</FormLabel>
-                            <Select onValueChange={field.onChange} defaultValue={field.value} >
+    return  <Form {...form}>
+                <form /* onSubmit={form.handleSubmit(onSubmit)} */ className={"space-y-8"}>
+                    <div className='text-black text-base'>{measurePoint.title}</div>
+                    <FormField
+                        control={form.control}
+                        name="type"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Тип заявки</FormLabel>
+                                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                    <FormControl>
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="Выберите тип заявки" />
+                                        </SelectTrigger>
+                                    </FormControl>
+                                    <SelectContent>
+                                        {Object.values(OrderTypes).map(type => <SelectItem key={type} value={type}>{type}</SelectItem>)}
+                                    </SelectContent>
+                                </Select>
+                                <FormMessage />
+                            </FormItem>
+                        )} 
+                    />
+                    <FormField
+                        control={form.control}
+                        name="description"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Описание</FormLabel>
                                 <FormControl>
-                                <SelectTrigger>
-                                    <SelectValue placeholder="Выберите тип заявки" />
-                                </SelectTrigger>
+                                    <Textarea placeholder="описание..." {...field} />
                                 </FormControl>
-                                <SelectContent>
-                                    {Object.values(OrderTypes).map(type => <SelectItem key={type} value={type} >{type}</SelectItem>)}
-                                </SelectContent>
-                            </Select>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                <FormField
-                    control={form.control}
-                    name="description"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Описание</FormLabel>
-                            <FormControl>
-                                <Textarea placeholder="описание..." {...field}/>
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />                    
-                <Button type="submit" disabled={createOrderMutation.isPending}>Добавить заявку</Button>
-            </form>
-        </Form>
-    );
+                                <FormMessage />
+                            </FormItem>
+                        )} 
+                    />
+                    {/* <Button disabled={createOrderMutation.isPending}>Добавить заявку</Button> */}
+                    <CreateOrderModal
+                        isOpen={isModalOpen}
+                        onOpenChange={setModalOpen}
+                        handleSubmit={form.handleSubmit}
+                        onSubmit={onSubmit}
+                        isSubmitDisabled={createOrderMutation.isPending}
+                    />
+                </form>
+            </Form>                                          
 }

@@ -1,6 +1,8 @@
+'use server';
+
 import { SignInForm } from '@/features/auth';
 
-export default function SignInPage() {
+export default async function SignInPage() {
     return (
         <div className="min-h-screen flex flex-col ">
             <main className="grow flex flex-col pt-24 ">

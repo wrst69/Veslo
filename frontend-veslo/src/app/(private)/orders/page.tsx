@@ -10,7 +10,7 @@ export default async function OrdersPage() {
         nodeGroups={nodeGroups}
         nodes={nodes}
         measurePoints={measurePoints}
-        equipment={equipment}
+        //equipment={equipment}
       />
     </main>
   );

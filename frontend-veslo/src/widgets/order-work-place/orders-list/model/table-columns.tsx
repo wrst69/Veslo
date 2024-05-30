@@ -31,6 +31,7 @@ export const columns: ColumnDef<OrderEntity>[] = [
   {
     accessorKey: 'owner.name',
     header: "Пользователь",
+    /* cell: ({row}) => <div className='cursor-pointer'>{row.original.owner.name}</div> */
   },
   /* {
     accessorKey: "cost",

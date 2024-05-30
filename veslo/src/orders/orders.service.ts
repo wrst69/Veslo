@@ -20,6 +20,7 @@ export class OrdersService {
         node: { select: { lersId: true } },
         measurePoint: { select: { lersId: true, title: true } },
       },
+      orderBy: { createdAt: 'desc' },
     });
   }
 
