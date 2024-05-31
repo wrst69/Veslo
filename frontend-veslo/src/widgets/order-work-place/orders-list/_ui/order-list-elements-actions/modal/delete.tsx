@@ -25,15 +25,15 @@ export function DeleteModal({
                 <DialogHeader>
                 <DialogTitle>Уверены, что хотите удалить заявку?</DialogTitle>
                 </DialogHeader>
-                <DialogFooter className="flex">
-                    <Button type="button" className='w-40' onClick={handleOkClick}>
-                        Да
-                    </Button>
+                <DialogFooter className="flex">       
                 <DialogClose asChild>
-                    <Button type="button" className='w-40' variant="destructive">
+                    <Button type="button" className='w-40' >
                         Нет
                     </Button>
                 </DialogClose>
+                    <Button type="button" variant="destructive" className='w-40' onClick={handleOkClick}>
+                        Да
+                    </Button>
                 </DialogFooter>
             </>
     };
