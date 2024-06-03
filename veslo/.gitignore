@@ -9,7 +9,7 @@ tmp
 /node_modules
 
 #env
-.env
+*.env
 
 # IDEs and editors
 /.idea
