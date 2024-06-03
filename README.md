@@ -14,7 +14,13 @@ Ansible — это программное решение для удаленно
 brew install ansible ansible-lint
 ```
 
-Для Linux:
+### Для Linux:
+```
+apt get install ansible ansible-lint
+```
+
+### Для Windows:
+Только через установку виртуальной машины Linux WSL
 ```
 apt get install ansible ansible-lint
 ```
