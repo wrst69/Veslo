@@ -20,7 +20,7 @@ export default function OrderWorkPlace({
     
   }) {
     
-    const [selectedPoint, setSelectedPoint] = useState<any>({
+    const [selectedPoint, setSelectedPoint] = useState<any>({    //задать тип
         currentNode: undefined,
         currentMeasurePoint: undefined
     });
@@ -43,3 +43,4 @@ export default function OrderWorkPlace({
         </ResizablePanelGroup>  
     );
   }
+ 
