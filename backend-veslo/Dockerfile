@@ -1,14 +1,16 @@
 FROM node:20.14-slim
-RUN apt-get uodate && apt-get install -y openssl libssl-dev
+RUN apt-get update && apt-get install -y openssl libssl-dev
 
 WORKDIR /opt/veslo-backend
-COPY ./dist/package.json .
+
+COPY ./package.json .
 RUN npm install --omit=dev
 
 COPY ./dist/prisma/schema.prisma ./schema.prisma
-RUN 
+RUN npx prisma generate --schema schema.prisma
  
-
 COPY ./dist .
+
+RUN npm run prisma:generate
 
 CMD ["node", "./main.js"]

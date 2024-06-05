@@ -23,13 +23,22 @@ services:
       - 8082:80
 
   redis:
-    image: redis/redis-stack:latest
+    image: redis/redis-stack:7.2.0-v10
     restart: always
     ports:
       - "6379:6379"
       - "8001:8001"
-    environment:
-      REDIS_PASSWORD: secret
+
+  veslo.backend:
+    image: veslo.backend
+    ports:
+     - "3003:3003"
+    env_file:
+      - ./backend-veslo/.env
+    depends_on:
+      - veslo.postgres
+      - redis
 
 volumes:
   veslo.postgres:
+

@@ -7,10 +7,8 @@ import {
     ResizablePanelGroup,
 } from "@/shared/ui/resizable"
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { EquipmentItem } from "./test-equipment-item";
-import { useRouter } from "next/navigation";
-import { ROUTES } from "@/shared/constants/routes";
 
 export function TestComponent({
     nodeGroups,
@@ -54,6 +52,7 @@ export function TestComponent({
                         nodeGroups={nodeGroups} 
                         nodes={nodes} 
                         measurePoints={measurePoints}
+                        selectedPoint={selectedPoint}
                         onPointChange={setSelectedPoint}
                     />
             </ResizablePanel>

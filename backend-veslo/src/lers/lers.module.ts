@@ -12,6 +12,7 @@ import { LersService } from './lers.service';
       isGlobal: true,
       ttl: 21600 * 10000,
       store: redisStore,
+      socket: { host: process.env.REDIS_HOST, port: process.env.REDIS_PORT },
     }),
   ],
   controllers: [LersController],
