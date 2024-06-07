@@ -18,25 +18,25 @@ export function NodeItem({
     selectedPoint,
     onPointChange
 }:{
-    node: NodeListElement,
+    node,
     measurePoints,
     selectedPoint,
     onPointChange
 }) {
 
-    const handlePointChange = (e) => {
+    const handlePointChange = (value: string) => {
         onPointChange({
             currentNode: node,
-            currentMeasurePoint: measurePoints.find(point => point.id === parseInt(e)),
+            currentMeasurePoint: measurePoints.find(point => point.id === parseInt(value)),
         });
     }
 
     return (   
         <AccordionItem 
             key={node.id} 
-            value={(node.id).toString()} 
+            value={node.id.toString()}
             className="
-            border border-gray-200 rounded-lg p-3 mb-2
+            border border-gray-200 rounded-lg p-2 mb-2 mr-4
             data-[state=open]:border-2 data-[state=open]:border-black"          
         >   
              <AccordionTrigger>{node.title}</AccordionTrigger>
@@ -47,9 +47,7 @@ export function NodeItem({
                         </SelectTrigger>
                         <SelectContent>
                             <SelectItem value="all">Все</SelectItem>
-                                {measurePoints?.map(point => {
-                                    return <SelectItem value ={point.id} key={point.id}>{point.title}</SelectItem>
-                                })}
+                                {measurePoints?.map(point => <SelectItem value ={point.id.toString()} key={point.id}>{point.title}</SelectItem>)}
                             </SelectContent>
                     </Select>             
                     <CreateOrderSheet selectedPoint={selectedPoint}/>

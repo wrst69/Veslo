@@ -19,7 +19,7 @@ export function CreateOrderSheet({
     return (
         <Sheet open={isOpen} onOpenChange={setOpen}>
             <SheetTrigger asChild>
-                <Button className="ml-auto mt-1" disabled={!selectedPoint.currentMeasurePoint}>Добавить заявку</Button>
+                <Button className="ml-auto mt-2" disabled={!selectedPoint.currentMeasurePoint}>Добавить заявку</Button>
             </SheetTrigger>
             <SheetContent side="top">
                 <SheetHeader>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useSessionQuery } from "@/entities/session/queries";
+import { useSessionQuery } from "@/entities/session/session.queries";
 import { ROUTES } from "@/shared/constants/routes";
 import { FullPageSpinner } from "@/shared/ui/full-page-spinner";
 import { useRouter } from "next/navigation";
@@ -16,10 +16,6 @@ export default function AuthorizedGuard({ children }: { children: React.ReactNod
       router.replace(ROUTES.SIGN_IN);
     }
   })
-  
-  if (isLoading) {
-    return <FullPageSpinner isLoading={isLoading}/>
-  }
 
   return (
     <>

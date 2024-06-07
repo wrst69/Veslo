@@ -20,7 +20,7 @@ export class OrdersController {
   constructor(private ordersService: OrdersService) {}
 
   @Get()
-  //@UseGuards(AuthGuard)
+  @UseGuards(AuthGuard)
   getOrders() {
     return this.ordersService.getOrders();
   }

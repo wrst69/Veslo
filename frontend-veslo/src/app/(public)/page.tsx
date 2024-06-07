@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useSessionQuery } from "@/entities/session/queries";
+import { useSessionQuery } from "@/entities/session/session.queries";
 import { useEffect } from "react";
 import { ROUTES } from "@/shared/constants/routes"
 

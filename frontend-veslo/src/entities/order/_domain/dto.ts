@@ -1,18 +1,19 @@
-import { OrderStatuses, OrderTypes } from './types';
+import { MeasurePointLersId, NodeLersId } from '@/entities/node/_domain/types';
+import { OrderStatus, OrderType } from './types';
 
 export type CreateOrderDto = {
-    nodeLersId: number,
+    nodeLersId: NodeLersId,
     nodeTitle: string,
-    measurePointLersId: number,
+    measurePointLersId: MeasurePointLersId,
     measurePointTitle: string,
-    type: OrderTypes,
+    type: OrderType,
     description: string,
 };
 
 export type UpdateOrderDto = {
-    type?: OrderTypes,
+    type?: OrderType,
     description?: string,
-    status?: OrderStatuses,
+    status?: OrderStatus,
 };
 
 export type DeleteOrderDto = number;

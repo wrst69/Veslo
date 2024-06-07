@@ -1,4 +1,4 @@
-import AuthorizedGuard from "@/features/auth/guards/authorized-guard";
+//import AuthorizedGuard from "@/features/auth/authorized-guard";
 import { AppHeader } from '@/widgets/app-headers/app-header';
 
 export default async function Layout({
@@ -9,9 +9,9 @@ export default async function Layout({
     return (
         <>
           <AppHeader variant='private'/>
-          <AuthorizedGuard>
+          {/* <AuthorizedGuard> */}
             {children}
-          </AuthorizedGuard>
+          {/* </AuthorizedGuard> */}
         </>
     );
 }

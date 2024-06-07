@@ -1,10 +1,11 @@
-"use client";
+'use client';
 
-import NodeSearchField from "../ui/search-field";
+import NodeSearchField from "./search-field";
 import { useState } from "react";
-import { NodeItem } from "../ui/node-item";
-import { NodeGroupSelect } from "../ui/node-group-select";
+import { NodeItem } from "./node-item";
+import { NodeGroupSelect } from "./node-group-select";
 import { Accordion } from "@/shared/ui/accordion";
+import { ScrollArea, ScrollBar } from "@/shared/ui/scroll-area";
 
 export function NodesList({
     nodes,
@@ -49,19 +50,19 @@ export function NodesList({
     })
 
     const handleCardChange = (e) => {
-        //onPointChange({currentNodeId: parseInt(e)});
         onPointChange({currentNode: nodes.find(node => node.id === parseInt(e))});
     };
 
     return (
-           <div className="flex h-full flex-col justify-top ml-4 mr-3 ">
-                <NodeGroupSelect nodeGroups={nodeGroups} onSelect={setSelectedNodeGroup}/>
+           <div className="flex h-full flex-col justify-top ml-4 mt-1">
+                <NodeGroupSelect  nodeGroups={nodeGroups} onSelect={setSelectedNodeGroup}/>
                 <NodeSearchField onInput={inputHandler}/> 
-                    <div className="flex flex-col gap-3 scroll-smooth">
+                    {/* <div className="flex flex-col gap-3 scroll-smooth overflow-y-auto h-screen"> */}
+                            <ScrollArea className="flex flex-col gap-3 scroll-smooth h-screen">
                             <Accordion type="single" collapsible onValueChange={handleCardChange}>
                                 {filteredData.map(node => {
                                     const filteredMeasurePoints = measurePoints.filter(point => point.nodeId === node.id);
-
+                                    
                                     return (
                                         <NodeItem
                                             key={node.id}
@@ -71,8 +72,10 @@ export function NodesList({
                                             onPointChange={onPointChange}
                                         />
                                 )})}
-                            </Accordion>                           
-                    </div>         
+                            </Accordion>
+                            <ScrollBar orientation="vertical" />
+                            </ScrollArea>                          
+                    {/* </div> */}      
             </div>           
     )
 }

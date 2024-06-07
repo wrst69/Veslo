@@ -3,7 +3,7 @@
 import dayjs from 'dayjs';
 import { ColumnDef } from "@tanstack/react-table"
 import { OrderEntity } from "@/entities/order/_domain/types";
-import {  OrderElementActions } from "../_ui/order-list-elements-actions/order-element-actions";
+import { OrderElementActions } from "../_ui/order-list-elements-actions/order-element-actions";
 
 export const columns: ColumnDef<OrderEntity>[] = [
   {

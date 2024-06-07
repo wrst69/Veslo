@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 
 import { ApiCreatedResponse, ApiOkResponse } from '@nestjs/swagger';
-import { Request, Response } from 'express';
+import { Response } from 'express';
 import { AuthService } from './auth.service';
 import { SignInBodyDto, SignUpBodyDto, GetSessionInfoDto } from './dto';
 import { CookieService } from './cookie.service';

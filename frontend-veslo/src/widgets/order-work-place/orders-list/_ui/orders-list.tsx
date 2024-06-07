@@ -1,6 +1,6 @@
 'use client';
 
-import { useOrdersQuery } from "@/entities/order/_repositories/queries";
+import { useOrdersQuery } from "@/entities/order/_repositories/orders.queries";
 import { columns } from "../model/table-columns";
 import { OrdersTable } from "./orders-table/orders-table";
 import { FullPageSpinner } from "@/shared/ui/full-page-spinner";
@@ -13,8 +13,6 @@ export function OrderList({
 }) {
     const { data, isLoading } = useOrdersQuery();
     const orders: OrderEntity[] = data; //а как задать тип если деструктурировать из квери { data: orders}
-
-
 
     if (isLoading) {
         return <FullPageSpinner/>
@@ -30,9 +28,7 @@ export function OrderList({
         }
     }       
     
-    return (
-        <div className="container ">
-           <OrdersTable columns={columns} data={filteredOrders}/>
-       </div>
-   )
+    return  <div className="container mt-1 max-h-screen">
+                <OrdersTable columns={columns} data={filteredOrders}/>
+            </div>        
 }

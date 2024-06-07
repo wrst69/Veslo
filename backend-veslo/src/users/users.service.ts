@@ -19,8 +19,4 @@ export class UsersService {
   async findByLogin(login: string) {
     return this.db.user.findUnique({ where: { login } });
   }
-
-  async findById(id: number) {
-    return this.db.user.findUnique({ where: { id } });
-  }
 }

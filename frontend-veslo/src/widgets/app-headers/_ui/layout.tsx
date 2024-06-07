@@ -11,11 +11,13 @@ export function Layout({
   logo,
   nav,
   profile,
+  messages,
   actions,
 }: {
   logo?: React.ReactNode;
   nav?: React.ReactNode;
   profile?: React.ReactNode;
+  messages?: React.ReactNode;
   actions?: React.ReactNode;
 }) {
   return (
@@ -33,14 +35,14 @@ export function Layout({
               {nav}
             </SheetContent>
           </Sheet>
-        </div>
-
+        </div> 
         <div className="mr-4 hidden md:flex mr-4">{logo}</div>
         <div className="items-center flex-1 flex">
-          <div className="hidden md:flex">{nav}</div>
-          <div className="flex flex-1 items-center justify-end space-x-3 ">
-            {actions}
-            {profile}
+          <div className="hidden md:flex">{nav}</div>      
+          <div className="flex flex-1 items-center justify-end space-x-3 ">                
+            { messages }
+            { actions }
+            { profile }
           </div>
         </div>
       </div>

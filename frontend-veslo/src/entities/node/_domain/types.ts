@@ -1,7 +1,11 @@
+export type NodeLersId = number;
+
+export type MeasurePointLersId = number;
+
 export type Node = {
-    id: number,
+    id: NodeLersId,
 };
 
 export type MeasurePoint = {
-    id: number,
+    id: MeasurePointLersId,
 };

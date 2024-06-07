@@ -12,11 +12,11 @@ import { Dialog, DialogTrigger } from '@/shared/ui/dialog';
 import { OrderEntity } from '@/entities/order/_domain/types';
 import { useState } from 'react';
 import { Modal } from './modal/layout';
-import { ModalTypes } from '../../model/types';
+import { ModalType } from '../../model/const';
 
 export function OrderElementActions({order} : {order: OrderEntity}) {
     const [isOpen, setOpen] = useState(false);
-    const [modalType, setModalType] = useState(ModalTypes.NONE);
+    const [modalType, setModalType] = useState(ModalType.NONE);
 
     return <Dialog open={isOpen} onOpenChange={setOpen}>
                 <DropdownMenu>
@@ -29,10 +29,10 @@ export function OrderElementActions({order} : {order: OrderEntity}) {
                 <DropdownMenuContent align="end">
                     <DropdownMenuLabel>Действия</DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DialogTrigger asChild onClick={() => setModalType(ModalTypes.UPDATE)}>
+                    <DialogTrigger asChild onClick={() => setModalType(ModalType.UPDATE)}>
                         <DropdownMenuItem>Редактировать</DropdownMenuItem>
                     </DialogTrigger>
-                    <DialogTrigger asChild onClick={() => setModalType(ModalTypes.DELETE)}>
+                    <DialogTrigger asChild onClick={() => setModalType(ModalType.DELETE)}>
                         <DropdownMenuItem className="text-red-800">Удалить</DropdownMenuItem>
                     </DialogTrigger>
                 </DropdownMenuContent>  

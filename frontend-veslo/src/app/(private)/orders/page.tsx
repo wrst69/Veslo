@@ -1,8 +1,17 @@
-import { nodesRepository } from "@/entities/node/_repositories/nodes.repository";
+'use client';
+
+import { useLersNodesQuery } from "@/entities/node/_repositories/nodes.queries";
+import { FullPageSpinner } from "@/shared/ui/full-page-spinner";
 import OrderWorkPlace from "@/widgets/order-work-place/order-work-place";
 
-export default async function OrdersPage() {
-  const { nodeGroups, nodes, measurePoints, equipment } = await nodesRepository.getLersNodesList();
+export default function OrdersPage() {
+  const { data, isLoading } = useLersNodesQuery();
+
+  if (isLoading) {
+    return <FullPageSpinner/>
+  }
+
+  const {nodeGroups, nodes, measurePoints, equipment } = data;
 
   return (
     <main className="flex min-h-screen flex-col p-8">

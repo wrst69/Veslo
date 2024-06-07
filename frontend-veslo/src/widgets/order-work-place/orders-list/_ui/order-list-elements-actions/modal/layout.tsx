@@ -2,7 +2,8 @@ import { DialogContent } from '@/shared/ui/dialog';
 import { Dispatch, SetStateAction } from 'react';
 import { DeleteModal } from './delete';
 import { UpdateModal } from './update';
-import { ModalTypes } from '../../../model/types';
+import { ModalType } from '../../../model/const';
+import { OrderId } from '@/entities/order/_domain/types';
 
 export function Modal({ 
     type,
@@ -10,13 +11,13 @@ export function Modal({
     isOpen,
     setOpen 
 }: { 
-    type: ModalTypes,
-    id: number, 
+    type: ModalType,
+    id: OrderId, 
     isOpen: boolean, 
     setOpen: Dispatch<SetStateAction<boolean>>
 }) {
     return <DialogContent className="sm:max-w-md">
-                {type === ModalTypes.DELETE && <DeleteModal id={id} isOpen={isOpen} setOpen={setOpen}/>}
-                {type === ModalTypes.UPDATE && <UpdateModal/>}
+                {type === ModalType.DELETE && <DeleteModal id={id} isOpen={isOpen} setOpen={setOpen}/>}
+                {type === ModalType.UPDATE && <UpdateModal/>}
             </DialogContent>
 }

@@ -1,35 +1,28 @@
-export enum OrderStatuses {
-    Pending = 'PENDING',
-    Processing = 'PROCESSING',
-    Success = 'SUCCESS',
-    Failed = 'FAILED'
-};
+import { UserId } from "@/entities/user/_domain/types";
+import { OrderStatus, OrderType } from "./const";
 
-export enum OrderTypes {
-    first = 'FIRST',
-    second = 'SECOND',
-    third = 'THIRD',
-    fourth = 'FOURTH',
-    fifth = 'FIFTH'
-};
+export type OrderId = number;
+
+export type OrderCommentId = number;
 
 export type OrderComment = {
-    id: number,
-    owner: number,
+    id: OrderCommentId,
+    owner: UserId,
     description: string
 };
 
 export type OrderEntity = {
-    id: number,
+    id: OrderId,
     createdAt: string,
     updatedAt: string,
     description: string,
-    type: OrderTypes,
-    status: OrderStatuses,
+    type: OrderType,
+    status: OrderStatus,
     owner: {
-        id: number,
+        id: UserId,
         name: string,
     },
+    recipient: UserId,
     node: {
         lersId: number,
     },

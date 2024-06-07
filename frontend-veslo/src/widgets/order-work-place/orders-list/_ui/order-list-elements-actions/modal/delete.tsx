@@ -2,7 +2,7 @@
 
 import { Button } from '@/shared/ui/button';
 import { DialogClose, DialogFooter, DialogHeader, DialogTitle } from '@/shared/ui/dialog';
-import { useDeleteOrderMutation } from '@/entities/order/_repositories/queries';
+import { useDeleteOrderMutation } from '@/entities/order/_repositories/orders.queries';
 import { Dispatch, SetStateAction } from 'react';
 
 export function DeleteModal({

@@ -10,19 +10,18 @@ import {
   } from '@/shared/ui/select';
 import { Textarea } from '@/shared/ui/textarea';
 import { Form } from '@/shared/ui/form';
-import { Button } from '@/shared/ui/button';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
-import { OrderTypes } from '@/entities/order/_domain/types';
 import { CreateOrderDto } from '@/entities/order/_domain/dto';
-import { useCreateOrderMutation } from '@/entities/order/_repositories/queries';
+import { useCreateOrderMutation } from '@/entities/order/_repositories/orders.queries';
 import { CreateOrderModal } from './modal';
 import { useState } from 'react';
+import { OrderType } from '@/entities/order/_domain/const';
 
 const createOrderFormSchema = z.object({
-    type: z.nativeEnum(OrderTypes, {
+    type: z.nativeEnum(OrderType, {
         required_error: 'Необходимо выбрать тип заявки',
     }),
     description: z.string().min(1, 'Поле не должно быть пустым')
@@ -85,7 +84,7 @@ export function CreateOrderForm({
                                         </SelectTrigger>
                                     </FormControl>
                                     <SelectContent>
-                                        {Object.values(OrderTypes).map(type => <SelectItem key={type} value={type}>{type}</SelectItem>)}
+                                        {Object.values(OrderType).map(type => <SelectItem key={type} value={type}>{type}</SelectItem>)}
                                     </SelectContent>
                                 </Select>
                                 <FormMessage />

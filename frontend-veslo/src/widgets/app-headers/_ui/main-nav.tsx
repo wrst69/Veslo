@@ -1,9 +1,10 @@
+'use client';
 import Link from "next/link";
 
 export function MainNav() {
   return (
     <nav className="flex items-start md:items-center gap-6 text-sm font-medium flex-col md:flex-row ">
-      {/* <Link
+      <Link
         className="transition-colors hover:text-foreground/80 text-foreground/60"
         href="/orders"
       >
@@ -11,16 +12,16 @@ export function MainNav() {
       </Link>
       <Link
         className="transition-colors hover:text-foreground/80 text-foreground/60"
-        href="/equipment"
+        href="/report"
       >
-        Equipment
+        Отчеты
       </Link>
       <Link
         className="transition-colors hover:text-foreground/80 text-foreground/60"
         href="/admin"
       >
         Admin panel
-      </Link> */}
+      </Link>
     </nav>
   );
 }
