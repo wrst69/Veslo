@@ -1,5 +1,3 @@
-
-
 export default async function ToDoPage() {
   return  <div className="flex  flex-col">
             <h1>My Todo List</h1>
