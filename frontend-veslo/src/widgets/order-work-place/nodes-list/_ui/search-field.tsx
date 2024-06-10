@@ -1,3 +1,5 @@
+'use client';
+
 import { Input } from "@/shared/ui/input";
 
 export default function NodeSearchField({

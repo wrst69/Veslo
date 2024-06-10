@@ -26,12 +26,11 @@ export const columns: ColumnDef<OrderEntity>[] = [
   },
   {
     accessorKey: 'type',
-    header: "Тип заявки",
+    header: "Тип заявки"
   },
   {
     accessorKey: 'owner.name',
-    header: "Пользователь",
-    /* cell: ({row}) => <div className='cursor-pointer'>{row.original.owner.name}</div> */
+    header: "Пользователь"
   },
   /* {
     accessorKey: "cost",
@@ -52,5 +51,5 @@ export const columns: ColumnDef<OrderEntity>[] = [
       const order = row.original;
       return <OrderElementActions order={order}/>
     },
-  },
+  }
 ]

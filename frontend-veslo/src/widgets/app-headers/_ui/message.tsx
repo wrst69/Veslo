@@ -42,12 +42,12 @@ export function Message() {
                                       <DropdownMenuItem asChild>
                                         <Link href={`/profile`}>
                                           
-                                          <span>Профиль</span>
+                                          <span>Message 1</span>
                                         </Link>
                                       </DropdownMenuItem>
                                       <DropdownMenuItem>
                                         
-                                        <span>Выход</span>
+                                        <span>Message 2</span>
                                       </DropdownMenuItem>
                                     </DropdownMenuGroup>
                                   </DropdownMenuContent>

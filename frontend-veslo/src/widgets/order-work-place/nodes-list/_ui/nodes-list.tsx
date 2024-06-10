@@ -1,63 +1,65 @@
 'use client';
 
+import { Dispatch, useState } from "react";
 import NodeSearchField from "./search-field";
-import { useState } from "react";
 import { NodeItem } from "./node-item";
 import { NodeGroupSelect } from "./node-group-select";
 import { Accordion } from "@/shared/ui/accordion";
 import { ScrollArea, ScrollBar } from "@/shared/ui/scroll-area";
+import { useLersNodesQuery } from "@/entities/node/_repositories/nodes.queries";
+import { FullPageSpinner } from "@/shared/ui/full-page-spinner";
 
 export function NodesList({
-    nodes,
-    nodeGroups,
-    measurePoints,
     selectedPoint,
-    onPointChange
+    handlePointChange
 } : {
-    nodes,
-    nodeGroups,
-    measurePoints,
     selectedPoint,
-    onPointChange?
+    handlePointChange: Dispatch<any>
 }) {
-
     const [selectedNodeGroup, setSelectedNodeGroup] = useState('all');
-    const [inputedText, setInputedText] = useState('');
+    const [searchText, setSearchText] = useState('');
 
-    let inputHandler = (element) => {
-        var lowerCase = element.target.value.toLowerCase();
-        setInputedText(lowerCase);
-    };
+    const { data, isLoading } = useLersNodesQuery();
+
+    if (isLoading) {
+        return <FullPageSpinner/>
+    }
+
+    const {nodeGroups, nodes, measurePoints, equipment } = data;
 
     const filteredData = nodes.filter((node) => {
         if (selectedNodeGroup === 'all') {
-            if (inputedText  === '') {
+            if (searchText  === '') {
                 return node;
             }
             
-            return node.title.toLowerCase().includes(inputedText);
+            return node.title.toLowerCase().includes(searchText);
         } else {
             const filteredNodeGroup = nodeGroups.find(e => e.nodeGroup.title === selectedNodeGroup);
 
             if (filteredNodeGroup.members.includes(node.id)) {
-                if (inputedText  === '') {
+                if (searchText  === '') {
                     return node;
                 }
                 //return the item which contains the user input
-                return node.title.toLowerCase().includes(inputedText);
+                return node.title.toLowerCase().includes(searchText);
             }    
         }
     })
 
+    let handleSearch = (e) => {
+        var lowerCase = e.target.value.toLowerCase();
+        setSearchText(lowerCase);
+    };
+
     const handleCardChange = (e) => {
-        onPointChange({currentNode: nodes.find(node => node.id === parseInt(e))});
+        handlePointChange({currentNode: nodes.find(node => node.id === parseInt(e))});
     };
 
     return (
            <div className="flex h-full flex-col justify-top ml-4 mt-1">
                 <NodeGroupSelect  nodeGroups={nodeGroups} onSelect={setSelectedNodeGroup}/>
-                <NodeSearchField onInput={inputHandler}/> 
-                    {/* <div className="flex flex-col gap-3 scroll-smooth overflow-y-auto h-screen"> */}
+                <NodeSearchField onInput={handleSearch}/> 
                             <ScrollArea className="flex flex-col gap-3 scroll-smooth h-screen">
                             <Accordion type="single" collapsible onValueChange={handleCardChange}>
                                 {filteredData.map(node => {
@@ -69,13 +71,12 @@ export function NodesList({
                                             node={node}
                                             measurePoints={filteredMeasurePoints}
                                             selectedPoint={selectedPoint}
-                                            onPointChange={onPointChange}
+                                            onPointChange={handlePointChange}
                                         />
                                 )})}
                             </Accordion>
                             <ScrollBar orientation="vertical" />
-                            </ScrollArea>                          
-                    {/* </div> */}      
+                            </ScrollArea>                           
             </div>           
     )
 }
