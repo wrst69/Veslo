@@ -11,13 +11,16 @@ import {
     AccordionTrigger,
 } from "@/shared/ui/accordion"
 import { CreateOrderSheet } from "@/features/create-order/create-order-sheet";
+import { ZodNumberDef } from "zod";
 
 export function NodeItem({
+    id,
     node,
     measurePoints,
     selectedPoint,
     onPointChange
 }:{
+    id?: string,
     node,
     measurePoints,
     selectedPoint,
@@ -32,7 +35,8 @@ export function NodeItem({
     }
 
     return (   
-        <AccordionItem 
+        <AccordionItem
+            id={id}
             key={node.id} 
             value={node.id.toString()}
             className="

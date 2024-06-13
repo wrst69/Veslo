@@ -1,6 +1,6 @@
 "use client";
 
-import { NodesList } from "@/widgets/order-work-place/nodes-list/_ui/nodes-list";
+import { NodesList } from "@/widgets/order-work-place/nodes-list/nodes-list";
 import {
     ResizableHandle,
     ResizablePanel,

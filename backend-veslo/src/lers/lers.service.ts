@@ -119,8 +119,25 @@ export class LersService {
   async getData() {
     return await this.getDataFromDb();
   }
+  
+  async getLersNodes() {
+    const token = await this.loginLers();
 
-  async getMeasurePointEquipment(id: number) {
-    return;
+    const nodes = await lastValueFrom(
+      this.httpService
+        .get(`${LERS_URL}Core/Nodes`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          params:{
+            nodeGroupId: 44
+          }
+        })
+        .pipe(map((res) => res.data)),
+    );
+
+    const { nodeGroups } = await this.getDataFromDb();
+
+    return nodes;
   }
 }

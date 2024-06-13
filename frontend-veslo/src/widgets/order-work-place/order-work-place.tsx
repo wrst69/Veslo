@@ -1,7 +1,7 @@
 'use client';
 
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/shared/ui/resizable';
-import { NodesList } from '@/widgets/order-work-place/nodes-list/_ui/nodes-list';
+import { NodesList } from '@/widgets/order-work-place/nodes-list/nodes-list';
 import { OrderList } from '@/widgets/order-work-place/orders-list/_ui/orders-list';
 import { useState } from 'react';
   

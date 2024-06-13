@@ -30,6 +30,7 @@ export default function RootLayout({
       > 
         <AppProvider>
           {children}
+          <div className="bg-black text-white">FOOTER</div>
         </AppProvider>
         <Toaster/>
       </body>

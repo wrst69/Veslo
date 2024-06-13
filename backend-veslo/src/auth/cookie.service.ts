@@ -12,7 +12,7 @@ export class CookieService {
       httpOnly: true,
       maxAge: 900000 * 4, //1h in ms
       sameSite: this.configService.get('COOKIE_SAMESITE_OPTION'),
-      secure: false,
+      secure: this.configService.get('COOKIE_SECURE_OPTION'),
 
       /* // true if production
       secure: true,

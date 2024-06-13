@@ -12,8 +12,9 @@ export class LersController {
     return this.lersService.getData();
   }
 
-  @Get()
-  getMeasurePointEquipment(id: number) {
-    return this.lersService.getMeasurePointEquipment(id);
+  @Get('nodes')
+  getLersNodes() {
+    return this.lersService.getLersNodes();
   }
+
 }

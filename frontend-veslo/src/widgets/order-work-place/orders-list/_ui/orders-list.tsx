@@ -15,7 +15,7 @@ export function OrderList({
     const orders: OrderEntity[] = data; //а как задать тип если деструктурировать из квери { data: orders}
 
     if (isLoading) {
-        return <FullPageSpinner/>
+        return <FullPageSpinner isLoading={isLoading}/>
     }
 
     let filteredOrders: OrderEntity[] = orders;
