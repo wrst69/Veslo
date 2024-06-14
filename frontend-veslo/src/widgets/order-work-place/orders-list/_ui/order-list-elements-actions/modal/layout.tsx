@@ -1,4 +1,4 @@
-import { DialogContent } from '@/shared/ui/dialog';
+import { AlertDialogContent } from '@/shared/ui/alert-dialog';
 import { Dispatch, SetStateAction } from 'react';
 import { DeleteModal } from './delete';
 import { UpdateModal } from './update';
@@ -16,8 +16,8 @@ export function Modal({
     isOpen: boolean, 
     setOpen: Dispatch<SetStateAction<boolean>>
 }) {
-    return <DialogContent className="sm:max-w-md">
+    return <AlertDialogContent className="sm:max-w-md">
                 {type === ModalType.DELETE && <DeleteModal id={id} isOpen={isOpen} setOpen={setOpen}/>}
                 {type === ModalType.UPDATE && <UpdateModal/>}
-            </DialogContent>
+            </AlertDialogContent>
 }

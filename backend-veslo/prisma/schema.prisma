@@ -8,17 +8,18 @@ datasource db {
 }
 
 model User {
-  id        Int       @id @default(autoincrement())
-  createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime  @updatedAt @map("updated_at")
-  name      String
-  hash      String
-  salt      String
-  login     String    @unique
-  avatar    String?
-  role      Roles     @default(VIEWER)
-  orders    Order[]
-  comments  Comment[]
+  id              Int       @id @default(autoincrement())
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+  name            String
+  hash            String
+  salt            String
+  login           String    @unique
+  avatar          String?
+  role            Roles     @default(VIEWER)
+  orders          Order[]   @relation(name: "owner_rel")
+  recipientOrders Order[]   @relation(name: "recipient_rel")
+  comments        Comment[]
 
   @@map("users")
 }
@@ -66,9 +67,11 @@ model Order {
   status      OrderStatuses @default(PENDING)
 
   ownerId        Int          @map("owner_id")
+  recipientId    Int          @map("recipient_id")
   nodeId         Int          @map("node_id")
   measurePointId Int          @map("measure_point_id")
-  owner          User         @relation(fields: [ownerId], references: [id])
+  owner          User         @relation(name: "owner_rel", fields: [ownerId], references: [id])
+  recipient      User         @relation(name: "recipient_rel", fields: [recipientId], references: [id])
   node           Node         @relation(fields: [nodeId], references: [id])
   measurePoint   MeasurePoint @relation(fields: [measurePointId], references: [id])
 

@@ -25,6 +25,12 @@ export class OrdersController {
     return this.ordersService.getOrders();
   }
 
+  @Get('recipient/:id')
+  @UseGuards(AuthGuard)
+  getRecipientOrders(@Param('id', ParseIntPipe) id: number) {
+    return this.ordersService.getRecipientOrders(id);
+  }
+
   @Post()
   @UseGuards(AuthGuard)
   createOrder(

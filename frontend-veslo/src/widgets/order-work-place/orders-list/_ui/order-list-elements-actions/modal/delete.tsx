@@ -1,7 +1,14 @@
 'use client';
 
 import { Button } from '@/shared/ui/button';
-import { DialogClose, DialogFooter, DialogHeader, DialogTitle } from '@/shared/ui/dialog';
+import {
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+} from '@/shared/ui/alert-dialog';
 import { useDeleteOrderMutation } from '@/entities/order/_repositories/orders.queries';
 import { Dispatch, SetStateAction } from 'react';
 
@@ -22,18 +29,15 @@ export function DeleteModal({
     };
 
     return  <>
-                <DialogHeader>
-                <DialogTitle>Уверены, что хотите удалить заявку?</DialogTitle>
-                </DialogHeader>
-                <DialogFooter className="flex">       
-                <DialogClose asChild>
-                    <Button type="button" className='w-40' >
-                        Нет
-                    </Button>
-                </DialogClose>
-                    <Button type="button" variant="destructive" className='w-40' onClick={handleOkClick}>
-                        Да
-                    </Button>
-                </DialogFooter>
+                <AlertDialogHeader>
+                    <AlertDialogTitle>Подтверждение</AlertDialogTitle>
+                    <AlertDialogDescription>Уверены, что хотите удалить заявку?</AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter className="flex">       
+                    <AlertDialogCancel>Отменить</AlertDialogCancel>
+                    <AlertDialogAction asChild>
+                        <Button onClick={handleOkClick}>Продолжить</Button>
+                    </AlertDialogAction>
+                </AlertDialogFooter>
             </>
     };

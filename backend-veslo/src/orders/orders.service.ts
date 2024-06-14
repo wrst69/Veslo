@@ -24,6 +24,12 @@ export class OrdersService {
     });
   }
 
+  async getRecipientOrders(userId: number) {
+    return await this.db.order.findMany({
+      where: { recipientId: userId }
+    })
+  }
+
   async createOrder(userId: number, dto: CreateOrderDto) {
     let node = await this.nodesService.checkNodeExist(dto.nodeLersId);
 
@@ -51,6 +57,7 @@ export class OrdersService {
         description: dto.description,
         type: dto.type,
         ownerId: userId,
+        recipientId: 1,
         measurePointId: measurePoint.id,
         nodeId: node.id,
       },

@@ -1,22 +1,25 @@
 'use client';
 
 import { Button } from '@/shared/ui/button';
-import { DialogClose, DialogFooter, DialogHeader, DialogTitle } from '@/shared/ui/dialog';
+import {
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+} from '@/shared/ui/alert-dialog';
 
 export function UpdateModal() {
     return <>
-                <DialogHeader>
-                <DialogTitle>Редактировать профиль</DialogTitle>
-                </DialogHeader>
-                <DialogFooter className="flex">
-                    {/* <Button type="button" className='w-40'>
-                        Да
-                    </Button> */}
-                <DialogClose asChild>
-                    <Button type="button" className='w-40' variant="destructive">
-                        Нет
-                    </Button>
-                </DialogClose>
-                </DialogFooter>
+                <AlertDialogHeader>
+                    <AlertDialogTitle>Редактировать профиль</AlertDialogTitle>
+                </AlertDialogHeader>
+                <AlertDialogFooter className="flex">
+                    <AlertDialogCancel>Отменить</AlertDialogCancel>
+                    <AlertDialogAction asChild>
+                        <Button>Продолжить</Button>
+                    </AlertDialogAction>
+                </AlertDialogFooter>
             </>
 }

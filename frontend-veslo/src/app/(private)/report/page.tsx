@@ -1,6 +1,6 @@
-'use client';
+'use server';
 
-export default function ReportPage() {
+export default async function ReportPage() {
   return  <div className="flex h-screen justify-center items-center">
             <p>Что-то здесь будет...</p>
           </div>

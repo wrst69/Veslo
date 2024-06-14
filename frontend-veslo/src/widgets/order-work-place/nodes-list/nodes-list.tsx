@@ -26,7 +26,6 @@ export function NodesList({
 
     useEffect(() => {
         if (inView) {
-            console.log('set inview')
             setListItemsAmount(prevState => prevState + 14);
         }
     }, [inView])

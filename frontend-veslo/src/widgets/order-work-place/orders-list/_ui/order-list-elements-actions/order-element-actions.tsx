@@ -8,7 +8,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@/shared/ui/dropdown-menu';
-import { Dialog, DialogTrigger } from '@/shared/ui/dialog';
+import {
+    AlertDialog,
+    AlertDialogTrigger,
+} from '@/shared/ui/alert-dialog';
 import { OrderEntity } from '@/entities/order/_domain/types';
 import { useState } from 'react';
 import { Modal } from './modal/layout';
@@ -18,7 +21,7 @@ export function OrderElementActions({order} : {order: OrderEntity}) {
     const [isOpen, setOpen] = useState(false);
     const [modalType, setModalType] = useState(ModalType.NONE);
 
-    return <Dialog open={isOpen} onOpenChange={setOpen}>
+    return <AlertDialog open={isOpen} onOpenChange={setOpen}>
                 <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                     <Button variant="ghost" className="h-8 w-8 p-0">
@@ -29,14 +32,14 @@ export function OrderElementActions({order} : {order: OrderEntity}) {
                 <DropdownMenuContent align="end">
                     <DropdownMenuLabel>Действия</DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DialogTrigger asChild onClick={() => setModalType(ModalType.UPDATE)}>
+                    <AlertDialogTrigger asChild onClick={() => setModalType(ModalType.UPDATE)}>
                         <DropdownMenuItem>Редактировать</DropdownMenuItem>
-                    </DialogTrigger>
-                    <DialogTrigger asChild onClick={() => setModalType(ModalType.DELETE)}>
+                    </AlertDialogTrigger>
+                    <AlertDialogTrigger asChild onClick={() => setModalType(ModalType.DELETE)}>
                         <DropdownMenuItem className="text-red-800">Удалить</DropdownMenuItem>
-                    </DialogTrigger>
+                    </AlertDialogTrigger>     
                 </DropdownMenuContent>  
                 </DropdownMenu>
-                <Modal type={modalType} id={order.id} isOpen={isOpen} setOpen={setOpen}/>      
-            </Dialog>
+                <Modal type={modalType} id={order.id} isOpen={isOpen} setOpen={setOpen}/>     
+            </AlertDialog>
 }
