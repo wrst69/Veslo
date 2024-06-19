@@ -23,6 +23,7 @@ export default async function ToDoPage({
               <div>Отрефакторить staleTime в tanstack queries </div>
               <div>Освоить React Context и добавить в order-work-place</div>   
               <div>Оптимизировать данные отдаваемые бэкендом</div>
+              <div>При нажатии "посмотреть все" в окне уведомлений, само окно должно закрываться</div>
               <div>Типизировать код фронта, сбилдить и добавить в докер образ</div>
             </div>
           </div>          

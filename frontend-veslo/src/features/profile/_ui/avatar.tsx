@@ -1,7 +1,8 @@
 import { Avatar, AvatarImage } from "@/shared/ui/avatar";
 //import { Profile } from "../_domain/types";
 import { cn } from "@/shared/ui/utils";
-import { Logo } from "@/widgets/app-headers/_ui/logo";
+import { Logo } from "./logo";
+
 
 export const UserAvatar = ({
   //profile,

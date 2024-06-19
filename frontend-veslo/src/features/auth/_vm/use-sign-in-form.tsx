@@ -32,7 +32,7 @@ export function useSignInForm() {
         mutationFn: (data: AuthFormDataDto) => authRepository.signIn(data),
         onSuccess(data) {
             reset();
-            router.push(ROUTES.ORDERS);
+            router.replace(ROUTES.ORDERS);
         },
     })
     

@@ -1,20 +1,23 @@
-"use client";
+"use server";
 
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { useSessionQuery } from "@/entities/session/session.queries";
 import { useEffect } from "react";
 import { ROUTES } from "@/shared/constants/routes"
 
-export default function Home() {
-    const router = useRouter();
+export default async function Home() {
+    //const router = useRouter();
 
-    const { isSuccess } = useSessionQuery();
+    //const { isSuccess, isError } = useSessionQuery();
 
-    useEffect(() => {
+    /* useEffect(() => {
         if (isSuccess) {
-            router.replace(ROUTES.ORDERS, { scroll: false});
-        } else {
-            router.replace(ROUTES.SIGN_IN, { scroll: false});
+            router.replace(ROUTES.ORDERS, { scroll: false });
         }
-    } ,[isSuccess, router])
+
+        if (isError) {
+            router.replace(ROUTES.SIGN_IN, { scroll: false })
+        }
+    } ,[isSuccess, router]) */
+     redirect(ROUTES.ORDERS)
 }

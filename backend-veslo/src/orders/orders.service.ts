@@ -2,10 +2,16 @@ import { Injectable } from '@nestjs/common';
 import { CreateOrderDto, UpdateOrderDto } from './dto';
 import { DbService } from 'src/db/db.service';
 import { NodesService } from 'src/nodes/nodes.service';
+import { NotificationsService } from 'src/notifications/notifications.service';
+import { NotificationTypes } from '@prisma/client';
 
 @Injectable()
 export class OrdersService {
-  constructor(private db: DbService, private nodesService: NodesService) {}
+  constructor(
+    private db: DbService, 
+    private nodesService: NodesService, 
+    private notificationsService: NotificationsService
+  ) {}
 
   async getOrders() {
     return await this.db.order.findMany({
@@ -22,12 +28,6 @@ export class OrdersService {
       },
       orderBy: { createdAt: 'desc' },
     });
-  }
-
-  async getRecipientOrders(userId: number) {
-    return await this.db.order.findMany({
-      where: { recipientId: userId }
-    })
   }
 
   async createOrder(userId: number, dto: CreateOrderDto) {
@@ -52,16 +52,25 @@ export class OrdersService {
       });
     }
 
-    return await this.db.order.create({
+    const recipients = [{ id: 3 }, { id:2 }]
+    const order = await this.db.order.create({
       data: {
+        ownerId: userId,
         description: dto.description,
         type: dto.type,
-        ownerId: userId,
-        recipientId: 1,
         measurePointId: measurePoint.id,
         nodeId: node.id,
+        recipients: { connect: recipients }
       },
     });
+
+    recipients.map(async (recipient) => await this.notificationsService.createNotification({
+      type: NotificationTypes.NEW_ORDER,
+      orderId: order.id,
+      recipientId: recipient.id
+    }))
+
+    return order;
   }
 
   async deleteOrder(id: number) {

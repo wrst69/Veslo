@@ -11,13 +11,13 @@ export function Layout({
   logo,
   nav,
   profile,
-  messages,
+  notifications,
   actions,
 }: {
   logo?: React.ReactNode;
   nav?: React.ReactNode;
   profile?: React.ReactNode;
-  messages?: React.ReactNode;
+  notifications?: React.ReactNode;
   actions?: React.ReactNode;
 }) {
   return (
@@ -40,7 +40,7 @@ export function Layout({
         <div className="items-center flex-1 flex">
           <div className="hidden md:flex">{nav}</div>      
           <div className="flex flex-1 items-center justify-end space-x-3 ">                
-            { messages }
+            { notifications }
             { actions }
             { profile }
           </div>

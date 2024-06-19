@@ -8,18 +8,21 @@ datasource db {
 }
 
 model User {
-  id              Int       @id @default(autoincrement())
-  createdAt       DateTime  @default(now()) @map("created_at")
-  updatedAt       DateTime  @updatedAt @map("updated_at")
-  name            String
-  hash            String
-  salt            String
-  login           String    @unique
-  avatar          String?
-  role            Roles     @default(VIEWER)
-  orders          Order[]   @relation(name: "owner_rel")
-  recipientOrders Order[]   @relation(name: "recipient_rel")
-  comments        Comment[]
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  name      String
+  hash      String
+  salt      String
+  login     String   @unique
+  avatar    String?
+  role      Roles    @default(VIEWER)
+
+  orders Order[] @relation(name: "owner_rel")
+
+  recipientOrders    Order[]
+  notifications Notification[]
+  comments      Comment[]
 
   @@map("users")
 }
@@ -67,15 +70,15 @@ model Order {
   status      OrderStatuses @default(PENDING)
 
   ownerId        Int          @map("owner_id")
-  recipientId    Int          @map("recipient_id")
   nodeId         Int          @map("node_id")
   measurePointId Int          @map("measure_point_id")
   owner          User         @relation(name: "owner_rel", fields: [ownerId], references: [id])
-  recipient      User         @relation(name: "recipient_rel", fields: [recipientId], references: [id])
   node           Node         @relation(fields: [nodeId], references: [id])
   measurePoint   MeasurePoint @relation(fields: [measurePointId], references: [id])
 
-  comments Comment[]
+  recipients    User[] 
+  notifications Notification[]
+  comments      Comment[]
 
   @@map("orders")
 }
@@ -114,4 +117,29 @@ model Comment {
   order   Order @relation(fields: [orderId], references: [id])
 
   @@map("comments")
+}
+
+model Notification {
+  id        Int               @id @default(autoincrement())
+  createdAt DateTime          @default(now()) @map("created_at")
+  type      NotificationTypes
+  isRead    Boolean           @default(false) @map("is_read")
+
+  orderId Int
+  order   Order @relation(fields: [orderId], references: [id])
+
+  recipientId Int
+  recipient   User @relation(fields: [recipientId], references: [id])
+
+  @@map("notifications")
+}
+
+enum NotificationTypes {
+  NEW_ORDER
+  ORDER_ACCEPTED
+  ORDER_UPDATED
+  ORDER_COMMENTED
+  ORDER_COMPLETED
+  ORDER_FAILED
+  ORDER_DELETED
 }

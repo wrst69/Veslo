@@ -11,7 +11,7 @@ export const columns: ColumnDef<OrderEntity>[] = [
     header: 'Создана',
     cell: ({ row }) => {
       const date: Date = row.getValue('createdAt');
-      const formattedDate = dayjs(date).format('DD/MM/YYYY');
+      const formattedDate = dayjs(date).format('DD.MM.YYYY');
       
       return <div className="text-right font-medium">{formattedDate}</div>;
     }

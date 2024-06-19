@@ -16,6 +16,7 @@ import { Skeleton } from "@/shared/ui/skeleton";
 import { useSessionQuery } from "@/entities/session/session.queries";
 import { UserAvatar } from "@/features/profile/_ui/avatar";
 import { useSignOut } from "@/features/auth/_vm/use-sign-out";
+import { ROUTES } from "@/shared/constants/routes";
 
 export function Profile() {
     const { data, isLoading }= useSessionQuery();
@@ -45,7 +46,7 @@ export function Profile() {
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
             <DropdownMenuItem asChild>
-              <Link href={`/profile/${data?.id}`}>
+              <Link href={`${ROUTES.PROFILE}/${data?.id}`}>
                 <User className="mr-2 h-4 w-4"/>
                 <span>Профиль</span>
               </Link>
