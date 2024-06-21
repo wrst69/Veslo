@@ -34,3 +34,5 @@ export type OrderEntity = {
 
     cost: number,  */ //maybe nenado
 };
+
+export { OrderType, OrderStatus };

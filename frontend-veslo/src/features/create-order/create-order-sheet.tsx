@@ -17,10 +17,12 @@ export function CreateOrderSheet({
     const [isOpen, setOpen] = useState(false);
     
     return (
-        <Sheet open={isOpen} onOpenChange={setOpen}>
-            <SheetTrigger asChild>
-                <Button className="ml-auto mt-2" disabled={!selectedPoint.currentMeasurePoint}>Добавить заявку</Button>
-            </SheetTrigger>
+        <Sheet open={isOpen} onOpenChange={setOpen}>  
+            <div className="flex justify-center items-center">
+                <SheetTrigger asChild>
+                    <Button size={"lg"} className=" w-[96%] mt-2" disabled={!selectedPoint.currentMeasurePoint}>Добавить заявку</Button>
+                </SheetTrigger>
+            </div>             
             <SheetContent side="top">
                 <SheetHeader>
                     <SheetTitle>Форма заявки</SheetTitle>

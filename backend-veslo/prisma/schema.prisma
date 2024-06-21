@@ -20,9 +20,9 @@ model User {
 
   orders Order[] @relation(name: "owner_rel")
 
-  recipientOrders    Order[]
-  notifications Notification[]
-  comments      Comment[]
+  recipientOrders Order[]
+  notifications   Notification[]
+  comments        Comment[]
 
   @@map("users")
 }
@@ -76,7 +76,7 @@ model Order {
   node           Node         @relation(fields: [nodeId], references: [id])
   measurePoint   MeasurePoint @relation(fields: [measurePointId], references: [id])
 
-  recipients    User[] 
+  recipients    User[]
   notifications Notification[]
   comments      Comment[]
 
@@ -126,7 +126,7 @@ model Notification {
   isRead    Boolean           @default(false) @map("is_read")
 
   orderId Int
-  order   Order @relation(fields: [orderId], references: [id])
+  order   Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
 
   recipientId Int
   recipient   User @relation(fields: [recipientId], references: [id])

@@ -1,5 +1,6 @@
 import { MeasurePointLersId, NodeLersId } from '@/entities/node/_domain/types';
 import { OrderStatus, OrderType } from './types';
+import { UserId } from '@/entities/user/_domain/types';
 
 export type CreateOrderDto = {
     nodeLersId: NodeLersId,
@@ -8,6 +9,7 @@ export type CreateOrderDto = {
     measurePointTitle: string,
     type: OrderType,
     description: string,
+    recipients: UserId[]
 };
 
 export type UpdateOrderDto = {

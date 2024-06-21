@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CreateOrderDto, UpdateOrderDto } from './dto';
+import { CreateOrderDto } from './dto';
 import { DbService } from 'src/db/db.service';
 import { NodesService } from 'src/nodes/nodes.service';
 import { NotificationsService } from 'src/notifications/notifications.service';
@@ -52,7 +52,8 @@ export class OrdersService {
       });
     }
 
-    const recipients = [{ id: 3 }, { id:2 }]
+    const recipients = dto.recipients.map((recipient) => ({id: recipient}))
+
     const order = await this.db.order.create({
       data: {
         ownerId: userId,

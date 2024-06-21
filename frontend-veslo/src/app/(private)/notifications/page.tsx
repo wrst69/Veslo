@@ -5,7 +5,7 @@ import { useNotificationsQuery } from "@/entities/notification/_repositories/not
 export default function Notifications() {
   const { data: notifications} = useNotificationsQuery();
   
-  return  <>
+  return  <div className="flex h-screen justify-center items-center">
             {notifications.map(notification => <div key={notification.id}>{notification.type}</div>)}
-          </>
+          </div>
 }

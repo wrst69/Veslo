@@ -4,7 +4,6 @@ import { Button } from '@/shared/ui/button';
 import {
     AlertDialogAction,
     AlertDialogCancel,
-    AlertDialogDescription,
     AlertDialogFooter,
     AlertDialogHeader,
     AlertDialogTitle,
@@ -13,7 +12,7 @@ import {
 export function UpdateModal() {
     return <>
                 <AlertDialogHeader>
-                    <AlertDialogTitle>Редактировать профиль</AlertDialogTitle>
+                    <AlertDialogTitle>Редактировать заявку</AlertDialogTitle>
                 </AlertDialogHeader>
                 <AlertDialogFooter className="flex">
                     <AlertDialogCancel>Отменить</AlertDialogCancel>

@@ -3,7 +3,7 @@ import { notificationsRepository } from './notifications.repository';
 import { SetNotificationIsReadDto } from '../_domain/dto';
 
 
-const notificationsKey = ['notifications'];
+export const notificationsKey = ['notifications'];
 
 export const useNotificationsQuery = () => {
   return useQuery({

@@ -27,9 +27,10 @@ export class CreateOrderDto {
   @IsString()
   type: OrderTypes;
 
-  /* @ApiProperty()
-  @IsNumber()
-  recipients: number[]; */
+  @ApiProperty()
+  @IsArray()
+  @IsNumber({},{each: true}) 
+  recipients: number[];
 }
 
 export class UpdateOrderDto {
