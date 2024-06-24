@@ -14,7 +14,9 @@ import { CreateOrderDto, UpdateOrderDto } from './dto';
 import { SessionInfo } from 'src/auth/session-info.decorator';
 import { GetSessionInfoDto } from 'src/auth/dto';
 import { AuthGuard } from 'src/auth/auth.guard';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('orders')
 @Controller('orders')
 export class OrdersController {
   constructor(private ordersService: OrdersService) {}
@@ -34,17 +36,19 @@ export class OrdersController {
     return this.ordersService.createOrder(session.id, dto);
   }
 
-  @Delete(':id')
+  @Patch(':id')
+  @UseGuards(AuthGuard)
+  updateOrder(
+    @SessionInfo() session: GetSessionInfoDto,
+    @Param('id', ParseIntPipe) orderId: number,
+    @Body() dto: UpdateOrderDto
+  ) {
+    return this.ordersService.updateOrder(session.id, orderId, dto);
+  }
+
+  @Patch(':id')
   @UseGuards(AuthGuard)
   deleteOrder(@Param('id', ParseIntPipe) id: number) {
     return this.ordersService.deleteOrder(id);
   }
-
-  /*   @Patch()
-  updateOrder(
-    @Body() dto: UpdateOrderDto,
-    @SessionInfo() session: getSessionInfoDto,
-  ): Promise<OrderDto> {
-    return this.ordersService.updateOrder(session.id, dto);
-  } */
 }

@@ -21,6 +21,7 @@ model User {
   orders Order[] @relation(name: "owner_rel")
 
   recipientOrders Order[]
+  orderUpdates    OrderUpdate[]
   notifications   Notification[]
   comments        Comment[]
 
@@ -76,6 +77,7 @@ model Order {
   node           Node         @relation(fields: [nodeId], references: [id])
   measurePoint   MeasurePoint @relation(fields: [measurePointId], references: [id])
 
+  orderUpdates  OrderUpdate[]
   recipients    User[]
   notifications Notification[]
   comments      Comment[]
@@ -88,6 +90,7 @@ enum OrderStatuses {
   PROCESSING
   SUCCESS
   FAILED
+  DELETED
 }
 
 enum OrderTypes {
@@ -99,8 +102,16 @@ enum OrderTypes {
 }
 
 model OrderUpdate {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now()) @map("created_at")
+  id          Int              @id @default(autoincrement())
+  createdAt   DateTime         @default(now()) @map("created_at")
+  description String?
+  orderType   OrderTypes?      @map("order_type")
+  status      OrderStatuses?   @default(PENDING)
+
+  ownerId Int   @map("owner_id")
+  orderId Int   @map("order_id")
+  owner   User  @relation(fields: [ownerId], references: [id])
+  order   Order @relation(fields: [orderId], references: [id])
 
   @@map("order_updates")
 }
@@ -111,8 +122,8 @@ model Comment {
   updatedAt DateTime @updatedAt @map("updated_at")
   title     String
 
-  ownerId Int
-  orderId Int
+  ownerId Int   @map("owner_id")
+  orderId Int   @map("order_id")
   owner   User  @relation(fields: [ownerId], references: [id])
   order   Order @relation(fields: [orderId], references: [id])
 
@@ -125,10 +136,10 @@ model Notification {
   type      NotificationTypes
   isRead    Boolean           @default(false) @map("is_read")
 
-  orderId Int
+  orderId Int   @map("order_id")
   order   Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
 
-  recipientId Int
+  recipientId Int  @map("recipient_id")
   recipient   User @relation(fields: [recipientId], references: [id])
 
   @@map("notifications")

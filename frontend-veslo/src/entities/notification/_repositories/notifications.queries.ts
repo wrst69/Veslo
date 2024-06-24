@@ -1,7 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { notificationsRepository } from './notifications.repository';
-import { SetNotificationIsReadDto } from '../_domain/dto';
-
+import { DeleteNotificationDto, SetNotificationIsReadDto } from '../_domain/dto';
 
 export const notificationsKey = ['notifications'];
 
@@ -20,5 +19,16 @@ export const useSetNotificationIsReadMutation = () => {
     async onSuccess() {
       await queryClient.invalidateQueries({ queryKey: notificationsKey });
     }
-  })
-}
+  });
+};
+
+export const useDeleteNotificationMutation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (data: DeleteNotificationDto) => notificationsRepository.deleteNotification(data),
+    async onSuccess() {
+      await queryClient.invalidateQueries({ queryKey: notificationsKey });
+    }
+  });
+};

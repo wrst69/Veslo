@@ -1,9 +1,9 @@
 export enum NotificationType {
-  NEW_ORDER,
-  ORDER_ACCEPTED,
-  ORDER_UPDATED,
-  ORDER_COMMENTED,
-  ORDER_COMPLETED,
-  ORDER_FAILED,
-  ORDER_DELETED
+  NewOrder = 'NEW_ORDER',
+  OrderAccepted = 'ORDER_ACCEPTED',
+  OrderUpdated = 'ORDER_UPDATED',
+  OrderCommented = 'ORDER_COMMENTED',
+  OrderCompleted = 'ORDER_COMPLETED',
+  OrderFailed = 'ORDER_FAILED',
+  OrderDeleted = 'ORDER_DELETED'
 };

@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { CreateOrderDto } from './dto';
+import { CreateOrderDto, UpdateOrderDto } from './dto';
 import { DbService } from 'src/db/db.service';
 import { NodesService } from 'src/nodes/nodes.service';
 import { NotificationsService } from 'src/notifications/notifications.service';
-import { NotificationTypes } from '@prisma/client';
+import { NotificationTypes, OrderStatuses, OrderUpdateTypes } from '@prisma/client';
 
 @Injectable()
 export class OrdersService {
@@ -15,6 +15,7 @@ export class OrdersService {
 
   async getOrders() {
     return await this.db.order.findMany({
+      where: {status: { not: OrderStatuses.DELETED}},
       select: {
         id: true,
         createdAt: true,
@@ -65,16 +66,42 @@ export class OrdersService {
       },
     });
 
-    recipients.map(async (recipient) => await this.notificationsService.createNotification({
-      type: NotificationTypes.NEW_ORDER,
-      orderId: order.id,
-      recipientId: recipient.id
-    }))
+    if (order) {
+      this.notificationsService.createNotifications({ orderId: order.id, recipients: recipients, type: NotificationTypes.NEW_ORDER })
+    }
 
     return order;
   }
 
+  async updateOrder(userId: number, orderId: number, dto: UpdateOrderDto) {
+    const order = await this.db.order.update({ where: {id: orderId}, data: { ...dto, ownerId: userId }, select: {id: true, recipients: { select: { id: true }}}});
+
+    if (order) {
+      switch (dto.status) {
+        case OrderStatuses.PROCESSING:
+          this.notificationsService.createNotifications({ orderId: order.id, recipients: order.recipients, type: NotificationTypes.ORDER_ACCEPTED });
+          break;
+        case OrderStatuses.SUCCESS:
+          this.notificationsService.createNotifications({ orderId: order.id, recipients: order.recipients, type: NotificationTypes.ORDER_COMPLETED });
+          break;
+        case OrderStatuses.FAILED:
+          this.notificationsService.createNotifications({ orderId: order.id, recipients: order.recipients, type: NotificationTypes.ORDER_FAILED });
+          break;
+        default:
+          this.notificationsService.createNotifications({ orderId: order.id, recipients: order.recipients, type: NotificationTypes.ORDER_UPDATED });
+      }
+    }
+    
+    return order;
+  }
+  
   async deleteOrder(id: number) {
-    return await this.db.order.delete({ where: { id } });
+    const order = await this.db.order.update({ where: { id }, data: {status: OrderStatuses.DELETED}, select: {id: true, recipients: { select: { id: true }}}});
+
+    if (order) {
+      this.notificationsService.createNotifications({ orderId: order.id, recipients: order.recipients, type: NotificationTypes.ORDER_DELETED })
+    }
+    
+    return order;
   }
 }

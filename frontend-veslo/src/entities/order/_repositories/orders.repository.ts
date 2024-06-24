@@ -1,4 +1,4 @@
-import { CreateOrderDto, DeleteOrderDto } from '../_domain/dto';
+import { CreateOrderDto, DeleteOrderDto, UpdateOrderDto } from '../_domain/dto';
 import { axiosInstance } from '@/shared/api/axios';
 
 class OrdersRepository {
@@ -6,7 +6,7 @@ class OrdersRepository {
 
     createOrder = async (data: CreateOrderDto) => await axiosInstance.post('/orders', data).then((res) => res.data);
 
-    updateOrder = async () => {};
+    updateOrder = async (data: UpdateOrderDto) => {};
     
     deleteOrder = async (data: DeleteOrderDto) => await axiosInstance.delete(`/orders/${data}`).then((res) => res.data);
 }

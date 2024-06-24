@@ -1,5 +1,5 @@
 'use server';
 
 export default async function AdminPanel() {
-  return <>ADMIN PANEL</>
+  return <div className="flex h-screen justify-center items-center">ADMIN PANEL</div>
 }

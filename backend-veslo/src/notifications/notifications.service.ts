@@ -13,7 +13,21 @@ export class NotificationsService {
     })
   }
 
-  async createNotification(dto: CreateNotificationDto) {
-    return this.db.notification.create({ data: { ...dto } })
+  async createNotifications(dto: CreateNotificationDto) {
+    const { recipients, ...data} = dto;
+
+    recipients.map(async (recipient) => await this.db.notification.create ({ data: { recipientId: recipient.id, ...data } }));
   }
+
+  async setIsRead(id: number) {
+    await this.db.notification.update({ where: { id }, data: { isRead: true }});
+  }
+
+  async setAllNotificationsIsRead(id: number) {
+    await this.db.notification.updateMany({ where: {recipientId: id}, data: { isRead: true } })
+  }
+  async deleteNotification(id: number) {
+    await this.db.notification.delete({ where: { id} })
+  }
+
 }
