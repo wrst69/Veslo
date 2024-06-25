@@ -3,7 +3,7 @@ import { CreateOrderDto, UpdateOrderDto } from './dto';
 import { DbService } from 'src/db/db.service';
 import { NodesService } from 'src/nodes/nodes.service';
 import { NotificationsService } from 'src/notifications/notifications.service';
-import { NotificationTypes, OrderStatuses, OrderUpdateTypes } from '@prisma/client';
+import { NotificationTypes, OrderStatuses } from '@prisma/client';
 
 @Injectable()
 export class OrdersService {

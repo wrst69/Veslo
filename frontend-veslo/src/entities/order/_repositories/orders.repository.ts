@@ -8,7 +8,7 @@ class OrdersRepository {
 
     updateOrder = async (data: UpdateOrderDto) => {};
     
-    deleteOrder = async (data: DeleteOrderDto) => await axiosInstance.delete(`/orders/${data}`).then((res) => res.data);
+    deleteOrder = async (data: DeleteOrderDto) => await axiosInstance.patch(`/orders/delete/${data}`).then((res) => res.data);
 }
 
 export const ordersRepository = new OrdersRepository();

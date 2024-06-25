@@ -12,7 +12,9 @@ import { Copy, Truck, MoreVertical, CreditCard, ChevronLeft, ChevronRight } from
 
 export default function OrderPage({ params } : { params : { id: string }}) {
     const {data, isLoading} = useOrdersQuery();
+
     if (isLoading) return;
+
     const order: OrderEntity = data.filter(order => order.id === parseInt(params.id))[0];
 
     console.log(order)
@@ -27,8 +29,10 @@ export default function OrderPage({ params } : { params : { id: string }}) {
                     Заявка № {order.id}
                   </CardTitle>
                   <CardDescription>Date: {dayjs(order.createdAt).format('DD.MM.YYYY H:mm')}</CardDescription>
+                  
                 </div>
-                <div className="ml-auto flex items-center gap-1">
+                </CardHeader>
+                {/* <div className="ml-auto flex items-center gap-1">
                   <Button size="sm" variant="outline" className="h-8 gap-1">
                     <Truck className="h-3.5 w-3.5" />
                     <span className="lg:sr-only xl:not-sr-only xl:whitespace-nowrap">
@@ -161,7 +165,7 @@ export default function OrderPage({ params } : { params : { id: string }}) {
                     </PaginationItem>
                   </PaginationContent>
                 </Pagination>
-              </CardFooter>
+              </CardFooter> */}
             </Card>
             </main>
 }

@@ -1,7 +1,6 @@
 import {
   Body,
   Controller,
-  Delete,
   Get,
   Param,
   ParseIntPipe,
@@ -46,7 +45,7 @@ export class OrdersController {
     return this.ordersService.updateOrder(session.id, orderId, dto);
   }
 
-  @Patch(':id')
+  @Patch('delete/:id')
   @UseGuards(AuthGuard)
   deleteOrder(@Param('id', ParseIntPipe) id: number) {
     return this.ordersService.deleteOrder(id);
