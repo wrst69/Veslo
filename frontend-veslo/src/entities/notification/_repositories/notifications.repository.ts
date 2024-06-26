@@ -4,11 +4,11 @@ import { DeleteNotificationDto, SetAllNotificationsIsReadDto, SetNotificationIsR
 class NotificationsRepository {
     getNotifications = async () => await axiosInstance.get('/notifications').then((res) => res.data);
 
-    setNotificationIsRead = async (data: SetNotificationIsReadDto) => await axiosInstance.patch(`/notifications/${data}`).then((res) => res.data);
+    setNotificationIsRead = async (dto: SetNotificationIsReadDto) => await axiosInstance.patch(`/notifications/${dto}`).then((res) => res.data);
 
-    setAllNotificationsIsRead = async (data: SetAllNotificationsIsReadDto) => await axiosInstance.patch(`/notifications/all/${data}`)
+    setAllNotificationsIsRead = async (dto: SetAllNotificationsIsReadDto) => await axiosInstance.patch(`/notifications/all/${dto}`)
 
-    deleteNotification = async (data: DeleteNotificationDto) => await axiosInstance.delete(`/notifications/${data}`).then((res) => res.data);
+    deleteNotification = async (dto: DeleteNotificationDto) => await axiosInstance.delete(`/notifications/${dto}`).then((res) => res.data);
 }
 
 export const notificationsRepository = new NotificationsRepository();

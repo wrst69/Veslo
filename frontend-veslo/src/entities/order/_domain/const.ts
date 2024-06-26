@@ -2,7 +2,8 @@ export enum OrderStatus {
   Pending = 'PENDING',
   Processing = 'PROCESSING',
   Success = 'SUCCESS',
-  Failed = 'FAILED'
+  Failed = 'FAILED',
+  Deleted = 'DELETED'
 };
 
 export enum OrderType {

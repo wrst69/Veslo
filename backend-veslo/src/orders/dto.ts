@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { OrderStatuses, OrderTypes, OrderUpdateTypes } from '@prisma/client';
+import { OrderStatuses, OrderTypes } from '@prisma/client';
 import { IsArray, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class CreateOrderDto {

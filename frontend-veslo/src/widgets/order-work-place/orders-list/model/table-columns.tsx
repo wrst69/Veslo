@@ -2,8 +2,9 @@
 
 import dayjs from 'dayjs';
 import { ColumnDef } from "@tanstack/react-table"
-import { OrderEntity } from "@/entities/order/_domain/types";
+import { OrderEntity, OrderStatus } from "@/entities/order/_domain/types";
 import { OrderElementActions } from "../_ui/order-list-elements-actions/order-element-actions";
+import { humanizeOrderStatus, humanizeOrderType } from '@/shared/lib/utils';
 
 export const columns: ColumnDef<OrderEntity>[] = [
   {
@@ -13,20 +14,30 @@ export const columns: ColumnDef<OrderEntity>[] = [
       const date: Date = row.getValue('createdAt');
       const formattedDate = dayjs(date).format('DD.MM.YYYY');
       
-      return <div className="text-right font-medium">{formattedDate}</div>;
+      return <div>{formattedDate}</div>;
     }
   },
   {
     accessorKey: 'status',
-    header: 'Статус'
+    header: 'Статус',
+    cell: ({ row }) => {
+      const status: OrderStatus = row.getValue('status');
+      
+      return <div>{humanizeOrderStatus(status)}</div>;
+    }
   },
   {
     accessorKey: 'measurePoint.title',
-    header: 'Адрес'
+    header: 'Адрес',
   },
   {
     accessorKey: 'type',
-    header: "Тип заявки"
+    header: "Тип заявки",
+    cell: ({ row }) => {
+      const type: OrderStatus = row.getValue('type');
+      
+      return <div>{humanizeOrderType(type)}</div>;
+    }
   },
   {
     accessorKey: 'owner.name',

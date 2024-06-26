@@ -21,6 +21,7 @@ import { Dispatch, useState } from 'react';
 import { OrderType } from '@/entities/order/_domain/const';
 import { useUsersQuery } from '@/entities/user/_repositories/users.queries';
 import { Checkbox } from '@/shared/ui/checkbox';
+import { humanizeOrderType } from '@/shared/lib/utils';
 
 const createOrderFormSchema = z.object({
     type: z.nativeEnum(OrderType, {
@@ -99,7 +100,7 @@ export function CreateOrderForm({
                                         </SelectTrigger>
                                     </FormControl>
                                     <SelectContent>
-                                        {Object.values(OrderType).map(type => <SelectItem key={type} value={type}>{type}</SelectItem>)}
+                                        {Object.values(OrderType).map(type => <SelectItem key={type} value={type}>{humanizeOrderType(type)}</SelectItem>)}
                                     </SelectContent>
                                 </Select>
                                 <FormMessage />

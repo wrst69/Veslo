@@ -26,6 +26,14 @@ export class OrdersController {
     return this.ordersService.getOrders();
   }
 
+  @Get(':id')
+  @UseGuards(AuthGuard)
+  getOrderById(
+    @Param('id', ParseIntPipe) orderId: number
+  ) {
+    return this.ordersService.getOrderById(orderId);
+  }
+
   @Post()
   @UseGuards(AuthGuard)
   createOrder(

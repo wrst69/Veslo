@@ -31,6 +31,13 @@ export class OrdersService {
     });
   }
 
+  async getOrderById(orderId: number) {
+    return await this.db.order.findUnique({ 
+      where: { id: orderId },
+      include: { owner: { select: { id: true, name: true } }, node: { select: { lersId: true }} , measurePoint: { select: { lersId: true, title: true } }}
+    });
+  }
+
   async createOrder(userId: number, dto: CreateOrderDto) {
     let node = await this.nodesService.checkNodeExist(dto.nodeLersId);
 
@@ -53,8 +60,8 @@ export class OrdersService {
       });
     }
 
-    const recipients = dto.recipients.map((recipient) => ({id: recipient}))
-
+    const recipients = dto.recipients.map((recipient) => ({id: recipient}));
+    
     const order = await this.db.order.create({
       data: {
         ownerId: userId,
@@ -74,25 +81,33 @@ export class OrdersService {
   }
 
   async updateOrder(userId: number, orderId: number, dto: UpdateOrderDto) {
-    const order = await this.db.order.update({ where: {id: orderId}, data: { ...dto, ownerId: userId }, select: {id: true, recipients: { select: { id: true }}}});
-
-    if (order) {
+    const { id, recipients, owner } = await this.db.order.update({ 
+      where: {id: orderId}, 
+      data: { ...dto }, 
+      select: { 
+        id: true, 
+        owner: { select: { id: true }}, 
+        recipients: { select: { id: true }}
+      }
+    });
+    
+    recipients.push( { id: owner.id });
+   
+    if (recipients) {
       switch (dto.status) {
         case OrderStatuses.PROCESSING:
-          this.notificationsService.createNotifications({ orderId: order.id, recipients: order.recipients, type: NotificationTypes.ORDER_ACCEPTED });
+          this.notificationsService.createNotifications({ orderId: id, recipients: recipients, type: NotificationTypes.ORDER_ACCEPTED });
           break;
         case OrderStatuses.SUCCESS:
-          this.notificationsService.createNotifications({ orderId: order.id, recipients: order.recipients, type: NotificationTypes.ORDER_COMPLETED });
+          this.notificationsService.createNotifications({ orderId: id, recipients: recipients, type: NotificationTypes.ORDER_COMPLETED });
           break;
         case OrderStatuses.FAILED:
-          this.notificationsService.createNotifications({ orderId: order.id, recipients: order.recipients, type: NotificationTypes.ORDER_FAILED });
+          this.notificationsService.createNotifications({ orderId: id, recipients: recipients, type: NotificationTypes.ORDER_FAILED });
           break;
         default:
-          this.notificationsService.createNotifications({ orderId: order.id, recipients: order.recipients, type: NotificationTypes.ORDER_UPDATED });
+          this.notificationsService.createNotifications({ orderId: id, recipients: recipients, type: NotificationTypes.ORDER_UPDATED });
       }
     }
-    
-    return order;
   }
   
   async deleteOrder(id: number) {
