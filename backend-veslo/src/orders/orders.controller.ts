@@ -6,6 +6,7 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { OrdersService } from './orders.service';
@@ -14,6 +15,7 @@ import { SessionInfo } from 'src/auth/session-info.decorator';
 import { GetSessionInfoDto } from 'src/auth/dto';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { ApiTags } from '@nestjs/swagger';
+import { OrdersQuery } from './query/order.query';
 
 @ApiTags('orders')
 @Controller('orders')
@@ -24,6 +26,13 @@ export class OrdersController {
   @UseGuards(AuthGuard)
   getOrders() {
     return this.ordersService.getOrders();
+  }
+
+  @Get('filter')
+  async index(
+    @Query() query: OrdersQuery
+  ) {
+    return await this.ordersService.getOrdersByFilter(query);
   }
 
   @Get(':id')

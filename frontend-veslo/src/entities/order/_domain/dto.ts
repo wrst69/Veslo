@@ -2,6 +2,10 @@ import { MeasurePointLersId, NodeLersId } from '@/entities/node/_domain/types';
 import { OrderId, OrderStatus, OrderType } from './types';
 import { UserId } from '@/entities/user/_domain/types';
 
+export type FilteredOrdersDto = {
+    status: OrderStatus | 'ALL',
+}
+
 export type CreateOrderDto = {
     nodeLersId: NodeLersId,
     nodeTitle: string,

@@ -6,7 +6,7 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from 'src/users/users.service';
 import { PasswordService } from './password.service';
-import { Roles } from '@prisma/client';
+import { Divisions, Roles } from '@prisma/client';
 
 @Injectable()
 export class AuthService {
@@ -33,13 +33,14 @@ export class AuthService {
       id: user.id,
       login: user.login,
       name: user.name,
-      role: user.role
+      role: user.role,
+      division: user.division
     });
 
     return { accessToken, user };
   }
 
-  async signUp(login: string, name: string, role: Roles, password: string) {
+  async signUp(login: string, name: string, role: Roles, division: Divisions, password: string) {
     const user = await this.usersService.findByLogin(login);
 
     if (user) {
@@ -53,6 +54,7 @@ export class AuthService {
       login,
       name,
       role,
+      division,
       hash,
       salt,
     );
@@ -61,7 +63,8 @@ export class AuthService {
       id: newUser.id,
       login: newUser.login,
       name: newUser.name,
-      role: newUser.role
+      role: newUser.role,
+      division: newUser.division
     });
 
     return { accessToken };

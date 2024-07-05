@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Roles } from '@prisma/client';
+import { Divisions, Roles } from '@prisma/client';
 import { IsNotEmpty, IsString } from 'class-validator';
 
 export class SignUpBodyDto {
@@ -18,11 +18,18 @@ export class SignUpBodyDto {
   name: string;
 
   @ApiProperty({
-    example: 'viewer',
+    example: 'VIEWER',
   })
   @IsNotEmpty()
   @IsString()
   role: Roles;
+
+  @ApiProperty({
+    example: 'KIP',
+  })
+  @IsNotEmpty()
+  @IsString()
+  division: Divisions;
 
   @ApiProperty({
     example: '123456',

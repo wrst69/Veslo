@@ -7,9 +7,8 @@ export enum OrderStatus {
 };
 
 export enum OrderType {
-  First = 'FIRST',
-  Second = 'SECOND',
-  Third = 'THIRD',
-  Fourth = 'FOURTH',
-  Fifth = 'FIFTH'
+  Diagnostics = 'DIAGNOSTICS',
+  Dismantling = 'DISMANTLING',
+  Installation = 'INSTALLATION',
+  Verification = 'VERIFICATION',
 };

@@ -26,15 +26,13 @@ export const humanizeOrderStatus = (status: OrderStatus) => {
 
 export const humanizeOrderType = (type: OrderType) => {
   switch (type) {
-    case OrderType.First:
-      return 'Тип 1';
-    case OrderType.Second:
-      return 'Тип 2';
-    case OrderType.Third:
-      return 'Тип 3';
-    case OrderType.Fourth:
-      return 'Тип 4';
-    case OrderType.Fifth:
-      return 'Тип 5';
+    case OrderType.Diagnostics:
+      return 'Диагностика';
+    case OrderType.Dismantling:
+      return 'Демонтаж';
+    case OrderType.Installation:
+      return 'Монтаж';
+    case OrderType.Verification:
+      return 'Поверка';
   } 
 }

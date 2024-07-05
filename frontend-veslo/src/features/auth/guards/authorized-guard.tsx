@@ -2,20 +2,23 @@
 
 import { useRouter } from 'next/navigation';
 import { useSessionQuery } from '@/entities/session/session.queries';
-import { FullPageSpinner } from '@/shared/ui/full-page-spinner';
 import { ROUTES } from '@/shared/constants/routes';
+import { useEffect } from 'react';
 
 export default function AuthorizedGuard({ children }: { children: React.ReactNode }) {
+  const { isSuccess, isError, data } = useSessionQuery();
+  
   const router = useRouter();
 
-  const { isSuccess, isError, isLoading } = useSessionQuery();
-
-  if (isError) {
-    router.replace(ROUTES.SIGN_IN);
+  useEffect(() => {
+    if (isError) {
+      router.replace(ROUTES.SIGN_IN);
+    }
+  }, [isError])
+  
+  if (isSuccess && data) {
+    return  <>{children}</>;
   }
-
-  return  <>
-            {isLoading && <FullPageSpinner isLoading={isLoading}/>}
-            {isSuccess && children}
-          </>
+  
+  return null;
 }

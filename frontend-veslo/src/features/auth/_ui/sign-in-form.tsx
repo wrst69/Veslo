@@ -44,8 +44,8 @@ export function SignInForm() {
                     </FormItem>
                   )}
                 />
-                <Button disabled={isPending} type="submit" size={"lg"} className="w-full">Войти</Button>
                 {errorMessage && <div className="text-rose-500 ">{errorMessage}</div>}
+                <Button disabled={isPending} type="submit" size={"lg"} className="w-full">Войти</Button>
               </form>
             </Form>
 }

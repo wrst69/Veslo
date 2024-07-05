@@ -7,8 +7,7 @@ export const useSessionQuery = () => {
   return useQuery({
     queryKey: sessionKey,
     queryFn: () => authRepository.getSessionInfo(),
-    retry: 0,
-    staleTime: 5 * 60 * 1000,
+    retry: 0
   });
 };
 

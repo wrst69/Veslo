@@ -2,7 +2,7 @@
 
 import dayjs from 'dayjs';
 import { ColumnDef } from "@tanstack/react-table"
-import { OrderEntity, OrderStatus } from "@/entities/order/_domain/types";
+import { OrderEntity, OrderStatus, OrderType } from "@/entities/order/_domain/types";
 import { OrderElementActions } from "../_ui/order-list-elements-actions/order-element-actions";
 import { humanizeOrderStatus, humanizeOrderType } from '@/shared/lib/utils';
 
@@ -27,17 +27,17 @@ export const columns: ColumnDef<OrderEntity>[] = [
     }
   },
   {
-    accessorKey: 'measurePoint.title',
-    header: 'Адрес',
-  },
-  {
     accessorKey: 'type',
     header: "Тип заявки",
     cell: ({ row }) => {
-      const type: OrderStatus = row.getValue('type');
+      const type: OrderType = row.getValue('type');
       
       return <div>{humanizeOrderType(type)}</div>;
     }
+  },
+  {
+    accessorKey: 'measurePoint.title',
+    header: 'Адрес',
   },
   {
     accessorKey: 'owner.name',

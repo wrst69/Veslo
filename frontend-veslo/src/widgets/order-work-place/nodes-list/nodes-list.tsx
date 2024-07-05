@@ -33,7 +33,7 @@ export function NodesList({
     const { data, isLoading } = useLersNodesQuery();
 
     if (isLoading) {
-        return <FullPageSpinner isLoading={isLoading}/>
+        return <FullPageSpinner/>
     }
         
     const {nodeGroups, nodes, measurePoints } = data;

@@ -34,6 +34,7 @@ export class AuthController {
       body.login,
       body.name,
       body.role,
+      body.division,
       body.password,
     );
 

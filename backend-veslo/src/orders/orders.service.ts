@@ -4,6 +4,7 @@ import { DbService } from 'src/db/db.service';
 import { NodesService } from 'src/nodes/nodes.service';
 import { NotificationsService } from 'src/notifications/notifications.service';
 import { NotificationTypes, OrderStatuses } from '@prisma/client';
+import { OrdersQuery } from './query/order.query';
 
 @Injectable()
 export class OrdersService {
@@ -36,6 +37,18 @@ export class OrdersService {
       where: { id: orderId },
       include: { owner: { select: { id: true, name: true } }, node: { select: { lersId: true }} , measurePoint: { select: { lersId: true, title: true } }}
     });
+  }
+
+  async getOrdersByFilter({ /* limit, sortDirection, */ status }: OrdersQuery) {
+    if (status === 'ALL') {
+      return this.db.order.findMany();
+    }
+
+    return this.db.order.findMany({
+      where: {
+        status
+      }
+    })
   }
 
   async createOrder(userId: number, dto: CreateOrderDto) {

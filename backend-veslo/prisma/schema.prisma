@@ -8,18 +8,18 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  id        Int        @id @default(autoincrement())
+  createdAt DateTime   @default(now()) @map("created_at")
+  updatedAt DateTime   @updatedAt @map("updated_at")
   name      String
   hash      String
   salt      String
-  login     String   @unique
+  login     String     @unique
   avatar    String?
-  role      Roles    @default(VIEWER)
+  role      Roles      @default(VIEWER)
+  division  Divisions?
 
-  orders Order[] @relation(name: "owner_rel")
-
+  orders          Order[]        @relation(name: "owner_rel")
   recipientOrders Order[]
   orderUpdates    OrderUpdate[]
   notifications   Notification[]
@@ -32,6 +32,12 @@ enum Roles {
   ADMIN
   USER
   VIEWER
+}
+
+enum Divisions {
+  KIP
+  PU
+  PO
 }
 
 model Node {
@@ -67,14 +73,16 @@ model Order {
   createdAt   DateTime      @default(now()) @map("created_at")
   updatedAt   DateTime      @updatedAt @map("updated_at")
   description String
-  type        OrderTypes    @default(FIRST)
+  type        OrderTypes
   status      OrderStatuses @default(PENDING)
 
   ownerId        Int          @map("owner_id")
-  nodeId         Int          @map("node_id")
-  measurePointId Int          @map("measure_point_id")
   owner          User         @relation(name: "owner_rel", fields: [ownerId], references: [id])
+
+  nodeId         Int          @map("node_id")
   node           Node         @relation(fields: [nodeId], references: [id])
+
+  measurePointId Int          @map("measure_point_id")
   measurePoint   MeasurePoint @relation(fields: [measurePointId], references: [id])
 
   orderUpdates  OrderUpdate[]
@@ -94,23 +102,23 @@ enum OrderStatuses {
 }
 
 enum OrderTypes {
-  FIRST
-  SECOND
-  THIRD
-  FOURTH
-  FIFTH
+  DIAGNOSTICS
+  DISMANTLING
+  INSTALLATION
+  VERIFICATION
 }
 
 model OrderUpdate {
-  id          Int              @id @default(autoincrement())
-  createdAt   DateTime         @default(now()) @map("created_at")
+  id          Int            @id @default(autoincrement())
+  createdAt   DateTime       @default(now()) @map("created_at")
   description String?
-  orderType   OrderTypes?      @map("order_type")
-  status      OrderStatuses?   @default(PENDING)
+  orderType   OrderTypes?    @map("order_type")
+  status      OrderStatuses? @default(PENDING)
 
   ownerId Int   @map("owner_id")
-  orderId Int   @map("order_id")
   owner   User  @relation(fields: [ownerId], references: [id])
+
+  orderId Int   @map("order_id")
   order   Order @relation(fields: [orderId], references: [id])
 
   @@map("order_updates")
@@ -123,8 +131,9 @@ model Comment {
   title     String
 
   ownerId Int   @map("owner_id")
-  orderId Int   @map("order_id")
   owner   User  @relation(fields: [ownerId], references: [id])
+
+  orderId Int   @map("order_id")
   order   Order @relation(fields: [orderId], references: [id])
 
   @@map("comments")

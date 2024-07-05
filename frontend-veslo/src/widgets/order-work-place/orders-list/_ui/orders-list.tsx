@@ -12,7 +12,7 @@ export function OrderList({
     selectedPoint
 }) {
     const { data, isLoading } = useOrdersQuery();
-    const orders: OrderEntity[] = data; //а как задать тип если деструктурировать из квери { data: orders}
+    const orders: OrderEntity[] = data;
 
     if (isLoading) {
         return <FullPageSpinner isLoading={isLoading}/>

@@ -8,18 +8,28 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@/shared/ui/dropdown-menu';
-import {
-    AlertDialog,
-    AlertDialogTrigger,
-} from '@/shared/ui/alert-dialog';
+import { AlertDialog, AlertDialogTrigger } from '@/shared/ui/alert-dialog';
 import { OrderEntity } from '@/entities/order/_domain/types';
 import { useState } from 'react';
 import { Modal } from './modal/layout';
 import { ModalType } from '../../model/const';
+import { useSessionQuery } from '@/entities/session/session.queries';
+import Link from 'next/link';
+import { ROUTES } from '@/shared/constants/routes';
 
-export function OrderElementActions({order} : {order: OrderEntity}) {
+export function OrderElementActions({
+    order
+}: {
+    order: OrderEntity
+}) {
     const [isOpen, setOpen] = useState(false);
     const [modalType, setModalType] = useState(ModalType.NONE);
+
+    const { data: user } = useSessionQuery();
+
+    if (!user) {
+        return null;
+    }
 
     return <AlertDialog open={isOpen} onOpenChange={setOpen}>
                 <DropdownMenu>
@@ -32,10 +42,13 @@ export function OrderElementActions({order} : {order: OrderEntity}) {
                 <DropdownMenuContent align="end">
                     <DropdownMenuLabel>Действия</DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <AlertDialogTrigger asChild onClick={() => setModalType(ModalType.UPDATE)}>
+                    <Link href={`${ROUTES.ORDERS}/${order.id}`}>
+                        <DropdownMenuItem>Открыть</DropdownMenuItem>
+                    </Link>
+                    <AlertDialogTrigger asChild disabled={user.id !== order.owner.id} onClick={() => setModalType(ModalType.UPDATE)}>
                         <DropdownMenuItem>Редактировать</DropdownMenuItem>
                     </AlertDialogTrigger>
-                    <AlertDialogTrigger asChild onClick={() => setModalType(ModalType.DELETE)}>
+                    <AlertDialogTrigger asChild disabled={user.id !== order.owner.id} onClick={() => setModalType(ModalType.DELETE)}>
                         <DropdownMenuItem className="text-red-800">Удалить</DropdownMenuItem>
                     </AlertDialogTrigger>     
                 </DropdownMenuContent>  

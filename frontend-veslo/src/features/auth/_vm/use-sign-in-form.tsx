@@ -1,3 +1,5 @@
+'use client';
+
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { useMutation } from "@tanstack/react-query";
@@ -30,9 +32,9 @@ export function useSignInForm() {
     const signInMutation = useMutation({
         mutationKey: ['login'],
         mutationFn: (data: AuthFormDataDto) => authRepository.signIn(data),
-        onSuccess(data) {
+        onSuccess() {
             reset();
-            router.replace(ROUTES.ORDERS);
+            router.replace(ROUTES.HOME);
         },
     })
     
