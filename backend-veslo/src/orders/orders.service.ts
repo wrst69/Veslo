@@ -41,13 +41,38 @@ export class OrdersService {
 
   async getOrdersByFilter({ /* limit, sortDirection, */ status }: OrdersQuery) {
     if (status === 'ALL') {
-      return this.db.order.findMany();
+      return this.db.order.findMany({
+        select: {
+          id: true,
+          createdAt: true,
+          updatedAt: true,
+          description: true,
+          type: true,
+          status: true,
+          owner: { select: { id: true, name: true } },
+          node: { select: { lersId: true } },
+          measurePoint: { select: { lersId: true, title: true } },
+        },
+        orderBy: { createdAt: 'desc' }
+      });
     }
 
     return this.db.order.findMany({
       where: {
         status
-      }
+      },
+      select: {
+        id: true,
+        createdAt: true,
+        updatedAt: true,
+        description: true,
+        type: true,
+        status: true,
+        owner: { select: { id: true, name: true } },
+        node: { select: { lersId: true } },
+        measurePoint: { select: { lersId: true, title: true } },
+      },
+      orderBy: { createdAt: 'desc' }
     })
   }
 

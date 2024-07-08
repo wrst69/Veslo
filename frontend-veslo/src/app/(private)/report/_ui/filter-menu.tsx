@@ -15,8 +15,8 @@ export function FilterMenu({
   filter,
   setFilter
 }) {
-  const testHandle = () => {
-    setFilter({status: OrderStatus.Success});
+  const testHandle = (status: OrderStatus.Success) => {
+    setFilter({ status});
   }
 
   return  <DropdownMenu>
@@ -28,8 +28,8 @@ export function FilterMenu({
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuCheckboxItem textValue={"ALL"} checked={filter.status === "ALL"} onCheckedChange={() => setFilter({status: "ALL"})}>Все</DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem>В работе</DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem checked={filter.status === OrderStatus.Success} onCheckedChange={testHandle}>Закрытые</DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem checked={filter.status === OrderStatus.Processing} onCheckedChange={() => setFilter({status: OrderStatus.Processing})}>В работе</DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem checked={filter.status === OrderStatus.Success} onCheckedChange={() => setFilter({status: OrderStatus.Success})}>Закрытые</DropdownMenuCheckboxItem>
               <DropdownMenuCheckboxItem>Архив</DropdownMenuCheckboxItem>
             </DropdownMenuContent>
           </DropdownMenu>

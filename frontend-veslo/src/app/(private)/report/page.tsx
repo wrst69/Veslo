@@ -15,11 +15,11 @@ import {
   TabsList,
   TabsTrigger,
 } from '@/shared/ui/tabs';
-import { useFilteredOrdersQuery, useOrdersQuery } from "@/entities/order/_repositories/orders.queries";
+import { useFilteredOrdersQuery } from "@/entities/order/_repositories/orders.queries";
 import { ReportTable } from "./_ui/report-table";
 import { InfoCards } from "./_ui/info-cards";
 import { FilterMenu } from "./_ui/filter-menu";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FullPageSpinner } from "@/shared/ui/full-page-spinner";
 import { PeriodTypes } from "./model/const";
 import { FilteredOrdersDto } from "@/entities/order/_domain/dto";
@@ -33,7 +33,7 @@ export default function ReportPage() {
   if (isPending) {
     return <FullPageSpinner/>;
   }
-  
+  console.log(data)
   return  <div className="flex min-h-screen w-full flex-col">
             <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
               <Tabs defaultValue={PeriodTypes.All} onValueChange={(value: string) => setPeriod(value)}>
@@ -54,7 +54,6 @@ export default function ReportPage() {
                 </div>
                 <TabsContent value={period}>
                   <InfoCards data={data}/>
-                  {/* <div>{period}</div> */}
                   <div className="mt-4">
                     <Card >
                       {/* <CardHeader className="flex flex-row items-center">
@@ -67,7 +66,11 @@ export default function ReportPage() {
                         </Button>
                       </CardHeader> */}
                       <CardContent>
-                        <ReportTable/>
+                        {/* <ReportTable/> */}
+                        <div className="flex flex-col">
+                          {data?.map((order) => <div key={order.id}>{`${order.id}            ${order.measurePoint.title}`}</div>)}
+                        </div>
+                        
                       </CardContent>
                     </Card>
                   </div>
