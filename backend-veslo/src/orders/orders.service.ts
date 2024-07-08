@@ -41,7 +41,10 @@ export class OrdersService {
 
   async getOrdersByFilter({ /* limit, sortDirection, */ status }: OrdersQuery) {
     if (status === 'ALL') {
-      return this.db.order.findMany({
+      return await this.db.order.findMany({
+        where: {
+          status: { not: OrderStatuses.DELETED}
+        },
         select: {
           id: true,
           createdAt: true,
@@ -57,7 +60,7 @@ export class OrdersService {
       });
     }
 
-    return this.db.order.findMany({
+    return await this.db.order.findMany({
       where: {
         status
       },
@@ -74,6 +77,16 @@ export class OrdersService {
       },
       orderBy: { createdAt: 'desc' }
     })
+  }
+
+  async getOrderCounts() {
+    return {
+      all: await this.db.order.count({ where: { status: { not: OrderStatuses.DELETED }}}),
+      pending: await this.db.order.count({ where: { status: OrderStatuses.PENDING }}),
+      processing: await this.db.order.count({ where: { status: OrderStatuses.PROCESSING }}),
+      success: await this.db.order.count({ where: { status: OrderStatuses.SUCCESS }}),
+      failed: await this.db.order.count({ where: { status: OrderStatuses.FAILED }})
+    }
   }
 
   async createOrder(userId: number, dto: CreateOrderDto) {

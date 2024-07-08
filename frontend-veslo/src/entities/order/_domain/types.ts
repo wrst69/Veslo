@@ -35,4 +35,12 @@ export type OrderEntity = {
     cost: number,  */ //maybe nenado
 };
 
+export type OrderCounts = {
+    all: number,
+    pending: number,
+    processing: number,
+    success: number,
+    failed: number
+};
+
 export { OrderType, OrderStatus };

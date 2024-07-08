@@ -2,10 +2,11 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ordersRepository } from './orders.repository';
 import { CreateOrderDto, DeleteOrderDto, FilteredOrdersDto, UpdateOrderDto } from '../_domain/dto';
 import { notificationsKey } from '@/entities/notification/_repositories/notifications.queries';
-import { OrderEntity, OrderId } from '../_domain/types';
+import { OrderCounts, OrderEntity, OrderId } from '../_domain/types';
 
 export const reportOrdersKey = ['report_orders'];
 export const ordersKey = ['orders'];
+export const ordersCount = ['orders_count'];
 
 export const useOrdersQuery = () => {
   return useQuery<OrderEntity[]>({
@@ -25,6 +26,13 @@ export const useOrderByIdQuery = (data: OrderId) => {
   return useQuery<OrderEntity>({
     queryKey: ['orders', data],
     queryFn: () => ordersRepository.getOrderById(data)
+  })
+};
+
+export const useOrderCountsQuery = () => {
+  return useQuery<OrderCounts>({
+    queryKey: ordersCount,
+    queryFn: () => ordersRepository.getOrdersCount()
   })
 };
 

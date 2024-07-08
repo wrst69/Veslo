@@ -7,17 +7,16 @@ import {
 import { Button } from "@/shared/ui/button";
 import { ListFilter } from "lucide-react";
 import { OrderStatus } from "@/entities/order/_domain/const";
+import { Dispatch } from "react";
+import { FilteredOrdersDto } from "@/entities/order/_domain/dto";
 
 export function FilterMenu({
   filter,
   setFilter
 }: {
-  filter,
-  setFilter
+  filter: FilteredOrdersDto,
+  setFilter: Dispatch<FilteredOrdersDto>
 }) {
-  const testHandle = (status: OrderStatus.Success) => {
-    setFilter({ status});
-  }
 
   return  <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -28,6 +27,7 @@ export function FilterMenu({
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuCheckboxItem textValue={"ALL"} checked={filter.status === "ALL"} onCheckedChange={() => setFilter({status: "ALL"})}>Все</DropdownMenuCheckboxItem>
+              <DropdownMenuCheckboxItem checked={filter.status === OrderStatus.Pending} onCheckedChange={() => setFilter({status: OrderStatus.Pending})}>В ожидании</DropdownMenuCheckboxItem>
               <DropdownMenuCheckboxItem checked={filter.status === OrderStatus.Processing} onCheckedChange={() => setFilter({status: OrderStatus.Processing})}>В работе</DropdownMenuCheckboxItem>
               <DropdownMenuCheckboxItem checked={filter.status === OrderStatus.Success} onCheckedChange={() => setFilter({status: OrderStatus.Success})}>Закрытые</DropdownMenuCheckboxItem>
               <DropdownMenuCheckboxItem>Архив</DropdownMenuCheckboxItem>

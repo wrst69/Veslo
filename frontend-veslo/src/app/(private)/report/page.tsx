@@ -2,13 +2,7 @@
 
 import { File } from "lucide-react";
 import { Button } from "@/shared/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/shared/ui/card";
+
 import {
   Tabs,
   TabsContent,
@@ -16,13 +10,15 @@ import {
   TabsTrigger,
 } from '@/shared/ui/tabs';
 import { useFilteredOrdersQuery } from "@/entities/order/_repositories/orders.queries";
-import { ReportTable } from "./_ui/report-table";
+
 import { InfoCards } from "./_ui/info-cards";
 import { FilterMenu } from "./_ui/filter-menu";
 import { useState } from "react";
 import { FullPageSpinner } from "@/shared/ui/full-page-spinner";
 import { PeriodTypes } from "./model/const";
 import { FilteredOrdersDto } from "@/entities/order/_domain/dto";
+import { reportTableColumns } from "./_ui/report-table/report-table-columns";
+import { ReportTable } from "./_ui/report-table/report-table";
 
 export default function ReportPage() {
   const [period, setPeriod] = useState<string>(PeriodTypes.All);
@@ -33,8 +29,9 @@ export default function ReportPage() {
   if (isPending) {
     return <FullPageSpinner/>;
   }
-  console.log(data)
-  return  <div className="flex min-h-screen w-full flex-col">
+
+  if (data) {
+    return  <div className="flex min-h-screen w-full flex-col">
             <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
               <Tabs defaultValue={PeriodTypes.All} onValueChange={(value: string) => setPeriod(value)}>
                 <div className="flex items-center">
@@ -54,28 +51,10 @@ export default function ReportPage() {
                 </div>
                 <TabsContent value={period}>
                   <InfoCards data={data}/>
-                  <div className="mt-4">
-                    <Card >
-                      {/* <CardHeader className="flex flex-row items-center">
-                        <CardTitle>Заявки за выбранный период</CardTitle>
-                        <Button asChild size="sm" className="ml-auto gap-1">
-                          <Link href="#">
-                            View All
-                            <ArrowUpRight className="h-4 w-4" />
-                          </Link>
-                        </Button>
-                      </CardHeader> */}
-                      <CardContent>
-                        {/* <ReportTable/> */}
-                        <div className="flex flex-col">
-                          {data?.map((order) => <div key={order.id}>{`${order.id}            ${order.measurePoint.title}`}</div>)}
-                        </div>
-                        
-                      </CardContent>
-                    </Card>
-                  </div>
+                  <ReportTable columns={reportTableColumns} data={data}/>
                 </TabsContent>
               </Tabs>
             </main>
           </div>
+  }
 }

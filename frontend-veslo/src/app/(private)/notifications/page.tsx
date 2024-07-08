@@ -3,7 +3,7 @@
 import { useNotificationsQuery } from "@/entities/notification/_repositories/notifications.queries";
 import { Button } from "@/shared/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/ui/card";
-import { ArrowUpRight, MailOpen, Trash2 } from "lucide-react";
+import {  MailOpen, Trash2 } from "lucide-react";
 
 export default function Notifications() {
   const { data: notifications} = useNotificationsQuery();

@@ -28,6 +28,12 @@ export class OrdersController {
     return this.ordersService.getOrders();
   }
 
+  @Get('count')
+  @UseGuards(AuthGuard)
+  getOrderCounts() {
+    return this.ordersService.getOrderCounts();
+  }
+
   @Get('filter')
   async index(
     @Query() query: OrdersQuery

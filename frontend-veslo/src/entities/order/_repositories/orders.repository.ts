@@ -9,12 +9,14 @@ class OrdersRepository {
 
     getFilteredOrders = async (dto: FilteredOrdersDto) => await axiosInstance.get(`/orders/filter?status=${dto.status}`).then((res) => res.data);
 
+    getOrdersCount = async () => await axiosInstance.get('/orders/count').then((res) => res.data);
+
     createOrder = async (dto: CreateOrderDto) => await axiosInstance.post('/orders', dto).then((res) => res.data);
 
     updateOrder = async (dto: UpdateOrderDto) => {
         const {id, ...data} = dto;
         await axiosInstance.patch(`/orders/${id}`, data).then((res) => res.data);
-    }
+    };
     
     deleteOrder = async (dto: DeleteOrderDto) => await axiosInstance.patch(`/orders/delete/${dto}`).then((res) => res.data);
 }
