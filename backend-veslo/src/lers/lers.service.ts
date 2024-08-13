@@ -4,6 +4,8 @@ import { Inject, Injectable } from '@nestjs/common';
 import { lastValueFrom } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+import fs from 'fs';
+
 const LERS_URL = 'http://10.192.1.4:10000/api/v1/';
 
 @Injectable()
@@ -117,7 +119,14 @@ export class LersService {
   }
 
   async getData() {
-    return await this.getDataFromDb();
+    const dbData  = await this.getDataFromDb();
+
+    if (dbData) {
+      return dbData;
+    }
+
+    const rawData = fs.readFileSync('./string_value.txt', { encoding: 'utf8', flag: 'r' });
+    return JSON.parse(rawData);
   }
   
   async getLersNodes() {

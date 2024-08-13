@@ -4,6 +4,7 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
+
 import { Button } from "@/shared/ui/button";
 import { ListFilter } from "lucide-react";
 import { OrderStatus } from "@/entities/order/_domain/const";
@@ -17,7 +18,6 @@ export function FilterMenu({
   filter: FilteredOrdersDto,
   setFilter: Dispatch<FilteredOrdersDto>
 }) {
-
   return  <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="sm" className="h-8 gap-1">
