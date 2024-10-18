@@ -3,8 +3,7 @@ import { CACHE_MANAGER, Cache } from '@nestjs/cache-manager';
 import { Inject, Injectable } from '@nestjs/common';
 import { lastValueFrom } from 'rxjs';
 import { map } from 'rxjs/operators';
-
-import fs from 'fs';
+import * as fs from 'fs';
 
 const LERS_URL = 'http://10.192.1.4:10000/api/v1/';
 
@@ -114,7 +113,7 @@ export class LersService {
         })
         .pipe(map((res) => res.data)),
     );
-
+    console.log(nodes)
     return { nodeGroups, nodes, measurePoints, equipment };
   }
 
@@ -125,7 +124,7 @@ export class LersService {
       return dbData;
     }
 
-    const rawData = fs.readFileSync('./string_value.txt', { encoding: 'utf8', flag: 'r' });
+    const rawData = fs.readFileSync('./src/lers/string_value.txt', { encoding: 'utf8', flag: 'r' });
     return JSON.parse(rawData);
   }
   

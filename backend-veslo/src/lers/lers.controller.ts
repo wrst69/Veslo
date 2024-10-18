@@ -16,5 +16,4 @@ export class LersController {
   getLersNodes() {
     return this.lersService.getLersNodes();
   }
-
 }

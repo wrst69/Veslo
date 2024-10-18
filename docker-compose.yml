@@ -14,6 +14,7 @@ services:
 
   veslo.pgadmin:
     image: dpage/pgadmin4
+    restart: always
     container_name: veslo.pgadmin
     environment:
       PGADMIN_DEFAULT_EMAIL: "gbpleq1@gmail.com"
@@ -31,6 +32,7 @@ services:
 
   veslo.backend:
     image: veslo.backend
+    restart: always
     ports:
      - "3003:3003"
     env_file:
@@ -38,6 +40,12 @@ services:
     depends_on:
       - veslo.postgres
       - redis
+    
+  veslo.frontend:
+    image: veslo.frontend
+    restart: always
+    ports:
+     - "80:3000"
 
 volumes:
   veslo.postgres:
