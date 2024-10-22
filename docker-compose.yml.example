@@ -34,7 +34,7 @@ services:
     image: veslo.backend
     restart: always
     ports:
-     - "3003:3003"
+      - "3003:3003"
     env_file:
       - ./backend-veslo/.env
     depends_on:
@@ -45,7 +45,9 @@ services:
     image: veslo.frontend
     restart: always
     ports:
-     - "80:3000"
+      - "80:3100"
+    depends_on:
+      - veslo.backend
 
 volumes:
   veslo.postgres:

@@ -10,7 +10,11 @@ tmp
 /node_modules
 
 #env
-.env
+*.env
+postgres.env
+
+#docker
+docker-compose.yml
 
 # IDEs and editors
 /.idea
