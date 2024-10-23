@@ -5,8 +5,9 @@ services:
     image: postgres:14.1-alpine
     restart: always
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: "name"
+      POSTGRES_PASSWORD: "password"
+      POSTGRES_DB: "dbname"
     ports:
       - 5432:5432
     volumes:
@@ -17,8 +18,8 @@ services:
     restart: always
     container_name: veslo.pgadmin
     environment:
-      PGADMIN_DEFAULT_EMAIL: "gbpleq1@gmail.com"
-      PGADMIN_DEFAULT_PASSWORD: "postgres"
+      PGADMIN_DEFAULT_EMAIL: "name@gmail.com"
+      PGADMIN_DEFAULT_PASSWORD: "password"
       PGADMIN_CONFIG_SERVER_MODE: "False"
     ports:
       - 8082:80
@@ -27,8 +28,8 @@ services:
     image: redis/redis-stack:7.2.0-v10
     restart: always
     ports:
-      - "6379:6379"
-      - "8001:8001"
+      - 6379:6379
+      - 8001:8001
 
   veslo.backend:
     image: veslo.backend

@@ -10,8 +10,7 @@ tmp
 /node_modules
 
 #env
-*.env
-postgres.env
+.env
 
 #docker
 docker-compose.yml
