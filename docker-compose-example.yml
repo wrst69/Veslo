@@ -11,7 +11,7 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - veslo.postgres:/var/lib/postgresql/data
+      - /home/user/pgdata/veslo.postgres:/var/lib/postgresql/data
 
   veslo.pgadmin:
     image: dpage/pgadmin4
@@ -24,7 +24,7 @@ services:
     ports:
       - 8082:80
 
-  redis:
+  veslo.redis:
     image: redis/redis-stack:7.2.0-v10
     restart: always
     ports:
