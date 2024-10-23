@@ -124,8 +124,9 @@ export class LersService {
       return dbData;
     }
 
-    const rawData = fs.readFileSync('./src/lers/string_value.txt', { encoding: 'utf8', flag: 'r' });
-    return JSON.parse(rawData);
+    const data = fs.readFileSync('./src/lers/string_value.txt', { encoding: 'utf8', flag: 'r' });
+
+    return JSON.parse(data);
   }
   
   async getLersNodes() {
