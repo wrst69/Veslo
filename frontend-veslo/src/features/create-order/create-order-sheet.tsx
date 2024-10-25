@@ -8,11 +8,12 @@ import {
 import { Button } from "@/shared/ui/button";
 import { CreateOrderForm } from "./_ui/create-order-form";
 import { useState } from "react";
+import { SelectedPoint } from "@/entities/selected-point/_domain/types";
 
 export function CreateOrderSheet({
     selectedPoint
 }:{
-    selectedPoint
+    selectedPoint: SelectedPoint
 }) {
     const [isOpen, setOpen] = useState(false);
     

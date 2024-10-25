@@ -11,7 +11,9 @@ import {
     AccordionTrigger,
 } from "@/shared/ui/accordion"
 import { CreateOrderSheet } from "@/features/create-order/create-order-sheet";
-import { ZodNumberDef } from "zod";
+import { MeasurePoint, Node } from "@/entities/node/_domain/types";
+import { SelectedPoint } from "@/entities/selected-point/_domain/types";
+import { Dispatch } from "react";
 
 export function NodeItem({
     id,
@@ -21,10 +23,10 @@ export function NodeItem({
     onPointChange
 }:{
     id?: string,
-    node,
-    measurePoints,
-    selectedPoint,
-    onPointChange
+    node: Node,
+    measurePoints: MeasurePoint[],
+    selectedPoint: SelectedPoint,
+    onPointChange: Dispatch<SelectedPoint>
 }) {
 
     const handlePointChange = (value: string) => {
@@ -51,7 +53,7 @@ export function NodeItem({
                         </SelectTrigger>
                         <SelectContent>
                             <SelectItem value="all">Все</SelectItem>
-                                {measurePoints?.map(point => <SelectItem value ={point.id.toString()} key={point.id}>{point.title}</SelectItem>)}
+                                {measurePoints.map(point => <SelectItem value ={point.id.toString()} key={point.id}>{point.title}</SelectItem>)}
                             </SelectContent>
                     </Select>             
                     <CreateOrderSheet selectedPoint={selectedPoint}/>

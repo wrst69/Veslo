@@ -9,7 +9,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSepara
 import { FullPageSpinner } from "@/shared/ui/full-page-spinner";
 import { Separator } from "@/shared/ui/separator";
 import dayjs from "dayjs";
-import { MoreVertical, FileCheck } from "lucide-react";
+import { MoreVertical } from "lucide-react";
 import { notFound } from "next/navigation";
 import DeletedOrderPage from "./deleted-order-page";
 import { useSessionQuery } from "@/entities/session/session.queries";
@@ -17,11 +17,9 @@ import { AcceptOrderButton } from "@/features/order-page-components/accept-order
 
 export default function OrderPage({ params } : { params : { id: string }}) {
   const { data: user } = useSessionQuery();
-  const { data: order, isLoading } = useOrderByIdQuery(parseInt(params.id));
+  const { data: order, isPending } = useOrderByIdQuery(parseInt(params.id));
 
-  if (isLoading) {
-    return <FullPageSpinner isLoading={isLoading}/>;
-  };
+  if (isPending) return <FullPageSpinner/>;
 
   if (!user) {
     return null;

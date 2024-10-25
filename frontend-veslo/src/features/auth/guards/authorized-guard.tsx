@@ -14,10 +14,12 @@ export default function AuthorizedGuard({ children }: { children: React.ReactNod
     if (isError) {
       router.replace(ROUTES.SIGN_IN);
     }
-  }, [isError])
+  }, [isError, router])
   
   if (isSuccess && data) {
-    return  <>{children}</>;
+    return  <>
+              {children}
+            </>
   }
   
   return null;

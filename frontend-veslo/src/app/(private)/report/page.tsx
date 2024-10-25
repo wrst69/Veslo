@@ -50,7 +50,7 @@ export default function ReportPage() {
                   </div>
                 </div>
                 <TabsContent value={period}>
-                  <InfoCards data={data}/>
+                  <InfoCards/>
                   <ReportTable columns={reportTableColumns} data={data}/>
                 </TabsContent>
               </Tabs>

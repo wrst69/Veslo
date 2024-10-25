@@ -10,7 +10,7 @@ import { useRouter } from 'next/navigation';
 export default function AdminGuard({ children }: { children: React.ReactNode }) {
   const router = useRouter();
 
-  const { isSuccess, isError, isLoading, data } = useSessionQuery();
+  const { isSuccess, isError, isPending, data } = useSessionQuery();
   
   if (isError) {
     router.replace(ROUTES.SIGN_IN);
@@ -29,7 +29,7 @@ export default function AdminGuard({ children }: { children: React.ReactNode }) 
   }
 
   return  <>
-            {isLoading && <FullPageSpinner isLoading={isLoading}/>}
+            {isPending && <FullPageSpinner/>}
             {isSuccess && children}
           </>
 }

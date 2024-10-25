@@ -29,7 +29,7 @@ export default function Notifications() {
                 Удалить
               </Button>
             </div>
-                {notifications.map(notification => <div key={notification.id}>{notification.type}</div>)}
+                {notifications && notifications.map(notification => <div key={notification.id}>{notification.type}</div>)}
             </CardContent>
           </Card>
         </main>

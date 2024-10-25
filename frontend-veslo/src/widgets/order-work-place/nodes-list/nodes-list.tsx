@@ -9,13 +9,15 @@ import { Accordion } from "@/shared/ui/accordion";
 import { ScrollArea, ScrollBar } from "@/shared/ui/scroll-area";
 import { useLersNodesQuery } from "@/entities/node/_repositories/nodes.queries";
 import { FullPageSpinner } from "@/shared/ui/full-page-spinner";
+import { SelectedPoint } from "@/entities/selected-point/_domain/types";
+import { Node } from "@/entities/node/_domain/types";
 
 export function NodesList({
     selectedPoint,
     handlePointChange
 } : {
-    selectedPoint,
-    handlePointChange: Dispatch<any>
+    selectedPoint: SelectedPoint,
+    handlePointChange: Dispatch<SelectedPoint>
 }) {
     const [selectedNodeGroup, setSelectedNodeGroup] = useState('all');
     const [searchText, setSearchText] = useState('');
@@ -38,7 +40,7 @@ export function NodesList({
         
     const {nodeGroups, nodes, measurePoints } = data;
 
-    const filteredData = nodes.filter((node) => {
+    const filteredData = nodes.filter((node: Node) => {
         if (selectedNodeGroup === 'all') {
             if (searchText  === '') {
                 return node;
