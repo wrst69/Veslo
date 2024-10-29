@@ -1,5 +1,6 @@
 'use client';
 
+import { NodeGroup } from "@/entities/node/_domain/types";
 import {
     Select,
     SelectContent,
@@ -7,13 +8,14 @@ import {
     SelectTrigger,
     SelectValue,
   } from "@/shared/ui/select";
+import { Dispatch } from "react";
 
   export function NodeGroupSelect({
     nodeGroups,
     onSelect
   }: {
-    nodeGroups,
-    onSelect
+    nodeGroups: NodeGroup[],
+    onSelect: Dispatch<string>
   }) {
 
     return (

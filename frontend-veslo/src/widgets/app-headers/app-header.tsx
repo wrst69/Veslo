@@ -11,6 +11,6 @@ export function AppHeader({ variant }: { variant: 'auth' | 'private' | 'public' 
                 nav={isProfile && <MainNav/>}
                 profile={ isProfile && <Profile/>}
                 notifications={ isProfile && <Notification/>}
-                actions=<ToggleTheme/>
+                /* actions=<ToggleTheme/> */
             />   
 }

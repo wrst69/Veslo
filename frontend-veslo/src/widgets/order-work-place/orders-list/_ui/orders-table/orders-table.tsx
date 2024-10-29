@@ -45,7 +45,7 @@ export function OrdersTable<TData, TValue>({
                 key={row.id}
                 className="cursor-pointer"
                 data-state={row.getIsSelected() && "selected"}
-                onDoubleClick={() => router.push(`${ROUTES.ORDERS}/${row.original.id.toString()}`)}
+                /* onDoubleClick={() => router.push(`${ROUTES.ORDERS}/${row.original.id.toString()}`)} */
               >
                 {row.getVisibleCells().map((cell) => (  
                   <TableCell key={cell.id}>

@@ -22,14 +22,13 @@ import { OrderType } from '@/entities/order/_domain/const';
 import { useUsersQuery } from '@/entities/user/_repositories/users.queries';
 import { Checkbox } from '@/shared/ui/checkbox';
 import { humanizeOrderType } from '@/shared/lib/utils';
+import { SelectedPoint } from '@/entities/selected-point/_domain/types';
+import { UserEntity } from '@/entities/user/_domain/types';
 
 const createOrderFormSchema = z.object({
     type: z.nativeEnum(OrderType, {
         required_error: 'Необходимо выбрать тип заявки'
     }),
-    /* recipients: z.number({ 
-        required_error: 'Необходимо выбрать получателей' 
-    }).array().nonempty(), */
     recipients: z.array(z.number()).refine((value) => value.some((item) => item), {
         message: "Необходимо выбрать получателей",
     }),
@@ -43,12 +42,12 @@ export function CreateOrderForm({
     selectedPoint,
     setOpen
 } : {
-    selectedPoint,
+    selectedPoint: SelectedPoint,
     setOpen: Dispatch<boolean>
 }) {
-    const {data: users, isLoading: isUsersLoading} = useUsersQuery();
+    const [isModalOpen, setModalOpen] = useState(false);
 
-    const {currentNode: node, currentMeasurePoint: measurePoint} = selectedPoint;
+    const createOrderMutation = useCreateOrderMutation();
 
     const form = useForm<formValues>({
         resolver: zodResolver(createOrderFormSchema),
@@ -59,10 +58,12 @@ export function CreateOrderForm({
         },
     });
 
-    const createOrderMutation = useCreateOrderMutation();
+    const {data: users, isLoading: isUsersLoading} = useUsersQuery();
 
-    const [isModalOpen, setModalOpen] = useState(false);
-    
+    const {currentNode: node, currentMeasurePoint: measurePoint} = selectedPoint;
+
+    if (!node || !measurePoint) return null;
+
     const onSubmit = (values: formValues) => {
         const order: CreateOrderDto = {
             nodeLersId: node.id,
@@ -115,7 +116,7 @@ export function CreateOrderForm({
                                 
                                     <FormLabel className="text-base">Получатели</FormLabel>
                                 
-                                {users.map((user) => (
+                                {users.map((user: UserEntity) => (
                                     <FormField
                                     key={user.id}
                                     control={form.control}

@@ -43,19 +43,6 @@ export const columns: ColumnDef<OrderEntity>[] = [
     accessorKey: 'owner.name',
     header: "Пользователь"
   },
-  /* {
-    accessorKey: "cost",
-    header: () => <div className="text-right">Цена</div>,
-    cell: ({ row }) => {
-      const cost = parseFloat(row.getValue("cost"))
-      const formatted = new Intl.NumberFormat("ru-RU", {
-        style: "currency",
-        currency: "RUB",
-      }).format(cost)
-
-      return <div className="text-right font-medium">{formatted}</div>
-    }
-  }, */
   {
     id: "actions",
     cell: ({ row }) => {

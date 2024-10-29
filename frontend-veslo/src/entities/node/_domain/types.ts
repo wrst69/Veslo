@@ -7,7 +7,15 @@ export type Node = {
     title: string
 };
 
+export type NodeGroup = {
+    nodeGroup: {
+        id: number,
+        title: string
+    }
+}
+
 export type MeasurePoint = {
     id: MeasurePointLersId,
+    nodeId: NodeLersId,
     title: string
 };

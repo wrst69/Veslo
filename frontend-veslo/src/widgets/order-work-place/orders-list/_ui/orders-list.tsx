@@ -4,31 +4,30 @@ import { useOrdersQuery } from "@/entities/order/_repositories/orders.queries";
 import { columns } from "../model/table-columns";
 import { OrdersTable } from "./orders-table/orders-table";
 import { FullPageSpinner } from "@/shared/ui/full-page-spinner";
-import { OrderEntity } from "@/entities/order/_domain/types";
+import { SelectedPoint } from "@/entities/selected-point/_domain/types";
 
 export function OrderList({
     selectedPoint
 }: {
-    selectedPoint
+    selectedPoint: SelectedPoint
 }) {
-    const { data, isLoading } = useOrdersQuery();
-    const orders: OrderEntity[] = data;
+    const { data: orders, isPending } = useOrdersQuery();
 
-    if (isLoading) {
-        return <FullPageSpinner isLoading={isLoading}/>
+    if (isPending) {
+        return <FullPageSpinner/>
     }
 
-    let filteredOrders: OrderEntity[] = orders;
+    let filteredOrders = orders;
 
     if (selectedPoint.currentNode) {
-        filteredOrders = orders.filter(order => order.node.lersId === selectedPoint.currentNode.id);
+        filteredOrders = orders?.filter(order => order.node.lersId === selectedPoint.currentNode?.id);
 
         if (selectedPoint.currentMeasurePoint) {
-            filteredOrders = filteredOrders.filter(order => order.measurePoint.lersId === selectedPoint.currentMeasurePoint.id);
+            filteredOrders = filteredOrders?.filter(order => order.measurePoint.lersId === selectedPoint.currentMeasurePoint?.id);
         }
     }       
     
     return  <div className="container mt-1 max-h-screen">
-                <OrdersTable columns={columns} data={filteredOrders}/>
+                {filteredOrders ? <OrdersTable columns={columns} data={filteredOrders}/> : <OrdersTable columns={columns} data={[]}/>}
             </div>        
 }

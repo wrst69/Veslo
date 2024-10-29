@@ -1,12 +1,13 @@
 import { flexRender } from "@tanstack/react-table";
 
 import { TableHead, TableHeader, TableRow } from "@/shared/ui/table";
+import { Key } from "react";
 
-export function OrdersTableHeader({table} : {table}) {
+export function OrdersTableHeader({table} : {table: any}) {
 
 
     return <TableHeader>
-                {table.getHeaderGroups().map((headerGroup) => (
+                {table.getHeaderGroups().map((headerGroup: { id: Key | null | undefined; headers: any[]; }) => (
                 <TableRow key={headerGroup.id}>
                     {headerGroup.headers.map((header) => {
                     return (

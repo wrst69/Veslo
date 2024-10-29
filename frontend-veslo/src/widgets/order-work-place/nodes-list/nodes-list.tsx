@@ -10,7 +10,7 @@ import { ScrollArea, ScrollBar } from "@/shared/ui/scroll-area";
 import { useLersNodesQuery } from "@/entities/node/_repositories/nodes.queries";
 import { FullPageSpinner } from "@/shared/ui/full-page-spinner";
 import { SelectedPoint } from "@/entities/selected-point/_domain/types";
-import { Node } from "@/entities/node/_domain/types";
+import { Node, NodeGroup, MeasurePoint } from "@/entities/node/_domain/types";
 
 export function NodesList({
     selectedPoint,
@@ -48,7 +48,7 @@ export function NodesList({
             
             return node.title.toLowerCase().includes(searchText);
         } else {
-            const filteredNodeGroup = nodeGroups.find(e => e.nodeGroup.title === selectedNodeGroup);
+            const filteredNodeGroup = nodeGroups.find((e: NodeGroup) => e.nodeGroup.title === selectedNodeGroup);
 
             if (filteredNodeGroup.members.includes(node.id)) {
                 if (searchText  === '') {
@@ -67,7 +67,10 @@ export function NodesList({
     };
 
     const handleCardChange = (value: string) => {
-        handlePointChange({currentNode: nodes.find(node => node.id === parseInt(value))});
+        handlePointChange({
+            currentNode: nodes.find((node: Node) => node.id === parseInt(value)),
+            currentMeasurePoint: undefined
+        });
     };
     
     const handleNodeGroupChange = (value: string) => {
@@ -80,9 +83,9 @@ export function NodesList({
                 <NodeSearchField onInput={handleSearch}/> 
                 <ScrollArea  className="flex flex-col gap-3 scroll-smooth h-screen" >
                     <Accordion type="single" collapsible onValueChange={handleCardChange}>
-                        {filteredData.map((node, index: number) => {
+                        {filteredData.map((node: Node, index: number) => {
                             if (index < listItemsAmount) {
-                                const filteredMeasurePoints = measurePoints.filter(point => point.nodeId === node.id);
+                                const filteredMeasurePoints = measurePoints.filter((point: MeasurePoint) => point.nodeId === node.id);
 
                                 if (index === listItemsAmount - 1) {
                                     return  <div ref={ref} key={node.id}>
