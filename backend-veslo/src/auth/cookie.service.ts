@@ -10,8 +10,7 @@ export class CookieService {
   setToken(res: Response, token: string) {
     res.cookie(CookieService.tokenKey, token, {
       httpOnly: true,
-      maxAge: 1000 * 60 * 60, //1h in ms
-      //maxAge: 1000 * 60 * 1, test 1 min
+      maxAge: 1000 * 60 * 60,
       sameSite: this.configService.get('COOKIE_SAMESITE_OPTION'),
       secure: this.configService.get('COOKIE_SECURE_OPTION'),
 
